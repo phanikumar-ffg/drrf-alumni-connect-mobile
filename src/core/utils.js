@@ -7,6 +7,15 @@ export const emailValidator = email => {
   return '';
 };
 
+export const mobileValidator = mobile => {
+  const re = /[\d]{10}}/;
+
+  if (!mobile || mobile.length < 0) return 'Mobile cannot be empty.';
+  if (!re.test(mobile)) return 'Ooops! We need a valid phone number.';
+
+  return '';
+};
+
 export const passwordValidator = password => {
   if (!password || password.length <= 0) return 'Password cannot be empty.';
 

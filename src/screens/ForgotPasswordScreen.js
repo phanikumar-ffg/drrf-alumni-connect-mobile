@@ -20,7 +20,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('LoginScreen');
+    navigation.navigate('ForgotPasswordMsgScreen');
   };
 
   return (
@@ -32,7 +32,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       <Header>Restore Password</Header>
 
       <TextInput
-        label="E-mail address"
+        label="Email or mobile phone number"
         returnKeyType="done"
         value={email.value}
         onChangeText={text => setEmail({ value: text, error: '' })}

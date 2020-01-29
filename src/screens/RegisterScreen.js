@@ -14,19 +14,23 @@ import {
 } from '../core/utils';
 
 const RegisterScreen = ({ navigation }) => {
-  const [name, setName] = useState({ value: '', error: '' });
+  const [firstname, setFirstName] = useState({ value: '', error: '' });
+  const [lastname, setLastName] = useState({ value: '', error: '' });
+  const [mobile, setMobile] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
+    const firstnameError = nameValidator(firstname.value);
+    const lastnameError = nameValidator(lastname.value);
+    const mobileError = mobileValidator(mobile.value);
     const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
+    if (emailError || firstnameError || lastnameError) {
+      setFirstName({ ...firstname, error: firstnameError });
+      setLastName({ ...lastname, error: lastnameError });
+      setMobile({ ...mobile, error: mobileError });
       setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
       return;
     }
 
@@ -39,17 +43,33 @@ const RegisterScreen = ({ navigation }) => {
 
       <Logo />
 
-      <Header>Create Account</Header>
+      <Header>Please Identify Yourself</Header>
 
       <TextInput
-        label="Name"
+        label="First Name"
         returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        value={firstname.value}
+        onChangeText={text => setFirstName({ value: text, error: '' })}
+        error={!!firstname.error}
+        errorText={firstname.error}
       />
-
+      <TextInput
+        label="Last Name"
+        returnKeyType="next"
+        value={lastname.value}
+        onChangeText={text => setLastName({ value: text, error: '' })}
+        error={!!lastname.error}
+        errorText={lastname.error}
+      />
+      <TextInput
+        label="Mobile No"
+        returnKeyType="next"
+        value={mobile.value}
+        onChangeText={text => setMobile({ value: text, error: '' })}
+        error={!!mobile.error}
+        errorText={mobile.error}
+        autoCapitalize="none"
+      />
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -61,16 +81,6 @@ const RegisterScreen = ({ navigation }) => {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
-      />
-
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
       />
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>

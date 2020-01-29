@@ -8,6 +8,9 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
+import { connect } from 'react-redux'
+//import { USER_LOGIN } from '../actions/actionTypes'
+import { userLoginValidation } from '../actions/index'
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -22,8 +25,12 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-
-    navigation.navigate('Dashboard');
+    this.setState({
+      ...this.state,
+      username: email,
+      password: password
+    });
+    this.props.onLogin(email, password)
   };
 
   return (
@@ -32,7 +39,7 @@ const LoginScreen = ({ navigation }) => {
 
       <Logo />
 
-      <Header>Welcome back.</Header>
+      <Header>Dr. Reddy's Foundation</Header>
 
       <TextInput
         label="Email"
@@ -61,7 +68,7 @@ const LoginScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordScreen')}
         >
-          <Text style={styles.label}>Forgot your password?</Text>
+          <Text style={styles.normalLink}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
 
@@ -92,10 +99,26 @@ const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
   },
+  normalLink: {
+    color: theme.colors.primary,
+  },
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
 });
 
-export default memo(LoginScreen);
+const mapStateToProps = state => {
+  return {
+    username: ''
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: (username, password) => dispatch(userLoginValidation(username, password)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+
