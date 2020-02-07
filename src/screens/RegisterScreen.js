@@ -8,25 +8,35 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import {
-  emailValidator,
-  passwordValidator,
-  nameValidator,
+    nameValidator,
+    studentIDValidator,
+    phoneValidator,
+    dateOfBirthValidator,
+    emailValidator
 } from '../core/utils';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: '', error: '' });
+  const [studentID, setStudentID] = useState({value:'', error: ''});
+  const [phone, setPhone] = useState({value:'', error: ''});
+  const [dateOfBirth, setdateOfBirth] = useState({value:'', error: ''});
   const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
+    const studentIDError = studentIDValidator(studentID.value);
+    const phoneError = phoneValidator(phone.value);
+    const dateOfBirthError = dateOfBirthValidator(dateOfBirth.value);
     const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    // const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError || nameError) {
+    if (nameError || studentIDError || phoneError || dateOfBirthError || emailError) {
       setName({ ...name, error: nameError });
+      setStudentID({...studentID, error: studentIDError});
+      setPhone({...phone, error: setPhone});
+      setdateOfBirth({...dateOfBirth, error: setdateOfBirth});
       setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
+      // setPassword({ ...password, error: passwordError });
       return;
     }
 
@@ -40,7 +50,7 @@ const RegisterScreen = ({ navigation }) => {
       <Logo />
 
       <Header>Create Account</Header>
-
+        <form>
       <TextInput
         label="Name"
         returnKeyType="next"
@@ -49,6 +59,33 @@ const RegisterScreen = ({ navigation }) => {
         error={!!name.error}
         errorText={name.error}
       />
+
+        <TextInput
+            label="Student ID"
+            returnKeyType="next"
+            value={studentID.value}
+            onChangeText={text => setStudentID({ value: text, error: '' })}
+            error={!!studentID.error}
+            errorText={studentID.error}
+        />
+
+        <TextInput
+            label="Phone"
+            returnKeyType="next"
+            value={phone.value}
+            onChangeText={text => setPhone({ value: text, error: '' })}
+            error={!!phone.error}
+            errorText={phone.error}
+        />
+
+        <TextInput
+            label="Date of Birth"
+            returnKeyType="next"
+            value={dateOfBirth.value}
+            onChangeText={text => setdateOfBirth({ value: text, error: '' })}
+            error={!!dateOfBirth.error}
+            errorText={dateOfBirth.error}
+        />
 
       <TextInput
         label="Email"
@@ -63,7 +100,7 @@ const RegisterScreen = ({ navigation }) => {
         keyboardType="email-address"
       />
 
-      <TextInput
+     {/* <TextInput
         label="Password"
         returnKeyType="done"
         value={password.value}
@@ -72,10 +109,11 @@ const RegisterScreen = ({ navigation }) => {
         errorText={password.error}
         secureTextEntry
       />
-
+*/}
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
       </Button>
+        </form>
 
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
