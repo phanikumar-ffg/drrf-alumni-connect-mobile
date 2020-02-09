@@ -1,1 +1,1 @@
-export { userLoginValidation } from './userLogin'
+export { authInputChange, login } from './userLogin';

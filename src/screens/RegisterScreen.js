@@ -19,7 +19,6 @@ const RegisterScreen = ({ navigation }) => {
   const [mobile, setMobile] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
 
-
   const _onSignUpPressed = () => {
     const firstnameError = nameValidator(firstname.value);
     const lastnameError = nameValidator(lastname.value);
@@ -39,22 +38,14 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+      <BackButton goBack={() => navigation.navigate('LoginScreen')} />
 
       <Logo />
 
       <Header>Please Identify Yourself</Header>
 
       <TextInput
-        label="First Name"
-        returnKeyType="next"
-        value={firstname.value}
-        onChangeText={text => setFirstName({ value: text, error: '' })}
-        error={!!firstname.error}
-        errorText={firstname.error}
-      />
-      <TextInput
-        label="Last Name"
+        label="Student ID"
         returnKeyType="next"
         value={lastname.value}
         onChangeText={text => setLastName({ value: text, error: '' })}
@@ -62,7 +53,23 @@ const RegisterScreen = ({ navigation }) => {
         errorText={lastname.error}
       />
       <TextInput
-        label="Mobile No"
+        label="Name"
+        returnKeyType="next"
+        value={firstname.value}
+        onChangeText={text => setFirstName({ value: text, error: '' })}
+        error={!!firstname.error}
+        errorText={firstname.error}
+      />
+      <TextInput
+        label="Date Of Birth"
+        returnKeyType="next"
+        value={firstname.value}
+        onChangeText={text => setFirstName({ value: text, error: '' })}
+        error={!!firstname.error}
+        errorText={firstname.error}
+      />
+      <TextInput
+        label="Phone"
         returnKeyType="next"
         value={mobile.value}
         onChangeText={text => setMobile({ value: text, error: '' })}
