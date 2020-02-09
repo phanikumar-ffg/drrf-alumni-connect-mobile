@@ -32,7 +32,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       <Header>Restore Password</Header>
 
       <TextInput
-        label="Email or mobile phone number"
+        label="Enter registered Email ID"
         returnKeyType="done"
         value={email.value}
         onChangeText={text => setEmail({ value: text, error: '' })}
@@ -45,7 +45,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       />
 
       <Button mode="contained" onPress={_onSendPressed} style={styles.button}>
-        Send Reset Instructions
+        Submit
       </Button>
 
       <TouchableOpacity
