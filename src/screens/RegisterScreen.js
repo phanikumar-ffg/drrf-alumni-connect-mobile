@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -7,35 +7,50 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import {
     nameValidator,
     studentIDValidator,
     phoneValidator,
     dateOfBirthValidator,
-    emailValidator
+    emailValidator,
+    centerNameValidator
 } from '../core/utils';
+const options=[
+            {value:'center1',},
+            {value:'center2',},
+            ];
+const _onSelect = () => {
+    return;
+};
+
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [studentID, setStudentID] = useState({value:'', error: ''});
   const [phone, setPhone] = useState({value:'', error: ''});
-  const [dateOfBirth, setdateOfBirth] = useState({value:'', error: ''});
+  const [dateOfBirth, setDateOfBirth] = useState({value:'', error: ''});
   const [email, setEmail] = useState({ value: '', error: '' });
+  const [centerName, setCenterName] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
+    sout.println("in button");
     const nameError = nameValidator(name.value);
     const studentIDError = studentIDValidator(studentID.value);
     const phoneError = phoneValidator(phone.value);
     const dateOfBirthError = dateOfBirthValidator(dateOfBirth.value);
     const emailError = emailValidator(email.value);
+    const centerNameError = centerNameValidator(centerName.value);
     // const passwordError = passwordValidator(password.value);
 
-    if (nameError || studentIDError || phoneError || dateOfBirthError || emailError) {
+    if (nameError || studentIDError || phoneError || dateOfBirthError || emailError || centerNameError) {
       setName({ ...name, error: nameError });
       setStudentID({...studentID, error: studentIDError});
-      setPhone({...phone, error: setPhone});
-      setdateOfBirth({...dateOfBirth, error: setdateOfBirth});
+      setPhone({...phone, error: phoneError});
+      setDateOfBirth({...dateOfBirth, error: dateOfBirthError});
       setEmail({ ...email, error: emailError });
+      setCenterName({ ...centerName, error: centerNameError });
       // setPassword({ ...password, error: passwordError });
       return;
     }
@@ -44,72 +59,73 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   return (
+  <ScrollView>
     <Background>
       <BackButton goBack={() => navigation.navigate('HomeScreen')} />
-
       <Logo />
-
       <Header>Create Account</Header>
         <form>
-      <TextInput
-        label="Name"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
-      />
-
-        <TextInput
-            label="Student ID"
+          <TextInput
+            label="Name"
             returnKeyType="next"
-            value={studentID.value}
-            onChangeText={text => setStudentID({ value: text, error: '' })}
-            error={!!studentID.error}
-            errorText={studentID.error}
-        />
+            value={name.value}
+            onChangeText={text => setName({ value: text, error: '' })}
+            error={!!name.error}
+            errorText={name.error}
+          />
 
-        <TextInput
-            label="Phone"
+            <TextInput
+                label="Student ID"
+                returnKeyType="next"
+                value={studentID.value}
+                onChangeText={text => setStudentID({ value: text, error: '' })}
+                error={!!studentID.error}
+                errorText={studentID.error}
+            />
+
+            <TextInput
+                label="Phone"
+                returnKeyType="next"
+                value={phone.value}
+                onChangeText={text => setPhone({ value: text, error: '' })}
+                error={!!phone.error}
+                errorText={phone.error}
+            />
+
+            <TextInput
+                label="Date of Birth"
+                returnKeyType="next"
+                value={dateOfBirth.value}
+                onChangeText={text => setDateOfBirth({ value: text, error: '' })}
+                error={!!dateOfBirth.error}
+                errorText={dateOfBirth.error}
+            />
+
+          <TextInput
+            label="Email"
             returnKeyType="next"
-            value={phone.value}
-            onChangeText={text => setPhone({ value: text, error: '' })}
-            error={!!phone.error}
-            errorText={phone.error}
-        />
+            value={email.value}
+            onChangeText={text => setEmail({ value: text, error: '' })}
+            error={!!email.error}
+            errorText={email.error}
+            autoCapitalize="none"
+            autoCompleteType="email"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
 
-        <TextInput
-            label="Date of Birth"
+
+          <Dropdown
+            label="Center Name"
             returnKeyType="next"
-            value={dateOfBirth.value}
-            onChangeText={text => setdateOfBirth({ value: text, error: '' })}
-            error={!!dateOfBirth.error}
-            errorText={dateOfBirth.error}
-        />
+            options={options}
+            value={centerName.value}
+            onChange={option => setCenterName({value:option, error: '' })}
+            error={!!centerName.error}
+            errorText={centerName.error}
+            placeholder="Select a center name"
+          />
 
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-
-     {/* <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
-*/}
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
       </Button>
@@ -122,6 +138,7 @@ const RegisterScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </Background>
+   </ScrollView>
   );
 };
 
