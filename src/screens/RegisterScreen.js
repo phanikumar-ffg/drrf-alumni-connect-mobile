@@ -21,9 +21,6 @@ const options=[
             {value:'center1',},
             {value:'center2',},
             ];
-const _onSelect = () => {
-    return;
-};
 
 
 const RegisterScreen = ({ navigation }) => {
@@ -35,7 +32,6 @@ const RegisterScreen = ({ navigation }) => {
   const [centerName, setCenterName] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
-    sout.println("in button");
     const nameError = nameValidator(name.value);
     const studentIDError = studentIDValidator(studentID.value);
     const phoneError = phoneValidator(phone.value);
@@ -93,7 +89,7 @@ const RegisterScreen = ({ navigation }) => {
             />
 
             <TextInput
-                label="Date of Birth"
+                label="Date of Birth(DD-MM-YYYY)"
                 returnKeyType="next"
                 value={dateOfBirth.value}
                 onChangeText={text => setDateOfBirth({ value: text, error: '' })}
@@ -114,9 +110,10 @@ const RegisterScreen = ({ navigation }) => {
             keyboardType="email-address"
           />
 
-
+        <View style={styles.container}>
           <Dropdown
             label="Center Name"
+            style={styles.input}
             returnKeyType="next"
             options={options}
             value={centerName.value}
@@ -125,6 +122,8 @@ const RegisterScreen = ({ navigation }) => {
             errorText={centerName.error}
             placeholder="Select a center name"
           />
+          {centerName.error ? <Text style={styles.error}>{centerName.error}</Text> : null}
+        </View>
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
@@ -157,6 +156,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
+  container: {
+    width: '100%',
+    marginVertical: 12,
+  },
+  input: {
+    backgroundColor: theme.colors.surface,
+  },
+  error: {
+    fontSize: 14,
+    color: theme.colors.error,
+    paddingHorizontal: 4,
+    paddingTop: 4,
+  },
 });
+
 
 export default memo(RegisterScreen);

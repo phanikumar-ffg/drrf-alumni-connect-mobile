@@ -16,6 +16,8 @@ const TextInput = ({ errorText, ...props }) => (
   </View>
 );
 
+
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',
