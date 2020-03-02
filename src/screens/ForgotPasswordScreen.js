@@ -5,6 +5,7 @@ import Background from '../components/Background';
 import BackButton from '../components/BackButton';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
+import HelpScreen from "./HelpScreen";
 import TextInput from '../components/TextInput';
 import { theme } from '../core/theme';
 import Button from '../components/Button';
@@ -54,6 +55,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
       >
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>
+
+        <TouchableOpacity
+            onPress={() => navigation.navigate('HelpScreen')} >
+            <Text style={styles.label}>Help?</Text>
+        </TouchableOpacity>
     </Background>
   );
 };
