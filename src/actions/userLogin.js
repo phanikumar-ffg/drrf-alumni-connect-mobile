@@ -23,13 +23,34 @@ export const authInputChange = ({ field, value }) => {
 }; */
 export const login = ({ email, password }) => {
   console.debug('in login action');
-  user = {
-    name: 'phani',
-  };
   console.debug(email);
   return dispatch => {
     dispatch({ type: LOADING });
-    dispatch({ type: LOGIN_SUCCESS, payload: user });
+    fetch('http://10.0.2.2:8080/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then(response => response.json())
+      .then(res => {
+        console.debug(res);
+        const user = {
+          email: res.email,
+          password: res.password,
+        };
+        dispatch({ type: LOGIN_SUCCESS, payload: user });
+      })
+      .catch(error => {
+        console.error(error);
+        dispatch({ type: LOGIN_FAILURE });
+      });
+
     /* return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)

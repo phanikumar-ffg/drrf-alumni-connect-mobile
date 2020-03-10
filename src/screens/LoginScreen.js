@@ -22,7 +22,7 @@ import _ from 'lodash';
 class LoginScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!_.isEmpty(nextProps.user)) {
-      this.props.navigation.navigate('Dashboard');
+      this.props.navigation.navigate('Dashboard', nextProps.user);
     }
   }
 
