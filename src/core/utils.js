@@ -34,9 +34,9 @@ export const phoneValidator = phone => {
 };
 
 export const dateOfBirthValidator = dateOfBirth => {
-  const re2 = /^\[0-2][0-9]|[3][0-1]-\[0][0-9]|[1][0-2]-\d{4}$/;
+  //const re2 = /^\[0-2][0-9]|[3][0-1]-\[0][0-9]|[1][0-2]-\d{4}$/;
   if (!dateOfBirth || dateOfBirth.length <= 0) return 'dateOfBirth cannot be empty.';
-  if (!re2.test(dateOfBirth)) return 'Oops! We need a valid Date of Birth.';
+  //if (!re2.test(dateOfBirth)) return 'Oops! We need a valid Date of Birth.';
 
   return '';
 };

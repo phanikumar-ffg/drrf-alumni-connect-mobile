@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState,Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -9,6 +9,10 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+//import DatePicker from 'react-date-picker';
+import DatePicker from 'react-native-datepicker'
+//import datepicker from 'js-datepicker'
+import * as moment from 'moment/moment';
 import {
     nameValidator,
     studentIDValidator,
@@ -21,9 +25,15 @@ const options=[
             {value:'center1',},
             {value:'center2',},
             ];
-
-
+//const picker = datepicker(document.querySelector('.date') );
+/*export default class RegisterScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {date: "15-05-2018"}
+  }
+}*/
 const RegisterScreen = ({ navigation }) => {
+
   const [name, setName] = useState({ value: '', error: '' });
   const [studentID, setStudentID] = useState({value:'', error: ''});
   const [phone, setPhone] = useState({value:'', error: ''});
@@ -87,12 +97,28 @@ const RegisterScreen = ({ navigation }) => {
                 error={!!phone.error}
                 errorText={phone.error}
             />
+         {/* <DatePicker
+              selected={this.state.date}
+              onChange={date => setDateOfBirth({value:date,error:''})}
+          />*/}
+            <DatePicker
+                name="DOB"
+                onDateChange={date => setDateOfBirth({value:date,error:''})}
+                //onDateChange={date =>{this.setState({date:date})}}
+                //label="Date of Birth"
+                //returnKeyType="next"
+                //value={dateOfBirth.value}
+                style={{width: '100%'}}
+                date={dateOfBirth.value}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                minDate="1980-05-01"
+                //maxDate="2016-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
 
-            <TextInput
-                label="Date of Birth(DD-MM-YYYY)"
-                returnKeyType="next"
-                value={dateOfBirth.value}
-                onChangeText={text => setDateOfBirth({ value: text, error: '' })}
+                //value={dateOfBirth.value}
                 error={!!dateOfBirth.error}
                 errorText={dateOfBirth.error}
             />
