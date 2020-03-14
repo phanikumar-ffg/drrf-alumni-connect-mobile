@@ -6,6 +6,7 @@ import {
   RegisterScreen,
   ForgotPasswordScreen,
   Dashboard,
+  JobSearch,
   ForgotPasswordMsgScreen,
     HelpScreen
 
@@ -17,6 +18,7 @@ const Router = createStackNavigator(
     RegisterScreen,
     ForgotPasswordScreen,
     Dashboard,
+    JobSearch,
     ForgotPasswordMsgScreen,
       HelpScreen
   },
