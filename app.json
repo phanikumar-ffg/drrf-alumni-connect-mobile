@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "React Native Simple Login Template",
-    "slug": "react-native-simple-login-template",
+    "name": "Dr Reddy Foundation Alumni Connect",
+    "slug": "drrf-alumni-connect",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -26,7 +26,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Simple login template created with React Native.",
-    "githubUrl": "https://github.com/venits/react-native-login-template"
+    "description": "Dr Reddy Foundation Alumni Connect"
+    //"githubUrl": "https://github.com/phanikumar-ffg/drrf-alumni-connect-mobile.git"
   }
 }

@@ -5,6 +5,7 @@ import Background from '../components/Background';
 import BackButton from '../components/BackButton';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
+import HelpScreen from "./HelpScreen";
 import TextInput from '../components/TextInput';
 import { theme } from '../core/theme';
 import Button from '../components/Button';
@@ -20,7 +21,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('LoginScreen');
+    navigation.navigate('ForgotPasswordMsgScreen');
   };
 
   return (
@@ -32,7 +33,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       <Header>Restore Password</Header>
 
       <TextInput
-        label="E-mail address"
+        label="Enter registered Email ID"
         returnKeyType="done"
         value={email.value}
         onChangeText={text => setEmail({ value: text, error: '' })}
@@ -45,7 +46,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       />
 
       <Button mode="contained" onPress={_onSendPressed} style={styles.button}>
-        Send Reset Instructions
+        Submit
       </Button>
 
       <TouchableOpacity
@@ -54,6 +55,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
       >
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>
+
+        <TouchableOpacity
+            onPress={() => navigation.navigate('HelpScreen')} >
+            <Text style={styles.label}>Help?</Text>
+        </TouchableOpacity>
     </Background>
   );
 };

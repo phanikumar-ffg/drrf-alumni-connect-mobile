@@ -21,5 +21,4 @@ const Dashboard = ({ navigation }) => (
     </Button>
   </Background>
 );
-
 export default memo(Dashboard);
