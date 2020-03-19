@@ -7,3 +7,4 @@ export { default as JobSearch } from './JobSearch';
 export { default as ForgotPasswordMsgScreen } from './ForgotPasswordMsgScreen';
 export { default as HelpScreen } from './HelpScreen';
 export { default as ProfileScreen } from './ProfileScreen';
+export { default as SignUpSuccessScreen } from './SignUpSuccessScreen';

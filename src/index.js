@@ -9,7 +9,8 @@ import {
   JobSearch,
   ForgotPasswordMsgScreen,
     HelpScreen,
-    ProfileScreen
+    ProfileScreen,
+    SignUpSuccessScreen,
 
 } from './screens';
 
@@ -22,7 +23,8 @@ const Router = createStackNavigator(
     JobSearch,
     ForgotPasswordMsgScreen,
       HelpScreen,
-      ProfileScreen
+      ProfileScreen,
+      SignUpSuccessScreen,
   },
   {
     initialRouteName: 'LoginScreen',
