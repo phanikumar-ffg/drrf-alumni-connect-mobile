@@ -16,6 +16,9 @@ const Dashboard = ({ navigation }) => (
     <Button mode="contained" onPress={() => navigation.navigate('JobSearch')}>
       Job Search
     </Button>
+    <Button mode="outlined" onPress={() => navigation.navigate('ProfileScreen')}>
+      Edit Profile
+    </Button>
     <Button mode="outlined" onPress={() => navigation.navigate('HomeScreen')}>
       Logout
     </Button>
