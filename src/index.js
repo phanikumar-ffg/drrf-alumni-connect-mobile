@@ -11,6 +11,7 @@ import {
     HelpScreen,
     ProfileScreen,
     SignUpSuccessScreen,
+    AdminJobEntryScreen
 
 } from './screens';
 
@@ -25,6 +26,7 @@ const Router = createStackNavigator(
       HelpScreen,
       ProfileScreen,
       SignUpSuccessScreen,
+      AdminJobEntryScreen
   },
   {
     initialRouteName: 'LoginScreen',

@@ -105,6 +105,15 @@ class LoginScreen extends React.Component {
             <Text style={styles.link}>Sign up</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.row}>
+        <Text style={styles.label}>Do you want to enter Job details? </Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')}
+          >
+          <Text style={styles.link}>JobDetails</Text>
+          </TouchableOpacity>
+        </View>
       </Background>
     );
   }
