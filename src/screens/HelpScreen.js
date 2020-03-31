@@ -10,9 +10,11 @@ import Select from 'react-native';
 import {emailValidator} from "../core/utils";
 import {theme} from "../core/theme";
 import {Dropdown} from "../components/Dropdown";
+import BackButton from '../components/BackButton';
 
 const HelpScreen = ({ navigation }) => (
     <Background>
+        <BackButton goBack={() => navigation.navigate('Dashboard')} />
         <Logo />
         <Header>Better Skills Better Jobs</Header>
 

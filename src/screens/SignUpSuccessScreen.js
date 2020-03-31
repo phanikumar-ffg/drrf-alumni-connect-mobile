@@ -16,6 +16,9 @@ const SignUpSuccessScreen = ({ navigation }) => (
         <Button mode="outlined" onPress={() => navigation.navigate('LoginScreen')}>
             Login
         </Button>
+        <Button mode="outlined" onPress={() => navigation.navigate('Dashboard')}>
+                    Dashboard
+        </Button>
     </Background>
 );
 

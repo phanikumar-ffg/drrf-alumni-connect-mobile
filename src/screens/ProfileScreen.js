@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity ,ScrollView} from 'react-native';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
@@ -43,8 +43,9 @@ const ProfileScreen = ({ navigation }) => {
   
   
 return (
+    <ScrollView>
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+      <BackButton goBack={() => navigation.navigate('Dashboard')} />
       <Logo />
 
       <TextInput
@@ -106,6 +107,7 @@ return (
     </Button>
 
     </Background>
+    </ScrollView>
 );
 };
 

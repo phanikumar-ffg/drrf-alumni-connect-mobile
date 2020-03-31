@@ -19,7 +19,7 @@ const options=[
  const  AdminJobEntryScreen = ({ navigation }) => (
     <ScrollView >
     <Background>
-    <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+    <BackButton goBack={() => navigation.navigate('LoginScreen')} />
         <Logo />
         <form>
         <Text style={styles.text}>Job ID</Text>

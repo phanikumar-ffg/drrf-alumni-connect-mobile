@@ -59,6 +59,7 @@ const JobSearch = ({ navigation }) => {
   return (
     <ScrollView>
     <Background>
+        <BackButton goBack={() => navigation.navigate('Dashboard')} />
         {jobs.map(j=>(
         <Card
           key={j.job_id}

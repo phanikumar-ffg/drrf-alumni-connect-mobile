@@ -13,13 +13,16 @@ const Dashboard = ({ navigation }) => (
       Your amazing app starts here. Open you favourite code editor and start
       editing this project.
     </Paragraph>
-    <Button mode="contained" onPress={() => navigation.navigate('JobSearch')}>
+    <Button mode="outlined" onPress={() => navigation.navigate('JobSearch')}>
       Job Search
     </Button>
     <Button mode="outlined" onPress={() => navigation.navigate('ProfileScreen')}>
       Edit Profile
     </Button>
-    <Button mode="outlined" onPress={() => navigation.navigate('HomeScreen')}>
+    <Button mode="outlined" onPress={() => navigation.navigate('HelpScreen')}>
+      Help Page
+    </Button>
+    <Button mode="contained" onPress={() => navigation.navigate('HomeScreen')}>
       Logout
     </Button>
   </Background>
