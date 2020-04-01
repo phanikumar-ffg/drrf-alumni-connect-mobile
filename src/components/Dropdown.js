@@ -6,9 +6,9 @@ export const Dropdown = () => {
         <RNPickerSelect
             onValueChange={(value) => console.log(value)}
             items={[
-                { label: 'Football', value: 'football' },
-                { label: 'Baseball', value: 'baseball' },
-                { label: 'Hockey', value: 'hockey' },
+                { label: 'Need Training', value: 'Need Training' },
+                { label: 'Problem with Job', value: 'Problem with job' },
+                { label: 'Need any material', value: 'Need any Material' },
             ]}
         />
     );

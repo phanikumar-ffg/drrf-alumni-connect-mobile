@@ -51,15 +51,10 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.back}
-        onPress={() => navigation.navigate('LoginScreen')}
-      >
+        onPress={() => navigation.navigate('LoginScreen')}>
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>
 
-        <TouchableOpacity
-            onPress={() => navigation.navigate('HelpScreen')} >
-            <Text style={styles.label}>Help?</Text>
-        </TouchableOpacity>
     </Background>
   );
 };
