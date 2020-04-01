@@ -141,7 +141,7 @@ const RegisterScreen = ({ navigation }) => {
             keyboardType="email-address"
           />
 
-        <View style={styles.container}>
+
           <Dropdown
             label="Center Name"
             style={styles.input}
@@ -154,7 +154,6 @@ const RegisterScreen = ({ navigation }) => {
             placeholder="Select a center name"
           />
           {centerName.error ? <Text style={styles.error}>{centerName.error}</Text> : null}
-        </View>
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
@@ -186,10 +185,6 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
-  },
-  container: {
-    width: '100%',
-    marginVertical: 12,
   },
   input: {
     backgroundColor: theme.colors.surface,
