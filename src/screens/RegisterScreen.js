@@ -11,6 +11,10 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 //import DatePicker from 'react-date-picker';
 import DatePicker from 'react-native-datepicker';
+import RNPickerSelect from 'react-native-picker-select';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+
 //import SingleDatePicker from 'single-datepicker';
 //import datepicker from 'js-datepicker'
 import {
@@ -22,8 +26,9 @@ import {
     centerNameValidator
 } from '../core/utils';
 const options=[
-            {value:'center1',},
-            {value:'center2',},
+            {label: 'select a center Name', value: ''},
+            {label:'center1', value:'center1',},
+            {label:'center2', value:'center2',},
             ];
 //const picker = datepicker(document.querySelector('.date') );
 /*export default class RegisterScreen extends Component {
@@ -63,6 +68,20 @@ const RegisterScreen = ({ navigation }) => {
 
     navigation.navigate('SignUpSuccessScreen');
   };
+  const pickerStyle=StyleSheet.create({
+      inputAndroid: {
+          backgroundColor: theme.colors.surface,
+          paddingTop: 16,
+          paddingBottom: 16,
+         // paddingLeft: 8,
+          paddingRight: 4,
+          borderRadius: 4,
+          width: '100%',
+          marginVertical: 12,
+          color: '#999',
+          borderColor: '#808080'
+      }
+  });
 
   return (
   <ScrollView>
@@ -70,7 +89,8 @@ const RegisterScreen = ({ navigation }) => {
       <BackButton goBack={() => navigation.navigate('HomeScreen')} />
       <Logo />
       <Header>Create Account</Header>
-        <form>
+      <View style={styles.formStyle}>
+      <form>
           <TextInput
             label="Name"
             returnKeyType="next"
@@ -142,24 +162,29 @@ const RegisterScreen = ({ navigation }) => {
           />
 
 
-          <Dropdown
-            label="Center Name"
-            style={styles.input}
-            returnKeyType="next"
-            options={options}
-            value={centerName.value}
-            onChange={option => setCenterName({value:option, error: '' })}
-            error={!!centerName.error}
-            errorText={centerName.error}
-            placeholder="Select a center name"
-          />
-          {centerName.error ? <Text style={styles.error}>{centerName.error}</Text> : null}
-
+          <View style={styles.container}>
+          <RNPickerSelect
+               useNativeAndroidPickerStyle = 'false'
+                placeholder = {{
+                    label : 'Select a Center Name',
+                    value : null
+                }}
+                returnKeyType="next"
+                options={options}
+                value = {centerName.value}
+                error={!!centerName.error}
+                errorText={centerName.error}
+                style={pickerStyle}
+                onValueChange={(value) => console.log(value)}
+                items={options}
+                  />
+           {centerName.error ? <Text style={styles.error}>{centerName.error}</Text> : null}
+           </View>
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
       </Button>
-        </form>
-
+     </form>
+     </View>
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
@@ -175,8 +200,8 @@ const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
   },
-  button: {
-    marginTop: 24,
+  formStyle: {
+    width: '100%',
   },
   row: {
     flexDirection: 'row',
@@ -186,15 +211,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
-  input: {
-    backgroundColor: theme.colors.surface,
-  },
+   button: {
+      marginTop: 24,
+    },
   error: {
     fontSize: 14,
     color: theme.colors.error,
     paddingHorizontal: 4,
     paddingTop: 4,
   },
+   container: {
+          width: '100%',
+          flex: 1,
+          flexDirection: 'row',
+    }
 });
 
 
