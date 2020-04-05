@@ -9,8 +9,8 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Select from 'react-native';
 import {emailValidator} from "../core/utils";
 import {theme} from "../core/theme";
-import {Dropdown} from "../components/Dropdown";
 import BackButton from '../components/BackButton';
+import RNPickerSelect from 'react-native-picker-select';
 
 const HelpScreen = ({ navigation }) => (
     <Background>
@@ -21,31 +21,62 @@ const HelpScreen = ({ navigation }) => (
         <Paragraph>
             Need help - Tell us more
         </Paragraph>
-        <Text style={styles.text}>Problem Type </Text>
-        <Dropdown style={styles.dropdown}/>
-        <Text style={styles.text}>Problem Description </Text>
-        <Dropdown style={styles.dropdown}/>
-        <Text style={styles.text}> Any details if any: </Text>
-        <TextInput style={styles.textInput}
-                   label="Additional-Details"/>
+        <View style={styles.container}>
+        <RNPickerSelect
+             placeholder={{
+                label:"Select a Problem Type",
+                value:null,
+             }}
+            onValueChange={(value) => console.log(value)}
+            items={[
+                { label: 'Need Training', value: 'Need Training' },
+                { label: 'Problem with Job', value: 'Problem with job' },
+                { label: 'Need any material', value: 'Need any Material' },
+            ]}
+            style={pickerStyle}
+        />
+        </View>
+        <View style={styles.container}>
+        <RNPickerSelect
+             placeholder={{
+                label:"Select a Problem Description",
+                value:null,
+             }}
+            onValueChange={(value) => console.log(value)}
+            items={[
+                 { label: 'Salary Issue', value: 'Salary Issue' },
+                 { label: 'Problem with Manager', value: 'Problem with Manager' },
+                 { label: 'Problem with eOffice Environment', value: 'Problem with eOffice Environment' },
+             ]}
+            style={pickerStyle}
+        />
+        </View>
+        <TextInput label="Additional-Details"/>
         <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
             Submit
         </Button>
     </Background>
 );
-const styles = StyleSheet.create({
-    text:{
-        fontWeight : 'bold',
-        fontSize:15,
-        marginRight : 150,
-        marginTop: 20
+const pickerStyle=StyleSheet.create({
+    inputAndroid: {
+        backgroundColor: theme.colors.surface,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 8,
+        borderRadius: 4,
+        borderColor: '#808080'
     },
-    dropdown:{
-        width:100,
-        height:40
-    },
-    textInput:{
-        marginTop: -15
+    placeholder: {
+        placeholderColor: '#808080',
     }
+});
+const styles = StyleSheet.create({
+    input: {
+        backgroundColor: theme.colors.surface,
+     },
+    container: {
+        width: '100%',
+        marginVertical: 12,
+    },
 });
 export default memo(HelpScreen);
