@@ -44,7 +44,7 @@ const jobs = [
 ]
 
 import { ScrollView, View, Text, Image } from 'react-native'
-import { Card, ListItem, Icon, Button, SearchBar } from 'react-native-elements'
+import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet} from 'react-native';
 import Background from '../components/Background';
@@ -53,7 +53,7 @@ import Header from '../components/Header';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-
+import Button from '../components/Button';
 
 const JobSearch = ({ navigation }) => {
     var [data, setData] = useState({value:jobs})
@@ -77,7 +77,7 @@ const JobSearch = ({ navigation }) => {
     }
 
   return (
-    <ScrollView style={{marginTop:25}}>
+    <ScrollView style={{marginTop:28}}>
         <SearchBar 
              darkTheme
              clearIcon
@@ -99,9 +99,7 @@ const JobSearch = ({ navigation }) => {
             <Text style={{marginBottom: 8}}>
                 Description:{j.description}
             </Text>
-          <Button
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='Apply Now' />
+          <Button mode="contained">Apply Now</Button>
         </Card>))}
     </ScrollView>
         

@@ -2,23 +2,19 @@ import React, { memo } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
-import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
+import Paragraph from '../components/Paragraph';
+import TextInput  from '../components/TextInput';
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {theme} from "../core/theme";
+import BackButton from '../components/BackButton';
 
 const Dashboard = ({ navigation }) => (
-  <Background>
-    <Logo />
-    <Header>Let’s start</Header>
-    <Paragraph>
-      Your amazing app starts here. Open you favourite code editor and start
-      editing this project.
-    </Paragraph>
-    <Button mode="contained" onPress={() => navigation.navigate('JobSearch')}>
-      Job Search
-    </Button>
-    <Button mode="outlined" onPress={() => navigation.navigate('HomeScreen')}>
-      Logout
-    </Button>
-  </Background>
+    <Background>
+        <BackButton goBack={() => navigation.navigate('Dashboard')} />
+        <Logo />
+        <Header>Static Content</Header>
+    </Background>
 );
+
 export default memo(Dashboard);
