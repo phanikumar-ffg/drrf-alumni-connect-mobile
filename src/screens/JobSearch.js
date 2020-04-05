@@ -17,21 +17,21 @@ const jobs = [
     job_id: 1236,
     company_name: 'JP Morgan Chase',
     designation: 'Assistant',
-    location: 'Hyderabad',
+    location: 'Mumbai',
     description: 'This idea of job is to do something that you love and is passionate about'
  },
 {
     job_id: 1237,
     company_name: 'JP Morgan Chase',
     designation: 'Assistant',
-    location: 'Hyderabad',
+    location: 'Mumbai',
     description: 'This idea of job is to do something that you love and is passionate about'
  },
 {
     job_id: 1238,
     company_name: 'JP Morgan Chase',
     designation: 'Assistant',
-    location: 'Hyderabad',
+    location: 'Bangalore',
     description: 'This idea of job is to do something that you love and is passionate about'
  },
 {
@@ -44,7 +44,7 @@ const jobs = [
 ]
 
 import { ScrollView, View, Text, Image } from 'react-native'
-import { Card, ListItem, Icon, Button } from 'react-native-elements'
+import { Card, ListItem, Icon, Button, SearchBar} from 'react-native-elements'
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet} from 'react-native';
 import Background from '../components/Background';
@@ -56,11 +56,35 @@ import { theme } from '../core/theme';
 
 
 const JobSearch = ({ navigation }) => {
+var [data, setData] = useState({value:jobs})
+    const [dataBackup, setDataBackup] = useState({value:jobs})    
+    var [searchText, setSearchText] = useState({value:''})
+
+    const searchJob = (text) => {
+     searchText = text
+     setSearchText({value: searchText})
+     searchText = searchText.trim().toLowerCase();
+     setData({value: dataBackup.value})
+     if (!searchText == "") {
+         data = data.value.filter(l => {
+            return l.location.trim().toLowerCase().startsWith( searchText );
+         });
+        setData({value: data})
+       }
+    }
+
   return (
     <ScrollView>
+    <SearchBar 
+             darkTheme
+             clearIcon
+             placeholder='Search Location'
+            onChangeText={text=>searchJob(text)}
+            value = {searchText.value}
+        />
     <Background>
         <BackButton goBack={() => navigation.navigate('Dashboard')} />
-        {jobs.map(j=>(
+        {data.value.map(j=>(
         <Card
           key={j.job_id}
           title={j.designation}
