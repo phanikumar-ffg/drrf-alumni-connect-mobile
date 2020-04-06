@@ -13,16 +13,6 @@ import ProfileScreen from './ProfileScreen';
 import { createAppContainer } from 'react-navigation';
 import NavigationScreen from './NavigationScreen';
 
-
-class Dashboard extends Component{
-    render(){
-        return(
-            <View>
-                <Text>Home Screen</Text>
-                </View>
-        )
-    }
-}
 const TabNavigator= createMaterialBottomTabNavigator(
       {
         Home: {
@@ -79,5 +69,5 @@ const TabNavigator= createMaterialBottomTabNavigator(
       }
     );
 
-    export default createAppContainer(TabNavigator);
-    // export default memo(TabNavigator);
+export default createAppContainer(TabNavigator);
+

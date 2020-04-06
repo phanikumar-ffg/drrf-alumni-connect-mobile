@@ -161,31 +161,3 @@ export default class NavigationScreen extends Component {
   
   });
 
-// const NavigationScreen = ({ navigation }) => {
-  
-// return (
-
-// <View>
-//     <Background>
-//       <Logo />
-//     <Card>
-//     <Card.Content>
-//       <Title>Dr. Reddy Foundation</Title>
-//       <Paragraph>Dr.Reddy’s Foundation was founded in 1996, to enhance the dignity and well-being of socially and economically vulnerable people. We develop and test innovative solutions to address complex social problems and leverage partnerships to scale up impact. We work with Children, Youth (including Persons with Disabilities) Women and Households across 20 states in India.     </Paragraph>
-//     </Card.Content>
-//   </Card>
-  
-
-//     </Background>
-//     </View>
-// );
-// };
-
-// const styles = StyleSheet.create({
-  
-//   button: {
-//     marginTop: 24,
-//   },
-// });
-
-// export default memo(NavigationScreen);
