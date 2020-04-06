@@ -10,14 +10,14 @@ const jobs = [
     job_id: 1235,
     company_name: 'JP Morgan Chase',
     designation: 'Assistant',
-    location: 'Hyderabad',
+    location: 'Bangalore',
     description: 'This idea of job is to do something that you love and is passionate about'
  },
 {
     job_id: 1236,
     company_name: 'JP Morgan Chase',
     designation: 'Assistant',
-    location: 'Hyderabad',
+    location: 'Mumbai',
     description: 'This idea of job is to do something that you love and is passionate about'
  },
 {
@@ -44,7 +44,7 @@ const jobs = [
 ]
 
 import { ScrollView, View, Text, Image } from 'react-native'
-import { Card, ListItem, Icon, Button } from 'react-native-elements'
+import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet} from 'react-native';
 import Background from '../components/Background';
@@ -53,14 +53,39 @@ import Header from '../components/Header';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-
+import Button from '../components/Button';
 
 const JobSearch = ({ navigation }) => {
+    var [data, setData] = useState({value:jobs})
+    const [dataBackup, setDataBackup] = useState({value:jobs})    
+    var [searchText, setSearchText] = useState({value:''})
+
+    const searchJob = (text) => {
+     searchText = text
+     console.log(text)
+     setSearchText({value: searchText})
+     searchText = searchText.trim().toLowerCase();
+     setData({value: dataBackup.value})
+     if (!searchText == "") {
+         console.log(searchText)
+         data = data.value.filter(l => {
+            return l.location.trim().toLowerCase().startsWith( searchText );
+         });
+         console.log(data)
+        setData({value: data})
+       }
+    }
+
   return (
-    <ScrollView>
-    <Background>
-        <BackButton goBack={() => navigation.navigate('Dashboard')} />
-        {jobs.map(j=>(
+    <ScrollView style={{marginTop:28}}>
+        <SearchBar 
+             darkTheme
+             clearIcon
+             placeholder='Search Location'
+            onChangeText={text=>searchJob(text)}
+            value = {searchText.value}
+        />
+        {data.value.map(j=>(
         <Card
           key={j.job_id}
           title={j.designation}
@@ -74,11 +99,8 @@ const JobSearch = ({ navigation }) => {
             <Text style={{marginBottom: 8}}>
                 Description:{j.description}
             </Text>
-          <Button
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='Apply Now' />
+          <Button mode="contained">Apply Now</Button>
         </Card>))}
-    </Background>
     </ScrollView>
         
   );
