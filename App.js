@@ -8,12 +8,10 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { AppRegistry } from 'react-native';
 import reducers from './src/reducers';
-import firebase from 'firebase';
+
 
 export default class Main extends React.Component {
-  componentDidMount() {
-    firebase.initializeApp(config);
-  }
+
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (

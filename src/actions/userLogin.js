@@ -6,7 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOADING,
 } from './actionTypes';
-import firebase from 'firebase';
+
 
 export const authInputChange = ({ field, value }) => {
   return {
