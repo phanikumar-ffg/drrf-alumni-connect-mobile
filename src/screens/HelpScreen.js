@@ -51,7 +51,9 @@ const HelpScreen = ({ navigation }) => (
             style={pickerStyle}
         />
         </View>
-        <TextInput label="Additional-Details"/>
+        <TextInput label="Additional-Details"
+          multiline={true} style={styles.input}
+        />
         <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
             Submit
         </Button>
@@ -73,6 +75,7 @@ const pickerStyle=StyleSheet.create({
 const styles = StyleSheet.create({
     input: {
         backgroundColor: theme.colors.surface,
+        height:120,
      },
     container: {
         width: '100%',
