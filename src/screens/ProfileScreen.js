@@ -6,6 +6,8 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import Paragraph from '../components/Paragraph';
+import { Component } from 'react';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import {
   emailValidator,
   mobileValidator,
@@ -14,12 +16,44 @@ import {
   cityValidator,
 } from '../core/utils';
 
+class ProfileTable extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      HeadTable: ['Company Name', 'Profile', 'From', 'To'],
+      DataTable: [
+        ['Lemon Tree Hotel', 'FrontDesk Executive', 'Jan-19', 'Aug-19'],
+        ['Skywalk Hospitality', 'DataEntry operator', 'Sep-19', 'Jan-20']
+      ]
+    }
+  }
+
+  render () {
+  const state = this.state;
+
+  return (
+    <View style={styles.container}>
+        <Table borderStyle={{borderWidth: 1}}>
+          <Row data={state.HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
+          <Rows data={state.DataTable} textStyle={styles.TableText}/>
+        </Table>
+      </View>
+  )
+}
+}
+
+
+
+
 const ProfileScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [mobile, setMobile] = useState({ value: '', error: '' });
   const [state, setState] = useState({ value: '', error: '' });
   const [city, setCity] = useState({ value: '', error: '' });
+
+  
 
   const _onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
@@ -102,6 +136,10 @@ return (
       Work experience
     </Paragraph>
 
+    <ProfileTable>
+
+    </ProfileTable>
+
     <Button mode="contained" onPress={_onSignUpPressed} style={styles.button} >
         Save
     </Button>
@@ -116,6 +154,20 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 24,
   },
+  container: { 
+    flex: 1,
+    padding: 18,
+    paddingTop: 35,
+    backgroundColor: '#ffffff' 
+  },
+  HeadStyle: { 
+    height: 50,
+    alignContent: "center",
+    backgroundColor: '#ffe0f0'
+  },
+  TableText: { 
+    margin: 10
+  }
 });
 
 export default memo(ProfileScreen);
