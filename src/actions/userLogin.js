@@ -7,7 +7,6 @@ import {
   LOADING,
 } from './actionTypes';
 
-
 export const authInputChange = ({ field, value }) => {
   return {
     type: AUTH_INPUT_CHANGE,
@@ -25,14 +24,14 @@ export const login = ({ email, password }) => {
   console.debug('in login action');
   console.debug(email);
 
-  const user={
-    email:'abc',
-    password:'abc'
-  }
+  const user = {
+    email: 'abc',
+    password: 'abc',
+  };
 
-  return dispatch=>{
-    dispatch({type:LOGIN_SUCCESS,payload:user});
-  }
+  return dispatch => {
+    dispatch({ type: LOGIN_SUCCESS, payload: user });
+  };
 
   // return dispatch => {
   //   dispatch({ type: LOADING });
