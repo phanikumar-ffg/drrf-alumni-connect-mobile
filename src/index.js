@@ -13,7 +13,8 @@ import {
     SignUpSuccessScreen,
     AdminJobEntryScreen,
     HomeScreen,
-    NavigationScreen
+    NavigationScreen,
+    HomeContentScreen,
 
 } from './screens';
 
@@ -30,10 +31,11 @@ const Router = createStackNavigator(
       SignUpSuccessScreen,
       AdminJobEntryScreen,
       HomeScreen,
-     NavigationScreen
+     NavigationScreen,
+     HomeContentScreen,
   },
   {
-    initialRouteName: 'HomeScreen',
+    initialRouteName: 'HomeContentScreen',
     headerMode: 'none',
   }
 );
