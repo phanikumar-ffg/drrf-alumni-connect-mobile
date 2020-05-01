@@ -9,6 +9,6 @@ export { default as HelpScreen } from './HelpScreen';
 export { default as ProfileScreen } from './ProfileScreen';
 export { default as SignUpSuccessScreen } from './SignUpSuccessScreen';
 export { default as AdminJobEntryScreen } from './AdminJobEntryScreen';
-export { default as NavigationScreen } from './NavigationScreen';
-export { default as HomeContentScreen } from './HomeContentScreen';
+export { default as HomePage } from './HomePage';
+export { default as AdminContentManagement } from './AdminContentManagement';
 

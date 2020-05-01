@@ -3,27 +3,45 @@ const contents = [
     content_id: 1,
     content_title: 'React Native Tutorials',
     content_url: 'https://www.youtube.com/watch?v=qSRrxpdMpVc',
-    assessment_url: 'https://www.google.com/search?q=google+forms&oq=google+form&aqs=chrome.0.0j69i57j0l6.1745j0j7&sourceid=chrome&ie=UTF-8'
+    assessment_url: 'https://www.google.co.in/'
 },
 {
     content_id: 2,
+    content_title: 'Excel Tutorials',
+    content_url: '',
+    assessment_url: 'https://www.google.co.in/'
+},
+{
+    content_id: 3,
     content_title: 'Angular Tutorials',
     content_url: 'https://www.youtube.com/watch?v=0eWrpsCLMJQ&list=PLC3y8-rFHvwhBRAgFinJR8KHIrCdTkZcZ',
-    assessment_url: 'https://www.google.com/search?q=google+forms&oq=google+form&aqs=chrome.0.0j69i57j0l6.1745j0j7&sourceid=chrome&ie=UTF-8'
+    assessment_url: 'https://www.google.co.in/'
 }
 ]
 
-import { ScrollView, View, Text, Image } from 'react-native'
-import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet} from 'react-native';
+import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 import Background from '../components/Background';
 import Logo from '../components/Logo';
-import Header from '../components/Header';
 import { theme } from '../core/theme';
 import Button from '../components/Button';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  Alert,
+  Image,
+} from 'react-native';
 
-const HomeContentScreen = ({ navigation }) => {
+import { Component } from 'react';
+import Header from '../components/Header';
+
+import PropTypes from 'prop-types';
+
+const HomePage= ({ navigation }) => {
     var [data, setData] = useState({value:contents})
     const [dataBackup, setDataBackup] = useState({value:contents})
     var [searchText, setSearchText] = useState({value:''})
@@ -44,7 +62,7 @@ const HomeContentScreen = ({ navigation }) => {
        }
     }
     return (
-        <ScrollView style={{marginTop:28}}>
+<ScrollView style={{marginTop:28}}>
             <SearchBar
                  darkTheme
                  clearIcon
@@ -57,36 +75,32 @@ const HomeContentScreen = ({ navigation }) => {
             key={j.content_id}
             wrapperStyle={styles.content}
             >
-                <Image source={require('../assets/video-icon.png')} style={styles.image} href={j.assessment_url}/>
-                <Text>
-                    {j.content_title}
-                </Text>
-                <a href={j.assessment_url} class="button">Assessment</a>
+             <a href={j.content_url}>
+                <Image source={require('../assets/video-icon.png')} style={styles.image} to={j.assessment_url}/>
+             </a>
+             <Text>
+                 {j.content_title}
+             </Text>
+             <a href={j.assessment_url} class="button">
+                <Button mode="contained">Quiz</Button>
+             </a>
             </Card>
             ))}
-            <a href="https://www.youtube.com/watch?v=qSRrxpdMpVc" class="button">Continue</a>
-            <Button mode="contained" onclick="location.href = 'https://www.youtube.com/watch?v=qSRrxpdMpVc';" type="button">Assessment</Button>
         </ScrollView>
+    );
 
-      );
 };
-const styles = StyleSheet.create({
-  label: {
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
-  image: {
-      width: 40,
-      height: 40,
-  },
-  content: {
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  }
-});
 
-export default memo(HomeContentScreen);
+const styles = StyleSheet.create({
+    image: {
+        width: 40,
+        height: 40,
+    },
+    content: {
+      flex:1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+});
+export default memo(HomePage);
