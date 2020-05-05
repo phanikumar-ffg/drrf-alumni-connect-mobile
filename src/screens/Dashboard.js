@@ -6,17 +6,18 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import JobSearch from './JobSearch';
 import HelpScreen from './HelpScreen';
+import AdminContentManagement from './AdminContentManagement';
 import {View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import ProfileScreen from './ProfileScreen';
 import { createAppContainer } from 'react-navigation';
-import NavigationScreen from './NavigationScreen';
+import HomePage from './HomePage';
 
 const TabNavigator= createMaterialBottomTabNavigator(
       {
         Home: {
-                screen: NavigationScreen,
+                screen: HomePage,
                 navigationOptions: {
                     tabBarLabel:'Home',   
                     activeColor:"#600EE1",
