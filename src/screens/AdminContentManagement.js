@@ -80,7 +80,9 @@ const HomeContentScreen = ({ navigation }) => {
             </View>
              ))}
 
-            <Button mode="contained" style={{ marginVertical: 40}}>
+            <Button mode="contained" /*style={{ marginVertical: 40}}*/
+                mode="contained"
+                onPress={() => navigation.navigate('AdminAddContentScreen')} >
                 Add Content
             </Button>
         </ScrollView>

@@ -11,4 +11,4 @@ export { default as SignUpSuccessScreen } from './SignUpSuccessScreen';
 export { default as AdminJobEntryScreen } from './AdminJobEntryScreen';
 export { default as HomePage } from './HomePage';
 export { default as AdminContentManagement } from './AdminContentManagement';
-
+export { default as AdminAddContentScreen } from './AdminAddContentScreen';

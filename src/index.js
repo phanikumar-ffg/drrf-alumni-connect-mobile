@@ -15,6 +15,7 @@ import {
     HomeScreen,
     HomePage,
     AdminContentManagement,
+    AdminAddContentScreen
 
 } from './screens';
 
@@ -33,6 +34,7 @@ const Router = createStackNavigator(
       HomeScreen,
      HomePage,
      AdminContentManagement,
+     AdminAddContentScreen
   },
   {
     initialRouteName: 'HomeScreen',
