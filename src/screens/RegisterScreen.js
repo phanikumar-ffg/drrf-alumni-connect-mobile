@@ -1,4 +1,4 @@
-import React, { memo, useState, Component } from 'react';
+import React, { memo, useState, useEffect,Component } from 'react';
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { signup } from '../actions';
+import { authInputChange,signup } from '../actions';
 import {
   SIGNUP_FAILURE,
 } from '../actions/actionTypes';
@@ -43,24 +43,28 @@ const options = [
   { label: 'Patancheru', value: 'Patancheru' },
 ];
 //const picker = datepicker(document.querySelector('.date') );
-class Register extends Component {
-  constructor(props) {
-    super(props);
+class Register extends React.Component {
+  componentWillReceiveProps(nextProps) {
+  console.log('hey')
+  console.log(nextProps.signup_valid);
+    if (!_.isEmpty(nextProps.user)) {
+      this.props.navigation.navigate('SignUpSuccessScreen', nextProps.user);
+    }
   }
-
     showError() {
       if (this.props.error) {
         return <Paragraph>{this.props.error}</Paragraph>;
       }
    }
 }
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ props }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [studentID, setStudentID] = useState({ value: '', error: '' });
   const [phone, setPhone] = useState({ value: '', error: '' });
   const [dateOfBirth, setDateOfBirth] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [centerName, setCenterName] = useState({ value: '', error: '' });
+  const signup_valid=false;
 
   const _onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
@@ -90,8 +94,8 @@ const RegisterScreen = ({ navigation }) => {
 
     }
     console.log('before redux');
-    signup({name,studentID,phone,dateOfBirth,email,centerName});
-    //navigation.navigate('SignUpSuccessScreen');
+    //signup({name,studentID,phone,dateOfBirth,email,centerName});
+    navigation.navigate('SignUpSuccessScreen');
   };
   const pickerStyle = StyleSheet.create({
     inputAndroid: {
@@ -107,7 +111,15 @@ const RegisterScreen = ({ navigation }) => {
       borderColor: '#808080',
     },
   });
+
+  useEffect(() => {
+      console.log('count changed');
+      /*console.log(props.studentID);*/
+  }, props);
+
     const componentWillReceiveProps=(nextProps)=> {
+    console.log('nextProps');
+    console.log(nextProps.signup_valid);
       if (!_.isEmpty(nextProps.user)) {
         this.props.navigation.navigate('SignUpSuccessScreen', nextProps.user);
       }
@@ -268,6 +280,6 @@ const mapStateToProps = state => {
     loading: state.onboard.loading,
   };
 };
-export default connect(mapStateToProps, { signup })(
+export default connect(mapStateToProps, { authInputChange,signup })(
   RegisterScreen
 );

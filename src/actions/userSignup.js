@@ -1,13 +1,14 @@
 import {
+  AUTH_INPUT_CHANGE,
   SIGNUP_FAILURE,
   SIGNUP_SUCCESS,
   LOADING,
 } from './actionTypes';
 
 
-export const signup=({name,studentID,phone,dateOfBirth,email,centerName})=>{
+export const signup=(details)=>{
     console.log('in redux');
-    signup_validation=true;
+    const signup_validation=true;
     return dispatch => {
           dispatch({ type: SIGNUP_SUCCESS ,payload: signup_validation });
           /*fetch('http://10.0.2.2:8080/signup', {
@@ -17,12 +18,12 @@ export const signup=({name,studentID,phone,dateOfBirth,email,centerName})=>{
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                  name:name,
-                  studentID:studentID,
-                  phone:phone,
-                  dateOfBirth:dateOfBirth,
-                  email:email,
-                  centerName:centerName,
+                  name:details.name,
+                  studentID:details.studentID,
+                  phone:details.phone,
+                  dateOfBirth:details.dateOfBirth,
+                  email:details.email,
+                  centerName:details.centerName,
             }),
           })
             .then(response => response.json())
@@ -30,11 +31,7 @@ export const signup=({name,studentID,phone,dateOfBirth,email,centerName})=>{
               console.debug(res);
               const userSignup = {
                   name:res.name,
-                  studentID:res.studentID,
-                  phone:res.phone,
-                  dateOfBirth:res.dateOfBirth,
                   email:res.email,
-                  centerName:res.centerName,
               };
               dispatch({ type: SIGNUP_SUCCESS, payload: userSignup });
             })

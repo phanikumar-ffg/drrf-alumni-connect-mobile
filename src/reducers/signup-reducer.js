@@ -15,6 +15,7 @@ const initialState = {
   user: {},
   error: '',
   loading: false,
+  signup_valid: false,
 };
 
 export default (state = initialState, action) => {
@@ -24,12 +25,14 @@ export default (state = initialState, action) => {
       console.log('SIGNUP_SUCCESS');
       return {
         ...state,
-        user: action.payload,
+        //user: action.payload,
+        signup_valid: action.payload,
+        error:'dekhna hay',
         loading: false,
       };
     case SIGNUP_FAILURE:
       console.debug('SIGNUP_FAILURE');
-      console.log('SIGNUP_FAILURE')
+      //console.log('SIGNUP_FAILURE');
       return {
         ...state,
         error: 'Please enter Valid Data',
