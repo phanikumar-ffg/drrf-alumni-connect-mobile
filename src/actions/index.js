@@ -1,2 +1,2 @@
 export { authInputChange, login } from './userLogin';
-export { signup } from './userSignup';
+export { onboardInputChange,signup } from './userSignup';

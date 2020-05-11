@@ -21,7 +21,7 @@ import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { authInputChange,signup } from '../actions';
+import { onboardInputChange,signup } from '../actions';
 import Paragraph from '../components/Paragraph';
 
 import {
@@ -49,7 +49,8 @@ class RegisterScreen2 extends Component {
           centerName:{value:'',error:''},
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.loading);
+        //console.log(nextProps)
+        //console.log(nextProps.loading);
         console.log(nextProps.signup_valid);
         console.log(nextProps.error);
         if(nextProps.signup_valid==true){
@@ -129,6 +130,8 @@ class RegisterScreen2 extends Component {
                   returnKeyType="next"
                   value={this.state.name.value}
                   onChangeText={text => this.setState({ name:{value:text,error:''} })}
+                  //this.props.onboardInputChange({ field: 'name', value: text })}
+
                   error={!!this.state.name.error}
                   errorText={this.state.name.error}
                 />
@@ -265,6 +268,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { authInputChange,signup })(
+export default connect(mapStateToProps, { onboardInputChange,signup })(
   RegisterScreen2
 );

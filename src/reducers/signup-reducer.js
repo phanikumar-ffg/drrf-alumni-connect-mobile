@@ -2,6 +2,7 @@ import{
  SIGNUP_SUCCESS,
  SIGNUP_FAILURE,
  LOADING,
+ AUTH_INPUT_CHANGE,
 } from '../actions/actionTypes';
 
 
@@ -21,6 +22,13 @@ const initialState = {
 export default (state = initialState, action) => {
     console.log('reducer');
   switch (action.type) {
+    case AUTH_INPUT_CHANGE:
+      return {
+        ...state,
+        [action.payload.field]: action.payload.value,
+        //email: action.email,
+        //password: action.password,
+      };
     case SIGNUP_SUCCESS:
       console.log('SIGNUP_SUCCESS');
       return {

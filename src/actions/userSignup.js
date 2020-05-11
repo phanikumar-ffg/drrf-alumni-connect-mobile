@@ -5,6 +5,13 @@ import {
   LOADING,
 } from './actionTypes';
 
+export const onboardInputChange = ({ field, value }) => {
+  return dispatch => {
+    dispatch({ type: AUTH_INPUT_CHANGE,payload:{field,value} });
+    /*type: AUTH_INPUT_CHANGE,
+    payload: { field, value }, //field: 'email', 'text'*/
+  };
+};
 
 export const signup=(details)=>{
     console.log('in redux');
