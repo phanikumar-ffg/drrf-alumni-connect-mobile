@@ -40,16 +40,16 @@ const JobSearch = (props) => {
     const popup = (
         <View style={styles.popupContainer}>
             <Text  style = {styles.popupHeaderText}>Confirmation<hr /></Text>
-            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '30%', marginTop: "5%",marginBottom: '8%'}}>
-                <Icon name='assignment-ind' color="black" size={25} style = {{flex:1}}/>   
-                <Text style={styles.popupText}> {jobSelected.role}</Text>
+            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '20%', marginTop: "5%",marginBottom: '8%'}}>
+                <Icon name='assignment-ind' color="#0b2652" size={25} style = {{flex:1}}/>   
+                <Text style={styles.popupText}> {jobSelected.designation}</Text>
             </View>
-            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '30%', marginBottom: '8%'}}>
-                <Icon name='location-city' color="black" size={25} style = {{flex:1}} />   
+            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '20%', marginBottom: '8%'}}>
+                <Icon name='location-city' color="#0b2652" size={25} style = {{flex:1}} />   
                 <Text style={styles.popupText}> {jobSelected.companyName}</Text>
             </View>
-            <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '30%', marginBottom: '10%'}}>
-                <Icon name='place' color="black" size={25} style = {{flex:1}}/>   
+            <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '20%', marginBottom: '10%'}}>
+                <Icon name='place' color="#0b2652" size={25} style = {{flex:1}}/>   
                 <Text style={styles.popupText}> {jobSelected.city}</Text>
             </View>
             <Text style={{flex:1, width: "100%"}}><hr /></Text>
@@ -141,6 +141,7 @@ const JobSearch = (props) => {
      const sendJobRequest = () => {
         setButtonLoading(true)
         let student_details = props.user
+
         fetch('http://localhost:8080/api/v1/jobrequest', {
             method: 'POST',
             body: JSON.stringify({
@@ -194,13 +195,10 @@ const JobSearch = (props) => {
                 {data.value.map((j,index)=>(
                 <Card
                 key={j.jobId}
-                title={j.role}
+                title={j.designation}
                 style={{marginTop: 20 ,width: '95%'}} >
                 <Text style={{marginBottom: 8}}>
                         Company: {j.companyName}
-                    </Text>
-                    <Text style={{marginBottom: 8}}>
-                        Salary: {j.salaryScale}
                     </Text>
                     <Text style={{marginBottom: 8}}>
                         Location: {j.city}
@@ -271,7 +269,7 @@ popupText: {
     flex: 1,
     fontSize: 18, 
     marginLeft: "1%",
-    color:'#1c3466'
+    color:'#426db3'
   },
 loader: {
     flex:1, 
