@@ -38,7 +38,6 @@ class AdminAddContentScreen extends React.Component {
     submitContent() {
           console.debug('submitContent');
           const { url, description, assessURL } = this.props;
-          console.debug(submitContent);
           this.props.addContent({ url, description, assessURL });
     }
 
@@ -94,7 +93,7 @@ class AdminAddContentScreen extends React.Component {
                   </form>
                 </View>
 
-                  <Button mode="contained" >
+                  <Button mode="contained" onPress={this.submitContent.bind(this)} >
                             SAVE
                           </Button>
                   <Button mode="contained" onPress={() => this.props.navigation.navigate('AdminAddContentScreen') }>
