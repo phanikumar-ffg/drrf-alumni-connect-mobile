@@ -1,4 +1,4 @@
-import React, { memo, useState, Component } from 'react';
+import React, { memo, useState, useEffect,Component } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,11 @@ import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import { authInputChange,signup } from '../actions';
+import {
+  SIGNUP_FAILURE,
+} from '../actions/actionTypes';
+
 
 //import SingleDatePicker from 'single-datepicker';
 //import datepicker from 'js-datepicker'
@@ -38,19 +43,28 @@ const options = [
   { label: 'Patancheru', value: 'Patancheru' },
 ];
 //const picker = datepicker(document.querySelector('.date') );
-/*export default class RegisterScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {date: "15-05-2018"}
+class Register extends React.Component {
+  componentWillReceiveProps(nextProps) {
+  console.log('hey')
+  console.log(nextProps.signup_valid);
+    if (!_.isEmpty(nextProps.user)) {
+      this.props.navigation.navigate('SignUpSuccessScreen', nextProps.user);
+    }
   }
-}*/
-const RegisterScreen = ({ navigation }) => {
+    showError() {
+      if (this.props.error) {
+        return <Paragraph>{this.props.error}</Paragraph>;
+      }
+   }
+}
+const RegisterScreen = ({ props }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [studentID, setStudentID] = useState({ value: '', error: '' });
   const [phone, setPhone] = useState({ value: '', error: '' });
   const [dateOfBirth, setDateOfBirth] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [centerName, setCenterName] = useState({ value: '', error: '' });
+  const signup_valid=false;
 
   const _onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
@@ -60,7 +74,7 @@ const RegisterScreen = ({ navigation }) => {
     const emailError = emailValidator(email.value);
     const centerNameError = centerNameValidator(centerName.value);
     // const passwordError = passwordValidator(password.value);
-
+    console.log('onsignup');
     if (
       nameError ||
       studentIDError ||
@@ -76,9 +90,11 @@ const RegisterScreen = ({ navigation }) => {
       setEmail({ ...email, error: emailError });
       setCenterName({ ...centerName, error: centerNameError });
       // setPassword({ ...password, error: passwordError });
-      return;
-    }
+       return ;
 
+    }
+    console.log('before redux');
+    //signup({name,studentID,phone,dateOfBirth,email,centerName});
     navigation.navigate('SignUpSuccessScreen');
   };
   const pickerStyle = StyleSheet.create({
@@ -95,6 +111,40 @@ const RegisterScreen = ({ navigation }) => {
       borderColor: '#808080',
     },
   });
+
+  useEffect(() => {
+      console.log('count changed');
+      /*console.log(props.studentID);*/
+  }, props);
+
+    const componentWillReceiveProps=(nextProps)=> {
+    console.log('nextProps');
+    console.log(nextProps.signup_valid);
+      if (!_.isEmpty(nextProps.user)) {
+        this.props.navigation.navigate('SignUpSuccessScreen', nextProps.user);
+      }
+    };
+   const showButton=()=> {
+      if (this.props.loading) {
+        return (
+          <View>
+            <ActivityIndicator size="small" />
+          </View>
+        );
+      } else {
+        return (
+          <Button mode="contained" onPress={this._onSignUpPressed.bind(this)}>
+            Sign Up
+          </Button>
+        );
+      }
+    };
+
+   const showError=() => {
+      if (this.props.error) {
+        return <Paragraph>{this.props.error}</Paragraph>;
+      }
+    };
 
   return (
     <ScrollView>
@@ -169,13 +219,12 @@ const RegisterScreen = ({ navigation }) => {
                 <Text style={styles.error}>{centerName.error}</Text>
               ) : null}
             </View>
-            <Button
-              mode="contained"
-              onPress={_onSignUpPressed}
-              style={styles.button}
-            >
-              Sign Up
-            </Button>
+             <Button mode="contained" onPress={_onSignUpPressed.bind(this)}>
+                Sign Up
+              </Button>
+          {showError}
+          {showButton}
+
           </form>
         </View>
         <View style={styles.row}>
@@ -218,4 +267,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(RegisterScreen);
+const mapStateToProps = state => {
+  return {
+    name: state.onboard.name,
+    studentID: state.onboard.studentID,
+    phone: state.onboard.phone,
+    dateOfBirth: state.onboard.dateOfBirth,
+    email: state.onboard.email,
+    centerName: state.onboard.centerName,
+    user: state.onboard.user,
+    error: state.onboard.error,
+    loading: state.onboard.loading,
+  };
+};
+export default connect(mapStateToProps, { authInputChange,signup })(
+  RegisterScreen
+);
