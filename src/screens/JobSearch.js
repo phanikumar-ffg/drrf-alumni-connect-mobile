@@ -77,9 +77,8 @@ const JobSearch = (props) => {
 
     //Function runs once only when Job Search screen is rendered to get job data
     useEffect(() => {
- 
-        //http://localhost:8080/api/v1/jobs/125
-        fetch('https://my-json-server.typicode.com/arjun-goyal/demo1/jobs')
+        //hardcoding url with studentId=1234 for testing
+        fetch('http://localhost:8080/api/v1/jobs/1234') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
         .then(response => response.json())
         .then(json => {
             setLoaderVisibility(false)
@@ -151,11 +150,12 @@ const JobSearch = (props) => {
         setButtonLoading(true)
         let student_details = props.user
 
-        fetch('https://jsonplaceholder.typicode.com/posts', {
+        fetch('http://localhost:8080/api/v1/jobrequest', {
             method: 'POST',
             body: JSON.stringify({
-                studentId: 1234,        //hardcoding user details for testing
-                studentEmail: "ABC",
+                //hardcoding user details for testing
+                studentId: 1234,        //should be props.user.studentId
+                studentEmail: "ABC",    //should be props.user.studentEmail
                 jobId: jobSelected.jobId,
                 jobRole: jobSelected.role,
                 jobCompanyName: jobSelected.companyName,
