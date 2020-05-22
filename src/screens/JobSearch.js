@@ -40,15 +40,15 @@ const JobSearch = (props) => {
     const popup = (
         <View style={styles.popupContainer}>
             <Text  style = {styles.popupHeaderText}>Confirmation<hr /></Text>
-            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '20%', marginTop: "5%",marginBottom: '8%'}}>
+            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
                 <Icon name='assignment-ind' color="#0b2652" size={25} style = {{flex:1}}/>   
                 <Text style={styles.popupText}> {jobSelected.designation}</Text>
             </View>
-            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '20%', marginBottom: '8%'}}>
+            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginBottom: '8%'}}>
                 <Icon name='location-city' color="#0b2652" size={25} style = {{flex:1}} />   
                 <Text style={styles.popupText}> {jobSelected.companyName}</Text>
             </View>
-            <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '20%', marginBottom: '10%'}}>
+            <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '10%', marginBottom: '10%'}}>
                 <Icon name='place' color="#0b2652" size={25} style = {{flex:1}}/>   
                 <Text style={styles.popupText}> {jobSelected.city}</Text>
             </View>
@@ -77,7 +77,8 @@ const JobSearch = (props) => {
 
     //Function runs once only when Job Search screen is rendered to get job data
     useEffect(() => {
-        fetch('http://localhost:8080/api/v1/jobs')
+        //hardcoding url with studentId=1234 for testing
+        fetch('http://localhost:8080/api/v1/jobs/1234') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
         .then(response => response.json())
         .then(json => {
             setLoaderVisibility(false)
@@ -90,7 +91,7 @@ const JobSearch = (props) => {
             setAlertParameters({message: "Unable to fetch jobs", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             setAlertVisibility(true)
         })
-        console.log("rendered", props.user) //printing user details getting {email: 'abc', password: 'abc'}
+        
     },[])
 
     
@@ -130,10 +131,17 @@ const JobSearch = (props) => {
 
     
     const applyJobHandler = (index) => {
-        let jobDetails = data.value[index]
-        console.log(jobDetails)
+        let jobDetails = {...data.value[index], "index": index}
         setJobSelected(jobDetails)
         setdialogVisibility(true)
+     }
+
+
+     const removeAppliedJobEntry = () => {
+        let UpdatedJobList = [...data.value]
+        UpdatedJobList.splice(jobSelected.index,1)
+        setData({value: UpdatedJobList})
+        setDataBackup({value: UpdatedJobList})
      }
 
 
@@ -145,8 +153,9 @@ const JobSearch = (props) => {
         fetch('http://localhost:8080/api/v1/jobrequest', {
             method: 'POST',
             body: JSON.stringify({
-                studentId: 1234,        //hardcoding user details for testing
-                studentName: "ABC",
+                //hardcoding user details for testing
+                studentId: 1234,        //should be props.user.studentId
+                studentEmail: "ABC",    //should be props.user.studentEmail
                 jobId: jobSelected.jobId,
                 jobRole: jobSelected.role,
                 jobCompanyName: jobSelected.companyName,
@@ -157,7 +166,7 @@ const JobSearch = (props) => {
             }
         })
         .then(response => {
-            response.json();
+            removeAppliedJobEntry();
             setButtonLoading(false)
             setdialogVisibility(false)
             setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
@@ -166,7 +175,6 @@ const JobSearch = (props) => {
                 setAlertVisibility(false)
             }, 6000)                        // Alert gets automatically cleared after 6 sec
         })
-        .then(json => console.log(json))
         .catch(err => {
             setButtonLoading(false)
             setdialogVisibility(false)
@@ -289,7 +297,7 @@ touchOpacity: {
 //Connecting to Redux and getting user details as props
 const mapPropstoState = state => {
     return {
-        user: state.auth.user
+        user: state.auth.user  //getting {email: 'abc', password: 'abc'}
     }
 }
 
