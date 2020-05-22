@@ -13,6 +13,7 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import Paragraph from '../components/Paragraph';
 import { Component } from 'react';
+import Header from '../components/Header';
 import {
   Table,
   TableWrapper,
@@ -68,7 +69,7 @@ const ProfileScreen = ({ navigation }) => {
   const [city, setCity] = useState({ value: 'Hyderabad', error: '' });
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
+    /*const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const mobileError = mobileValidator(mobile.value);
     const stateError = stateValidator(state.value);
@@ -80,7 +81,16 @@ const ProfileScreen = ({ navigation }) => {
       setMobile({ ...mobile, error: mobileError });
       setState({ ...state, error: stateError });
       setCity({ ...city, error: cityError });
-      return;
+      return;*/
+      const userProfile = {
+        email: 'abc@gmail.com',
+        name: 'harsh',
+        mobile: '8374754487',
+        state: 'Hyd',
+        city: 'Hyd'
+
+      };
+      this.props.updateProfile({userProfile});
     }
 
     navigation.navigate('ProfileScreen');
@@ -91,6 +101,7 @@ const ProfileScreen = ({ navigation }) => {
       <Background>
         <BackButton goBack={() => navigation.navigate('Dashboard')} />
         <Logo />
+        <Header>Dr. Reddy's Foundation</Header>
 
         <TextInput
           label="Name"
@@ -173,4 +184,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ProfileScreen);
+const mapStateToProps = state => {
+  return {
+    email: state.auth.email,
+    mobile: state.auth.mobile,
+    name: state.auth.name,
+    state: state.auth.state,
+    city: state.auth.city,
+  };
+};
+/* const mapDispatchToProps = dispatch => {
+  return {
+    login: () => dispatch(login()),
+  };
+}; */
+//{ authInputChange, login } mapDispatchToProps
+export default connect(mapStateToProps, { authInputChange, updateProfile })(
+  ProfileScreen
+);
+
+
