@@ -59,7 +59,7 @@ export const dateOfBirthValidator = dateOfBirth => {
 };
 
 export const centerNameValidator = centerName => {
-  //if (!centerName || centerName.length <= 0) return 'Center name cannot be empty.Please choose one';
+  if (!centerName || centerName.length <= 0) return 'Center name cannot be empty.Please choose one';
 
   return '';
 };

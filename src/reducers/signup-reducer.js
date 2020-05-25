@@ -7,12 +7,12 @@ import{
 
 
 const initialState = {
-  name: '',
-  studentID: '',
-  phone: '',
-  dateOfBirth: '',
-  email: '',
-  centerName: '',
+  name: {value:'',error:''},
+  studentID: {value:'',error:''},
+  phone: {value:'',error:''},
+  dateOfBirth: {value:'',error:''},
+  email: {value:'',error:''},
+  centerName: {value:'',error:''},
   user: {},
   error: '',
   loading: false,
@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [action.payload.field]: action.payload.value,
+        //{value:action.payload.value,error:''},
         //email: action.email,
         //password: action.password,
       };
@@ -33,17 +34,16 @@ export default (state = initialState, action) => {
       console.log('SIGNUP_SUCCESS');
       return {
         ...state,
-        //user: action.payload,
-        signup_valid: action.payload,
-        error:'dekhna hay',
+        user: action.payload,
+        //signup_valid: action.payload,
         loading: false,
       };
     case SIGNUP_FAILURE:
       console.debug('SIGNUP_FAILURE');
-      //console.log('SIGNUP_FAILURE');
+      console.log('SIGNUP_FAILURE');
       return {
         ...state,
-        error: 'Please enter Valid Data',
+        error: "You already have an account/Your details doesn't match records",
         loading: false,
       };
     case LOADING:
