@@ -4,6 +4,7 @@ import React, { memo, useState, useEffect } from 'react';
 import { TouchableOpacity, StyleSheet} from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import Button from '../components/Button';
+import { theme } from '../core/theme';
 import {connect} from 'react-redux';
 
 //Main Job Search React Component
@@ -21,7 +22,7 @@ const JobSearch = (props) => {
     var [showLoader, setLoaderVisibility] = useState(true)
 
 
-    //Initialising variables for alert, popup, loader and touchableOpacuty components
+    //Initialising variables for alert, popup, loader and touchableOpacity components
     var showPopup = null
     var showTouchOpacity = null
     var Alert = null
@@ -31,7 +32,7 @@ const JobSearch = (props) => {
     //Loader view component
     const loaderComp = (
         <View style = {styles.loader}>
-            <ActivityIndicator size="large" color="#0000ff" />
+            <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
     )
 
@@ -61,32 +62,46 @@ const JobSearch = (props) => {
     )
 
 
-    //Alert view Component; Dynamically creating component based on request response status
+    //Alert view Component; Created dynamically based on request response status
     const resAlert = (
         <View style = {{flex:1, flexDirection: 'row', paddingTop: "5%", paddingHorizontal: "5%", paddingBottom: "10%", backgroundColor: alertParameters.backgroundColor}}>
-            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {20} style = {{flex:1}} />
+            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
             <Text style = {{fontSize: 20, flex: 5,}}>{alertParameters.message}</Text>
-            <Icon name = 'clear' color = {alertParameters.iconColor} size = {20} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
+            <Icon name = 'clear' color = {alertParameters.iconColor} size = {25} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
         </View>
     )
 
 
+    //Touchable opacity view component
     const TouchableOpacityView = (
         <TouchableOpacity style = {styles.touchOpacity} onPress ={ ()=>{setdialogVisibility(false)}}></TouchableOpacity>
     )
 
+
     //Function runs once only when Job Search screen is rendered to get job data
     useEffect(() => {
-        //hardcoding url with studentId=1234 for testing
-        fetch('http://localhost:8080/api/v1/jobs/1234') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
-        .then(response => response.json())
-        .then(json => {
+        fetch('http://localhost:8080/api/v1/jobs/'+props.user.studentId)
+        .then(response => {
+            if (response.status != 200){
+                setLoaderVisibility(false)
+                setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+                setAlertVisibility(true)
+            }
+            else{
+                return response.json()
+        }})
+        .then(jobs => {
             setLoaderVisibility(false)
-            setData({value: json});
-            setDataBackup({value: json});
+            if (Array.isArray(jobs) && jobs.length) {
+            setData({value: jobs});
+            setDataBackup({value: jobs});
+            }
+            else {
+                setAlertParameters({message: "No jobs found", backgroundColor: '#f0eabd', icon: 'warning', iconColor: '#665c10'})
+                setAlertVisibility(true)
+            }
         })
         .catch(err => {
-            console.log(err);
             setLoaderVisibility(false)
             setAlertParameters({message: "Unable to fetch jobs", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             setAlertVisibility(true)
@@ -137,27 +152,30 @@ const JobSearch = (props) => {
      }
 
 
+     //Removing job entry from list after user has applied for it
      const removeAppliedJobEntry = () => {
-        let UpdatedJobList = [...data.value]
-        UpdatedJobList.splice(jobSelected.index,1)
-        setData({value: UpdatedJobList})
-        setDataBackup({value: UpdatedJobList})
+        let UpdatedDataJobList = [...data.value]
+        let UpdatedBackupJobList = [...dataBackup.value]
+        let backupIndex = dataBackup.value.findIndex((jobDetails)=>{
+            return jobDetails.jobId == jobSelected.jobId
+        })
+        UpdatedDataJobList.splice(jobSelected.index,1)
+        UpdatedBackupJobList.splice(backupIndex,1)
+        setData({value: UpdatedDataJobList})
+        setDataBackup({value: UpdatedBackupJobList})
      }
 
 
      //Send Job Request to the backend with job and user details
      const sendJobRequest = () => {
         setButtonLoading(true)
-        let student_details = props.user
-
         fetch('http://localhost:8080/api/v1/jobrequest', {
             method: 'POST',
             body: JSON.stringify({
-                //hardcoding user details for testing
-                studentId: 1234,        //should be props.user.studentId
-                studentEmail: "ABC",    //should be props.user.studentEmail
+                studentId: props.user.studentId,
+                studentEmail: props.user.email,
                 jobId: jobSelected.jobId,
-                jobRole: jobSelected.role,
+                jobRole: jobSelected.designation,
                 jobCompanyName: jobSelected.companyName,
                 jobCity: jobSelected.city
             }),
@@ -166,10 +184,15 @@ const JobSearch = (props) => {
             }
         })
         .then(response => {
-            removeAppliedJobEntry();
             setButtonLoading(false)
             setdialogVisibility(false)
-            setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
+            if (response.status == 200){
+                setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
+                removeAppliedJobEntry();
+            }
+            else {
+                setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+            }
             setAlertVisibility(true)
             setTimeout(()=>{
                 setAlertVisibility(false)
@@ -297,7 +320,7 @@ touchOpacity: {
 //Connecting to Redux and getting user details as props
 const mapPropstoState = state => {
     return {
-        user: state.auth.user  //getting {email: 'abc', password: 'abc'}
+        user: state.auth.user 
     }
 }
 
