@@ -185,7 +185,6 @@ const JobSearch = (props) => {
             }
         })
         .then(response => {
-            console.log(response)
             setButtonLoading(false)
             setdialogVisibility(false)
             if (response.status == 200){
