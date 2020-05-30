@@ -174,10 +174,11 @@ const JobSearch = (props) => {
             body: JSON.stringify({
                 studentId: props.user.studentId,
                 studentEmail: props.user.email,
+                studentName: props.user.firstName+' '+props.user.lastName,
                 jobId: jobSelected.jobId,
                 jobRole: jobSelected.designation,
                 jobCompanyName: jobSelected.companyName,
-                jobCity: jobSelected.city
+                jobDescription: jobSelected.jobDescription
             }),
             headers: {
             "Content-type": "application/json; charset=UTF-8"
