@@ -38,7 +38,7 @@ const options = [
   { label: 'Medchal', value: 'Medchal' },
   { label: 'Patancheru', value: 'Patancheru' },
 ];
-class RegisterScreen extends Component {
+class RegisterScreen extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.signup_valid);
@@ -68,6 +68,9 @@ class RegisterScreen extends Component {
     showError() {
       if (this.props.error) {
         return <Paragraph>{this.props.error}</Paragraph>;
+      }
+      else{
+        return ;
       }
     }
 
@@ -133,7 +136,7 @@ class RegisterScreen extends Component {
                   errorText={this.props.studentID.error}
                 />
                 <TextInput
-                  label="Date Of Birth(DD-MM-YYYY)"
+                  label="Date Of Birth(YYYY-MM-DD)"
                   returnKeyType="next"
                   value={this.props.dateOfBirth.value}
                   onChangeText={text => //this.setState({ dateOfBirth:{value: text, error: '' }})}
@@ -232,6 +235,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.colors.error,
     paddingHorizontal: 4,
+    paddingTop: 4,
   },
   container: {
     width: '100%',

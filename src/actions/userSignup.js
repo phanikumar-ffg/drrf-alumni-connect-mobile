@@ -21,15 +21,14 @@ export const signup=(details)=>{
           //dispatch({ type: SIGNUP_SUCCESS ,payload: signup_validation });
           //dispatch({type:SIGNUP_FAILURE});
           dispatch({type:LOADING});
-          fetch('http://10.0.2.2:8080/api/v1/signup', {
+          fetch('http://localhost:8080/api/v1/signup', {
             method: 'POST',
             headers: {
-              Accept: 'application/json',
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                   firstName:details.name.value,
-                  studentID:details.studentID.value,
+                  studentId:details.studentID.value,
                   mobile:details.phone.value,
                   dob:details.dateOfBirth.value,
                   email:details.email.value,
@@ -46,7 +45,7 @@ export const signup=(details)=>{
               dispatch({ type: SIGNUP_SUCCESS, payload: userSignup });
             })
             .catch(error => {
-              console.error(error);
+
               dispatch({ type: SIGNUP_FAILURE });
             });
           };

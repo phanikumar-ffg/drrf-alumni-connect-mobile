@@ -35,6 +35,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        error:'',
         //signup_valid: action.payload,
         loading: false,
       };
