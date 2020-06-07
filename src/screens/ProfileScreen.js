@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, connect,useState } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import {
@@ -69,7 +69,7 @@ const ProfileScreen = ({ navigation }) => {
   const [city, setCity] = useState({ value: 'Hyderabad', error: '' });
 
   const _onSignUpPressed = () => {
-    /*const nameError = nameValidator(name.value);
+    const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const mobileError = mobileValidator(mobile.value);
     const stateError = stateValidator(state.value);
@@ -81,8 +81,7 @@ const ProfileScreen = ({ navigation }) => {
       setMobile({ ...mobile, error: mobileError });
       setState({ ...state, error: stateError });
       setCity({ ...city, error: cityError });
-      return;*/
-      const userProfile = {
+      return;      const userProfile = {
         email: 'abc@gmail.com',
         name: 'harsh',
         mobile: '8374754487',
@@ -193,12 +192,12 @@ const mapStateToProps = state => {
     city: state.auth.city,
   };
 };
-/* const mapDispatchToProps = dispatch => {
+ const mapDispatchToProps = dispatch => {
   return {
     login: () => dispatch(login()),
   };
-}; */
-//{ authInputChange, login } mapDispatchToProps
+}; 
+{ authInputChange, login } mapDispatchToProps
 export default connect(mapStateToProps, { authInputChange, updateProfile })(
   ProfileScreen
 );
