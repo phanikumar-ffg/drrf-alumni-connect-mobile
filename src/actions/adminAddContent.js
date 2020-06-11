@@ -11,14 +11,16 @@ export const authContentChange = ({ field, value }) => {
   };
 };
 
-export const addContent = ({ url, description, assessURL }) => {
+export const addContent = ({ url, contentType, description, assessURL }) => {
   console.debug('in add Content action');
   console.debug(url);
+  console.debug(contentType);
   console.debug(description);
   console.debug(assessURL)
 
   const content = {
     url: 'abc',
+    contentType: 'Video',
     assessURL: 'abc',
     description: 'abc'
   };
@@ -29,7 +31,7 @@ export const addContent = ({ url, description, assessURL }) => {
 
   // return dispatch => {
   //   dispatch({ type: LOADING });
-  //   fetch('http://10.0.2.2:8080/url', {
+  //   fetch('http://10.0.2.2:8080/addContent', {
   //     method: 'POST',
   //     headers: {
   //       Accept: 'application/json',
@@ -37,34 +39,20 @@ export const addContent = ({ url, description, assessURL }) => {
   //     },
   //     body: JSON.stringify({
   //       url: url,
+  //       contentType: contentType,
   //       assessURL: assessURL,
-  //        description: description
+  //       description: description
   //     }),
   //   })
   //     .then(response => response.json())
   //     .then(res => {
   //       console.debug(res);
-  //       const user = {
-  //         email: res.email,
-  //         password: res.password,
-  //       };
-  //       dispatch({ type: LOGIN_SUCCESS, payload: user });
+  //       dispatch({ type: ADD_CONTENT_SUCCESS });
   //     })
   //     .catch(error => {
   //       console.error(error);
-  //       dispatch({ type: LOGIN_FAILURE });
+  //       dispatch({ type: ADD_CONTENT_FAILURE });
   //     });
 
-  //   /* return firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(user => {
-  //       console.debug('login success');
-  //       dispatch({ type: LOGIN_SUCCESS, payload: user });
-  //     })
-  //     .catch(function(error) {
-  //       console.debug('login failure');
-  //       dispatch({ type: LOGIN_FAILURE });
-  //     }); */
   // };
 };

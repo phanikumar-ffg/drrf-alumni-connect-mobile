@@ -28,6 +28,9 @@ import Logo from '../components/Logo';
 import Header from '../components/Header';
 import { theme } from '../core/theme';
 import Button from '../components/Button';
+import { connect } from 'react-redux';
+import {authContentGet, getContent } from '../actions';
+import {authContentDelete, deleteContent} from '../actions';
 
 const HomeContentScreen = ({ navigation }) => {
     var [data, setData] = useState({value:contents})
@@ -80,8 +83,7 @@ const HomeContentScreen = ({ navigation }) => {
             </View>
              ))}
 
-            <Button mode="contained" /*style={{ marginVertical: 40}}*/
-                mode="contained"
+            <Button mode="contained"  mode="contained"
                 onPress={() => navigation.navigate('AdminAddContentScreen')} >
                 Add Content
             </Button>
@@ -111,4 +113,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default memo(HomeContentScreen);
+const mapStateToProps = state => {
+  return {
+    url: state.auth.url,
+    contentType: state.auth.contentType,
+    description: state.auth.description,
+    assessURL: state.auth.assessURL,
+    loading: state.auth.loading,
+  };
+};
+
+export default connect(mapStateToProps,{authContentGet, deleteContent, authContentDelete, deleteContent})(HomeContentScreen);
