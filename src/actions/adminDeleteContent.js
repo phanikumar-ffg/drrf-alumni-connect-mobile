@@ -1,45 +1,42 @@
 import {
-  AUTH_ADD_CONTENT,
-  ADD_CONTENT_FAILURE,
-  ADD_CONTENT_SUCCESS
+  AUTH_DELETE_CONTENT,
+  DELETE_CONTENT_FAILURE,
+  DELETE_CONTENT_SUCCESS
 } from './actionTypes';
 
-export const authContentChange = ({ field, value }) => {
+export const authContentDelete = ({ field, value }) => {
   return {
-    type: AUTH_ADD_CONTENT,
+    type: AUTH_DELETE_CONTENT,
     payload: { field, value }, //field: 'email', 'text'
   };
 };
 
-export const addContent = ({ url, contentType, description, assessURL }) => {
-  console.debug('in add Content action');
+export const deleteContent = ({ url, description, assessURL }) => {
+  console.debug('in delete Content action');
   console.debug(url);
-  console.debug(contentType);
   console.debug(description);
   console.debug(assessURL)
 
   const content = {
     url: 'abc',
-    contentType: 'Video',
     assessURL: 'abc',
     description: 'abc'
   };
 
   return dispatch => {
-    dispatch({ type: ADD_CONTENT_SUCCESS, payload: content });
+    dispatch({ type: DELETE_CONTENT_SUCCESS, payload: content });
   };
 
   // return dispatch => {
   //   dispatch({ type: LOADING });
-  //   fetch('http://10.0.2.2:8080/addContent', {
-  //     method: 'POST',
+  //   fetch('http://10.0.2.2:8080/deleteContent', {
+  //     method: 'DELETE',
   //     headers: {
   //       Accept: 'application/json',
   //       'Content-Type': 'application/json',
   //     },
   //     body: JSON.stringify({
   //       url: url,
-  //       contentType: contentType,
   //       assessURL: assessURL,
   //       description: description
   //     }),
@@ -47,12 +44,11 @@ export const addContent = ({ url, contentType, description, assessURL }) => {
   //     .then(response => response.json())
   //     .then(res => {
   //       console.debug(res);
-  //       dispatch({ type: ADD_CONTENT_SUCCESS });
+  //       dispatch({ type: DELETE_CONTENT_SUCCESS, payload: user });
   //     })
   //     .catch(error => {
   //       console.error(error);
-  //       dispatch({ type: ADD_CONTENT_FAILURE });
+  //       dispatch({ type: DELETE_CONTENT_FAILURE });
   //     });
-
   // };
 };

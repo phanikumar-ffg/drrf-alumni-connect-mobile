@@ -28,6 +28,11 @@ import {
 
 import PropTypes from 'prop-types';
 
+const contentTypeOptions = [ { label: 'Video', value: 'Video' },
+                             { label: 'Document', value: 'Document' },
+                             { label: 'Website', value: 'Website'}
+                           ];
+
 class AdminAddContentScreen extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (!_.isEmpty(nextProps.user)) {
@@ -37,8 +42,10 @@ class AdminAddContentScreen extends React.Component {
 
     submitContent() {
           console.debug('submitContent');
-          const { url, description, assessURL } = this.props;
-          this.props.addContent({ url, description, assessURL });
+          const { url, contentType, description, assessURL } = this.props;
+          if(url=="" || description=="" || assessURL=="" || contentType=="")
+          $("#validation").setValue("Please enter all fields")
+          this.props.addContent({ url,contentType, description, assessURL });
     }
 
     showButton() {
@@ -81,14 +88,17 @@ class AdminAddContentScreen extends React.Component {
                 <Header>Add New Content</Header>
                 <View style={styles.formStyle}>
                   <form>
-                     <TextInput  label="Video URL" returnKeyType="next" value={this.props.url}
-                              onChangeText={text => this.props.authContentChange({ field: 'url', value: text }) }
+                     <TextInput  label="Video URL" returnKeyType="next" value={this.props.url} required
+                              onChangeText={value => this.props.authContentChange({ field: 'url', value: value }) }
                               autoCapitalize="none" />
-                     <TextInput  label="Description" returnKeyType="next" value={this.props.description}
-                                 onChangeText={text => this.props.authContentChange({ field: 'description', value: text }) }
+                     <RNPickerSelect useNativeAndroidPickerStyle="false"
+                                     placeholder={{ label: 'Content Type',value: null,}}
+                                     value={this.props.contentType} style={pickerStyle} onValueChange={value => console.log(value)} items={contentTypeOptions} />
+                     <TextInput  label="Description" returnKeyType="next" value={this.props.description} required
+                                 onChangeText={value => this.props.authContentChange({ field: 'description', value: value }) }
                                  autoCapitalize="none" />
-                     <TextInput  label="Assessment URL" returnKeyType="next" value={this.props.assessURL}
-                                  onChangeText={text => this.props.authContentChange({ field: 'assessURL', value: text }) }
+                     <TextInput  label="Assessment URL" returnKeyType="next" value={this.props.assessURL} required
+                                  onChangeText={value => this.props.authContentChange({ field: 'assessURL', value: value }) }
                                   autoCapitalize="none" />
                   </form>
                 </View>
@@ -105,6 +115,19 @@ class AdminAddContentScreen extends React.Component {
           );
     }
 }
+const pickerStyle = StyleSheet.create({
+    inputAndroid: {
+      backgroundColor: theme.colors.surface,
+      paddingTop: 16,
+      paddingBottom: 16,
+      paddingRight: 4,
+      borderRadius: 4,
+      width: '100%',
+      marginVertical: 12,
+      color: '#999',
+      borderColor: '#808080',
+    },
+  });
 
 const styles = StyleSheet.create({
   label: {
@@ -138,6 +161,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     url: state.auth.url,
+    contentType: state.auth.contentType,
     description: state.auth.description,
     assessURL: state.auth.assessURL,
     loading: state.auth.loading,
