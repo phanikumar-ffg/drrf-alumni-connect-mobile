@@ -192,7 +192,8 @@ const mapStateToProps = state => {
     city: state.auth.city,
   };
 };
- const mapDispatchToProps = dispatch => {
+export default ProfileScreen;
+ /*const mapDispatchToProps = dispatch => {
   return {
     login: () => dispatch(login()),
   };
@@ -201,5 +202,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, { authInputChange, updateProfile })(
   ProfileScreen
 );
-
+*/
 

@@ -42,10 +42,10 @@ class AdminAddContentScreen extends React.Component {
 
     submitContent() {
           console.debug('submitContent');
-          const { url, contentType, description, assessURL } = this.props;
-          if(url=="" || description=="" || assessURL=="" || contentType=="")
-          $("#validation").setValue("Please enter all fields")
-          this.props.addContent({ url,contentType, description, assessURL });
+          const { contentURL, contentType, contentDesc, assessmentURL } = this.props;
+          /*if(url=="" || description=="" || assessURL=="" || contentType=="")
+          $("#validation").setValue("Please enter all fields")*/
+          this.props.addContent({ contentURL,contentType, contentDesc, assessmentURL });
     }
 
     showButton() {
@@ -88,16 +88,16 @@ class AdminAddContentScreen extends React.Component {
                 <Header>Add New Content</Header>
                 <View style={styles.formStyle}>
                   <form>
-                     <TextInput  label="Video URL" returnKeyType="next" value={this.props.url} required
+                     <TextInput  label="Video URL" returnKeyType="next" value={this.props.contentURL} required
                               onChangeText={value => this.props.authContentChange({ field: 'url', value: value }) }
                               autoCapitalize="none" />
                      <RNPickerSelect useNativeAndroidPickerStyle="false"
                                      placeholder={{ label: 'Content Type',value: null,}}
                                      value={this.props.contentType} style={pickerStyle} onValueChange={value => console.log(value)} items={contentTypeOptions} />
-                     <TextInput  label="Description" returnKeyType="next" value={this.props.description} required
+                     <TextInput  label="Description" returnKeyType="next" value={this.props.contentDesc} required
                                  onChangeText={value => this.props.authContentChange({ field: 'description', value: value }) }
                                  autoCapitalize="none" />
-                     <TextInput  label="Assessment URL" returnKeyType="next" value={this.props.assessURL} required
+                     <TextInput  label="Assessment URL" returnKeyType="next" value={this.props.assessmentURL} required
                                   onChangeText={value => this.props.authContentChange({ field: 'assessURL', value: value }) }
                                   autoCapitalize="none" />
                   </form>
@@ -160,10 +160,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    url: state.auth.url,
+    contentURL: state.auth.contentURL,
     contentType: state.auth.contentType,
-    description: state.auth.description,
-    assessURL: state.auth.assessURL,
+    contentDesc: state.auth.contentDesc,
+    assessmentURL: state.auth.assessmentURL,
     loading: state.auth.loading,
   };
 };
