@@ -6,13 +6,13 @@ import{
 } from '../actions/actionTypes';
 
 const initialState = {
-  url: '',
-  description: '',
-  assessURL: '',
-  content: {},
+  contentURL: '',
+  contentDesc: '',
+  assessmentURL: '',
+  contentType: '',
   error: '',
   content_valid: 'true',
-  loading: 'false'
+  loading: 'false',
 };
 
 export default (state = initialState, action) => {
