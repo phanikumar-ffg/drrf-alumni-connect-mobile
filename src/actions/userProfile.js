@@ -5,7 +5,7 @@ import {
     LOADING,
   } from './actionTypes';
   
-  export const authInputChange = ({ field, value }) => {
+  export const authInputChange1 = ({ field, value }) => {
     return {
       type: AUTH_INPUT_CHANGE,
       payload: { field, value }, //field: 'email', 'text'
