@@ -40,9 +40,9 @@ class AdminAddContentScreen extends React.Component {
   }
 
   submitContent() {
-    console.log('submitContent');
+    console.debug('submitContent');
     const { contentURL, contentType, contentDesc, assessmentURL } = this.props;
-    console.log(contentURL);
+    console.log(contentURL + contentType + contentDesc + assessmentURL);
     this.props.addContent({
       contentURL,
       contentType,
@@ -111,7 +111,7 @@ class AdminAddContentScreen extends React.Component {
                 placeholder={{ label: 'Content Type', value: null }}
                 value={this.props.contentType}
                 style={pickerStyle}
-                onValueChange={value => console.log(value)}
+                onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })}
                 items={contentTypeOptions}
               />
               <TextInput

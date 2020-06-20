@@ -13,22 +13,12 @@ export const authContentChange = ({ field, value }) => {
 };
 
 export const addContent = ({ contentURL, contentType, contentDesc, assessmentURL }) => {
-  console.debug('in add Content action');
-  console.debug(contentURL);
-  console.debug(contentType);
-  console.debug(contentDesc);
-  console.debug(assessmentURL)
+  console.log('in add Content action');
+  console.log(contentURL);
+  console.log(contentType);
+  console.log(contentDesc);
+  console.log(assessmentURL)
 
-  /*const content = {
-    url: 'abc',
-    contentType: 'Video',
-    assessURL: 'abc',
-    description: 'abc'
-  };*/
-
-  /*return dispatch => {
-    dispatch({ type: ADD_CONTENT_SUCCESS, payload: content });
-  };*/
 
    return dispatch => {
      dispatch({ type: LOADING });
