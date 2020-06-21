@@ -1,11 +1,5 @@
 import React, { memo, useState, Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -13,17 +7,13 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+import _ from 'lodash';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-//import DatePicker from 'react-date-picker';
-import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import { authContentChange, addContent } from '../actions';
-
 import {} from '../core/utils';
-
 import PropTypes from 'prop-types';
 
 const contentTypeOptions = [
@@ -34,21 +24,34 @@ const contentTypeOptions = [
 
 class AdminAddContentScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
+    let response = nextProps.content_valid;
+    if(response && response!=null){
+        console.log(response);
+        console.log(nextProps.error);
+        alert(response);
+    }
     if (!_.isEmpty(nextProps.user)) {
       this.props.navigation.navigate('Dashboard', nextProps.user);
     }
   }
 
-  submitContent() {
-    console.debug('submitContent');
+  handleSubmit = () => {
+    console.log('submitContent');
     const { contentURL, contentType, contentDesc, assessmentURL } = this.props;
     console.log(contentURL + contentType + contentDesc + assessmentURL);
-    this.props.addContent({
-      contentURL,
-      contentType,
-      contentDesc,
-      assessmentURL,
-    });
+    if(!contentURL.length) {alert('Content URL should not be empty'); return;}
+    if(!contentType.length) {alert('Content Type should not be empty'); return;}
+    if(!contentDesc.length) {alert('Content Description should not be empty'); return; }
+    if(!assessmentURL.length) {alert('Assessment URL should not be empty'); return;}
+    this.props.addContent({ contentURL, contentType, contentDesc, assessmentURL,});
+  }
+
+  resetContent = () => {
+    console.log('reset content');
+    this.props.authContentChange ({field: 'contentURL',value: ''});
+    this.props.authContentChange ({field: 'Content Type', value: ''});
+    this.props.authContentChange ({field: 'contentDesc', value: ''});
+    this.props.authContentChange ({field: 'assessmentURL',value: ''});
   }
 
   showButton() {
@@ -67,93 +70,31 @@ class AdminAddContentScreen extends React.Component {
     }
   }
 
-  showError() {
-    if (this.props.error) {
-      return <Paragraph>{this.props.error}</Paragraph>;
-    }
-  }
-  _onSave() {
-    return (
-      //   <Alert>Saved Successfully</Alert>
-      <View style={styles.container}>
-        <Paragraph>Saved Successfully</Paragraph>
-      </View>
-    );
-  }
-
   render() {
     return (
       <ScrollView>
         <Background>
           <BackButton
-            goBack={() => this.props.navigation.navigate('HomeScreen')}
+            goBack={() => this.props.navigation.navigate('AdminContentManagement')}
           />
           <Logo />
           <Header>Dr. Reddy's Foundation</Header>
           <Header>Add New Content</Header>
           <View style={styles.formStyle}>
             <form>
-              <TextInput
-                label="Video URL"
-                returnKeyType="next"
-                value={this.props.contentURL}
-                required
-                onChangeText={value =>
-                  this.props.authContentChange({
-                    field: 'contentURL',
-                    value: value,
-                  })
-                }
-                autoCapitalize="none"
-              />
-              <RNPickerSelect
-                useNativeAndroidPickerStyle="false"
-                placeholder={{ label: 'Content Type', value: null }}
-                value={this.props.contentType}
-                style={pickerStyle}
-                onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })}
-                items={contentTypeOptions}
-              />
-              <TextInput
-                label="Description"
-                returnKeyType="next"
-                value={this.props.contentDesc}
-                required
-                onChangeText={value =>
-                  this.props.authContentChange({
-                    field: 'contentDesc',
-                    value: value,
-                  })
-                }
-                autoCapitalize="none"
-              />
-              <TextInput
-                label="Assessment URL"
-                returnKeyType="next"
-                value={this.props.assessmentURL}
-                required
-                onChangeText={value =>
-                  this.props.authContentChange({
-                    field: 'assessmentURL',
-                    value: value,
-                  })
-                }
-                autoCapitalize="none"
-              />
+              <TextInput label="Video URL" returnKeyType="next" value={this.props.contentURL} blurOnSubmit="true"
+                onChangeText={value => this.props.authContentChange({field: 'contentURL',value: value, })}/>
+              <RNPickerSelect useNativeAndroidPickerStyle="false" placeholder={{ label: 'Content Type', value: '' }} value={this.props.contentType}
+                style={pickerStyle} onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })} items={contentTypeOptions}/>
+              <TextInput label="Description" returnKeyType="next" value={this.props.contentDesc}  blurOnSubmit="true"
+                onChangeText={value => this.props.authContentChange({ field: 'contentDesc', value: value,})}/>
+              <TextInput label="Assessment URL" returnKeyType="next" value={this.props.assessmentURL}  blurOnSubmit="true"
+                onChangeText={value => this.props.authContentChange({field: 'assessmentURL',value: value, })}/>
             </form>
           </View>
 
-          <Button mode="contained" onPress={this.submitContent.bind(this)}>
-            SAVE
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() =>
-              this.props.navigation.navigate('AdminAddContentScreen')
-            }
-          >
-            RESET
-          </Button>
+          <Button mode="contained" onPress={this.handleSubmit.bind(this)}> SAVE </Button>
+          <Button mode="contained" onPress={this.resetContent.bind(this)}> RESET </Button>
         </Background>
       </ScrollView>
     );

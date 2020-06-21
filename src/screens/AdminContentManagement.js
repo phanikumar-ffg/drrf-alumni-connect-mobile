@@ -32,7 +32,7 @@ import { connect } from 'react-redux';
 import {authContentGet, getContent } from '../actions';
 import {authContentDelete, deleteContent} from '../actions';
 
-const HomeContentScreen = ({ navigation }) => {
+const AdminContentManagement = ({ navigation }) => {
     var [data, setData] = useState({value:contents})
     const [dataBackup, setDataBackup] = useState({value:contents})
     var [searchText, setSearchText] = useState({value:''})
@@ -123,4 +123,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps,{authContentGet, deleteContent, authContentDelete, deleteContent})(HomeContentScreen);
+export default connect(mapStateToProps,{authContentGet, deleteContent, authContentDelete, deleteContent})(AdminContentManagement);

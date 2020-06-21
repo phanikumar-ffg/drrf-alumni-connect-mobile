@@ -38,11 +38,11 @@ export const addContent = ({ contentURL, contentType, contentDesc, assessmentURL
        .then(response => response.json())
        .then(res => {
          console.debug(res);
-         dispatch({ type: ADD_CONTENT_SUCCESS });
+         dispatch({ type: ADD_CONTENT_SUCCESS, payload : 'Successfully Added the content' });
        })
        .catch(error => {
          console.error(error);
-         dispatch({ type: ADD_CONTENT_FAILURE });
+         dispatch({ type: ADD_CONTENT_FAILURE, payload: 'Cannot add data' });
        });
 
    };
