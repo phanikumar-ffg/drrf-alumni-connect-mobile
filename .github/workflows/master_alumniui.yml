@@ -1,6 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
+  
 name: Build and deploy Node.js app to Azure Web App - alumniui
 
 on:
@@ -8,10 +9,16 @@ on:
     branches:
       - master
 
+env:
+  AZURE_WEBAPP_NAME: alumniui    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '/web-build'      # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '10.x'                # set this to the node version to use
+
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+     
     steps:
     - uses: actions/checkout@master
 
@@ -23,13 +30,13 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-        npm run build --if-present
-        npm run test --if-present
+        expo build:web --if-present
+
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
       with:
-        app-name: 'alumniui'
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_cf879600c5df4ff6b5d52171664f1cc1 }}
-        package: .
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
