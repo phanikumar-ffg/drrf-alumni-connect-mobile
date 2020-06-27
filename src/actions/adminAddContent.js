@@ -14,12 +14,6 @@ export const authContentChange = ({ field, value }) => {
 
 export const addContent = ({ contentURL, contentType, contentDesc, assessmentURL }) => {
   console.log('in add Content action');
-  console.log(contentURL);
-  console.log(contentType);
-  console.log(contentDesc);
-  console.log(assessmentURL)
-
-
    return dispatch => {
      dispatch({ type: LOADING });
      fetch('http://localhost:8080/api/v1/content/request', {
@@ -35,13 +29,17 @@ export const addContent = ({ contentURL, contentType, contentDesc, assessmentURL
          assessmentURL: assessmentURL
        }),
      })
-       .then(response => response.json())
+//       .then(response => response.json())
        .then(res => {
-         console.debug(res);
-         dispatch({ type: ADD_CONTENT_SUCCESS, payload : 'Successfully Added the content' });
+         console.log('result SDFGHJ : '+res.text());
+         //const content_valid = res;
+        /* if(res.errorMessage){
+            dispatch({ type: ADD_CONTENT_FAILURE, payload: res.errorMessage });
+         } else*/
+         dispatch({ type: ADD_CONTENT_SUCCESS, payload : res });
        })
        .catch(error => {
-         console.error(error);
+         console.log('going into error :P');
          dispatch({ type: ADD_CONTENT_FAILURE, payload: 'Cannot add data' });
        });
 

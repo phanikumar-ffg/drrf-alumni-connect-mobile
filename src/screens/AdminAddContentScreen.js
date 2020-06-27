@@ -24,8 +24,11 @@ const contentTypeOptions = [
 
 class AdminAddContentScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
-    let response = nextProps.content_valid;
+  console.log('component will receive props');
+  console.log('response content : ' + nextProps.contentResponse)
+    let response = nextProps.contentResponse;
     if(response && response!=null){
+        this.resetContent();
         console.log(response);
         console.log(nextProps.error);
         alert(response);
@@ -82,13 +85,13 @@ class AdminAddContentScreen extends React.Component {
           <Header>Add New Content</Header>
           <View style={styles.formStyle}>
             <form>
-              <TextInput label="Video URL" returnKeyType="next" value={this.props.contentURL} blurOnSubmit="true"
+              <TextInput label="Video URL" returnKeyType="next" value={this.props.contentURL}
                 onChangeText={value => this.props.authContentChange({field: 'contentURL',value: value, })}/>
-              <RNPickerSelect useNativeAndroidPickerStyle="false" placeholder={{ label: 'Content Type', value: '' }} value={this.props.contentType}
+              <RNPickerSelect placeholder={{ label: 'Content Type', value: '' }} value={this.props.contentType}
                 style={pickerStyle} onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })} items={contentTypeOptions}/>
               <TextInput label="Description" returnKeyType="next" value={this.props.contentDesc}  blurOnSubmit="true"
                 onChangeText={value => this.props.authContentChange({ field: 'contentDesc', value: value,})}/>
-              <TextInput label="Assessment URL" returnKeyType="next" value={this.props.assessmentURL}  blurOnSubmit="true"
+              <TextInput label="Assessment URL" returnKeyType="next" value={this.props.assessmentURL}
                 onChangeText={value => this.props.authContentChange({field: 'assessmentURL',value: value, })}/>
             </form>
           </View>

@@ -36,7 +36,7 @@ const Router = createStackNavigator(
     HomePage,
     AdminContentManagement,
     AdminAddContentScreen,
-    AdminHelpScreen
+//    AdminHelpScreen
   },
   {
     initialRouteName: 'HomeScreen',
