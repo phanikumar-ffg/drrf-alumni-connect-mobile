@@ -83,8 +83,8 @@ const AdminContentManagement = ({ props, navigation }) => {
                 console.log('reponse received!');
                if (response.status == 200){
                         console.log("delete successful");
-//                         setAlertParameters({message: "Your delete request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
-                         removeDeletedContent();
+                        alert("successfully deleted the content : " + contentSelected.contentDesc);
+                        removeDeletedContent();
                }
                else {
                          setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
@@ -109,7 +109,7 @@ const AdminContentManagement = ({ props, navigation }) => {
         let updatedContentList = [...data.value]
         let updatedBackupContentList = [...dataBackup.value]
         let backupIndex = dataBackup.value.findIndex((contentDetails)=>{
-          return contentDetails.content_id == jobSelected.jobId
+          return contentDetails.content_id == contentSelected.content_id
         })
         UpdatedDataContentList.splice(contentSelected.index,1)
         UpdatedBackupContentList.splice(backupIndex,1)

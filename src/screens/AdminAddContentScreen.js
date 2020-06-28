@@ -23,20 +23,6 @@ const contentTypeOptions = [
 ];
 
 class AdminAddContentScreen extends React.Component {
-  componentWillReceiveProps(nextProps) {
-  console.log('component will receive props');
-  console.log('response content : ' + nextProps.contentResponse)
-    let response = nextProps.contentResponse;
-    if(response && response!=null){
-        this.resetContent();
-        console.log(response);
-        console.log(nextProps.error);
-        alert(response);
-    }
-    if (!_.isEmpty(nextProps.user)) {
-      this.props.navigation.navigate('Dashboard', nextProps.user);
-    }
-  }
 
   handleSubmit = () => {
     console.log('submitContent');
@@ -46,7 +32,30 @@ class AdminAddContentScreen extends React.Component {
     if(!contentType.length) {alert('Content Type should not be empty'); return;}
     if(!contentDesc.length) {alert('Content Description should not be empty'); return; }
     if(!assessmentURL.length) {alert('Assessment URL should not be empty'); return;}
-    this.props.addContent({ contentURL, contentType, contentDesc, assessmentURL,});
+     fetch('http://localhost:8080/api/v1/content/request', {
+                 method: 'POST',
+                 body: JSON.stringify({
+                 contentURL: this.props.contentURL,
+                 contentType: this.props.contentType,
+                 contentDesc: this.props.contentDesc,
+                 assessmentURL: this.props.assessmentURL
+              }),
+              headers: {
+                 'Content-Type': 'application/json',
+               }})
+               .then(response => {
+                    console.log('reponse received!');
+                   if (response.status == 200){
+                            console.log("added successfully");
+                            this.resetContent();
+                   }
+                   else {
+                             setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+                         }
+                   })
+                   .catch(err => {
+                        console.log("error occurred while adding");
+                     })
   }
 
   resetContent = () => {
@@ -55,22 +64,6 @@ class AdminAddContentScreen extends React.Component {
     this.props.authContentChange ({field: 'Content Type', value: ''});
     this.props.authContentChange ({field: 'contentDesc', value: ''});
     this.props.authContentChange ({field: 'assessmentURL',value: ''});
-  }
-
-  showButton() {
-    if (this.props.loading) {
-      return (
-        <View>
-          <ActivityIndicator size="small" />
-        </View>
-      );
-    } else {
-      return (
-        <Button mode="contained" onPress={this.submitContent.bind(this)}>
-          SAVE
-        </Button>
-      );
-    }
   }
 
   render() {
@@ -156,6 +149,5 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { authContentChange, addContent })(
-  AdminAddContentScreen
-);
+export default connect(mapStateToProps)(memo(AdminAddContentScreen));
+
