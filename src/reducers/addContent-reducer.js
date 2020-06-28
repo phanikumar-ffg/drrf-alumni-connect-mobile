@@ -11,12 +11,12 @@ const initialState = {
   assessmentURL: '',
   contentType: '',
   error: '',
-  content_valid: 'true',
+  contentResponse: '',
   loading: 'false',
 };
 
 export default (state = initialState, action) => {
-    console.log('reducer');
+//  console.log('reducer');
   switch (action.type) {
     case AUTH_ADD_CONTENT:
       return {
@@ -27,20 +27,19 @@ export default (state = initialState, action) => {
       console.log('ADD_CONTENT_SUCCESS');
       return {
         ...state,
-        //user: action.payload,
-        content_valid: action.payload,
+        contentResponse: action.payload,
         error:'No Idea',
         loading: false,
       };
     case ADD_CONTENT_FAILURE:
-      console.debug('ADD_CONTENT_FAILURE');
+      console.log('ADD_CONTENT_FAILURE');
       return {
         ...state,
         error: 'Please enter Valid Data',
         loading: false,
       };
     case LOADING:
-       console.debug('loading reducer');
+       console.log('loading reducer');
        return {
          ...state,
          loading: true,
