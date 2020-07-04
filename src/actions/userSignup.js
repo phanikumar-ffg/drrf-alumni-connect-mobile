@@ -30,11 +30,11 @@ export const signup=(details)=>{
             body: JSON.stringify({
                   firstName:details.firstName.value,
                   lastName:details.lastName.value,
-                  studentId:details.studentID.value,
-                  mobile:details.phone.value,
+                  aspirantId:details.studentID.value,
+                  phone:details.phone.value,
                   dob:details.dateOfBirth.value,
-                  email:details.email.value,
-                  centerId:details.centerName.value,
+                  emailId:details.email.value,
+                  centerName:details.centerName.value,
             }),
           })
             .then(response => response.json())
@@ -42,7 +42,7 @@ export const signup=(details)=>{
               console.debug(res);
               const userSignup = {
                   name:res.firstName,
-                  email:res.email,
+                  email:res.emailId,
               };
               dispatch({ type: SIGNUP_SUCCESS, payload: userSignup });
             })
