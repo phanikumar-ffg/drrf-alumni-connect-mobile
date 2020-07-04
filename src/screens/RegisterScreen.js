@@ -20,6 +20,7 @@ import 'react-dropdown/style.css';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import _ from 'lodash';
+import config from '../config/index.js'
 import { connect } from 'react-redux';
 import { onboardInputChange,signup } from '../actions';
 import Paragraph from '../components/Paragraph';
@@ -75,6 +76,23 @@ class RegisterScreen extends React.Component {
       else{
         return ;
       }
+    }
+
+    componentDidMount(){
+    fetch(config.baseurl+'/api/v1/centreDetails', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+                .then(response => response.json())
+                .then(res => {
+                  console.debug(res);
+                  this.props.onboardInputChange({ field: 'centres', value:res});
+                })
+                .catch(error => {
+                console.log(error);
+                });
     }
 
   onSignUpPressed = () => {
@@ -194,7 +212,7 @@ class RegisterScreen extends React.Component {
                     value={this.props.centerName.value}
                     style={pickerStyle}
                     onValueChange={value => this.props.onboardInputChange({ field: 'centerName', value: {value:value,error:'' } })}
-                    items={options}
+                    items={this.props.centres.map(j=>({value:j.centreName,label:j.centreName}))}
                   />
                   {this.props.centerName.error ? (
                     <Text style={styles.error}>{this.props.centerName.error}</Text>
@@ -270,7 +288,8 @@ const mapStateToProps = state => {
     user: state.onboard.user,
     error: state.onboard.error,
     loading: state.onboard.loading,
-    signup_valid: state.onboard.signup_valid
+    signup_valid: state.onboard.signup_valid,
+    centres: state.onboard.centres
   };
 };
 

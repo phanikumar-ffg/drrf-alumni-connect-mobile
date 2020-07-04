@@ -18,6 +18,7 @@ const initialState = {
   error: '',
   loading: false,
   signup_valid: false,
+  centres: []
 };
 
 export default (state = initialState, action) => {
