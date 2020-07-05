@@ -74,7 +74,7 @@ const ProfileScreen = ({ navigation }) => {
     const mobileError = mobileValidator(mobile.value);
     const stateError = stateValidator(state.value);
     const cityError = cityValidator(city.value);
-
+ 
     if (emailError || mobileError || nameError || stateError || cityError) {
       setName({ ...name, error: nameError });
       setEmail({ ...email, error: emailError });
@@ -91,8 +91,12 @@ const ProfileScreen = ({ navigation }) => {
       };
       this.props.updateProfile({userProfile});
     }
-
     navigation.navigate('ProfileScreen');
+  };
+
+  const _onPasswordChange = () => {
+    console.log('on password change method');
+    navigation.navigate('ChangePasswordScreen');
   };
 
   return (
@@ -158,6 +162,14 @@ const ProfileScreen = ({ navigation }) => {
         >
           Save
         </Button>
+
+        <Button
+          mode="contained"
+          onPress={_onPasswordChange}
+          style={styles.button}
+        >            Change Password
+          </Button>
+
       </Background>
     </ScrollView>
   );

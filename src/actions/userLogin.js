@@ -15,6 +15,19 @@ export const authInputChange = ({ field, value }) => {
 };
 
 export const login = ({ email, password }) => {
+  console.debug('in login action');
+  console.debug(email);
+
+  const user = {
+    email: 'abc',
+    password: 'abc',
+  };
+
+  // TO RUN IN LOCAL UNCOMMENT THIS AND COMMENT DISPATCH BELOW
+  // return dispatch => {
+  //   dispatch({ type: LOGIN_SUCCESS, payload: user });
+  // };
+  
   return dispatch => {
     dispatch({ type: LOADING });
     fetch('http://localhost:8080/api/v1/login', {

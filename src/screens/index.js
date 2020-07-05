@@ -12,3 +12,5 @@ export { default as AdminJobEntryScreen } from './AdminJobEntryScreen';
 export { default as HomePage } from './HomePage';
 export { default as AdminContentManagement } from './AdminContentManagement';
 export { default as AdminAddContentScreen } from './AdminAddContentScreen';
+export { default as AdminHelpScreen } from './AdminHelpScreen';
+export { default as ChangePasswordScreen } from './ChangePasswordScreen';

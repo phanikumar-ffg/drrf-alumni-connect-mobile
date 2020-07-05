@@ -11,6 +11,23 @@ export const passwordValidator = password => {
   if (!password || password.length <= 0) return 'Password cannot be empty.';
 };
 
+export const changePasswordValidator = password => {
+  console.log('Inside validate pwd method; '+ JSON.stringify(password)+' 1: '+ password.value);
+  const re2= /^\w+$/;
+ const re = /[0-9]/;
+  if (!password.value || password.value.length <= 0) {
+    return 'Password cannot be empty.';
+  }else if(re2.test(password.value)){
+    return 'Password must include any one of !, @, #, $, %';
+  }
+  else if(password.value.length<6){
+    return 'Password must contain atleast 6 letters';
+  }
+  else if(!re.test(password.value)) {
+    return 'password must contain at least one number (0-9)!';
+  }
+};
+
 export const nameValidator = name => {
   if (!name || name.length <= 0) return 'Name cannot be empty.';
 
