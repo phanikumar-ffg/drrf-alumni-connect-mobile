@@ -4,14 +4,19 @@
     "slug": "drrf-alumni-connect",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "ios": {
+      "bundleIdentifier": "com.jpmc.drrf",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.jpmc.drrf",
+      "versionCode": 1
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,13 +25,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
+    "assetBundlePatterns": ["**/*"],
     "description": "Dr Reddy Foundation Alumni Connect"
-    //"githubUrl": "https://github.com/phanikumar-ffg/drrf-alumni-connect-mobile.git"
   }
 }

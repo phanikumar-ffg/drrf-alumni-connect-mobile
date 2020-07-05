@@ -27,3 +27,8 @@ Project was created using [Expo](https://expo.io/). If you want standard native 
 expo eject
 ```
 
+Host: alumniconnectarvind.mysql.database.azure.com
+Port: 3306
+UserName: alumniadmin@alumniconnectarvind
+Password: Alpha@123
+DefaultSchema:alumniconnect

@@ -8,14 +8,15 @@ import {
   Dashboard,
   JobSearch,
   ForgotPasswordMsgScreen,
-    HelpScreen,
-  //  ProfileScreen,
-    SignUpSuccessScreen,
-    AdminJobEntryScreen,
-    HomeScreen,
-    HomePage,
-    AdminContentManagement,
-    AdminAddContentScreen
+  HelpScreen,
+  ProfileScreen,
+  SignUpSuccessScreen,
+  AdminJobEntryScreen,
+  HomeScreen,
+  HomePage,
+  AdminContentManagement,
+  AdminAddContentScreen,
+  AdminHelpScreen
 
 } from './screens';
 
@@ -27,14 +28,15 @@ const Router = createStackNavigator(
     Dashboard,
     JobSearch,
     ForgotPasswordMsgScreen,
-      HelpScreen,
-  //    ProfileScreen,
-      SignUpSuccessScreen,
-      AdminJobEntryScreen,
-      HomeScreen,
-     HomePage,
-     AdminContentManagement,
-     AdminAddContentScreen
+    HelpScreen,
+    ProfileScreen,
+    SignUpSuccessScreen,
+    AdminJobEntryScreen,
+    HomeScreen,
+    HomePage,
+    AdminContentManagement,
+    AdminAddContentScreen,
+//    AdminHelpScreen
   },
   {
     initialRouteName: 'HomeScreen',

@@ -1,45 +1,46 @@
 import{
-     AUTH_ADD_CONTENT,
-      ADD_CONTENT_FAILURE,
-      ADD_CONTENT_SUCCESS,
+     AUTH_DELETE_CONTENT,
+      DELETE_CONTENT_FAILURE,
+      DELETE_CONTENT_SUCCESS,
       LOADING
 } from '../actions/actionTypes';
 
 const initialState = {
-  contentURL: '',
-  contentDesc: '',
-  assessmentURL: '',
-  contentType: '',
+  url: '',
+  description: '',
+  assessURL: '',
+  content: {},
   error: '',
-  contentResponse: '',
-  loading: 'false',
+  content_valid: 'true',
+  loading: 'false'
 };
 
 export default (state = initialState, action) => {
-//  console.log('reducer');
+    console.log('reducer');
   switch (action.type) {
-    case AUTH_ADD_CONTENT:
+    case AUTH_DELETE_CONTENT:
       return {
         ...state,
         [action.payload.field]: action.payload.value,
       };
-    case ADD_CONTENT_SUCCESS:
-      console.log('ADD_CONTENT_SUCCESS');
+    case DELETE_CONTENT_SUCCESS:
+      console.log('DELETE_CONTENT_SUCCESS');
       return {
         ...state,
-        contentResponse: action.payload,
+        //user: action.payload,
+        content_valid: action.payload,
         error:'No Idea',
         loading: false,
       };
-    case ADD_CONTENT_FAILURE:
-      console.log('ADD_CONTENT_FAILURE');
+    case DELETE_CONTENT_FAILURE:
+      console.debug('ADD_CONTENT_FAILURE');
       return {
         ...state,
         error: 'Please enter Valid Data',
         loading: false,
       };
     case LOADING:
-       console.log('loading reducer');
+       console.debug('loading reducer');
        return {
          ...state,
          loading: true,

@@ -1,11 +1,5 @@
 import React, { memo, useState, Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -13,98 +7,108 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+import _ from 'lodash';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-//import DatePicker from 'react-date-picker';
-import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
-import _ from 'lodash';
 import { connect } from 'react-redux';
-import {authContentChange, addContent} from '../actions'
-
-import {
-
-} from '../core/utils';
-
+import { authContentChange, addContent } from '../actions';
+import {} from '../core/utils';
 import PropTypes from 'prop-types';
 
+const contentTypeOptions = [
+  { label: 'Video', value: 'Video' },
+  { label: 'Document', value: 'Document' },
+  { label: 'Website', value: 'Website' },
+];
+
 class AdminAddContentScreen extends React.Component {
-    componentWillReceiveProps(nextProps) {
-        if (!_.isEmpty(nextProps.user)) {
-          this.props.navigation.navigate('Dashboard', nextProps.user);
-        }
-      }
 
-    submitContent() {
-          console.debug('submitContent');
-          const { url, description, assessURL } = this.props;
-          this.props.addContent({ url, description, assessURL });
-    }
+  handleSubmit = () => {
+    console.log('submitContent');
+    const { contentURL, contentType, contentDesc, assessmentURL } = this.props;
+    console.log(contentURL + contentType + contentDesc + assessmentURL);
+    if(!contentURL.length) {alert('Content URL should not be empty'); return;}
+    if(!contentType.length) {alert('Content Type should not be empty'); return;}
+    if(!contentDesc.length) {alert('Content Description should not be empty'); return; }
+    if(!assessmentURL.length) {alert('Assessment URL should not be empty'); return;}
+     fetch('http://localhost:8080/api/v1/content/request', {
+                 method: 'POST',
+                 body: JSON.stringify({
+                 contentURL: this.props.contentURL,
+                 contentType: this.props.contentType,
+                 contentDesc: this.props.contentDesc,
+                 assessmentURL: this.props.assessmentURL
+              }),
+              headers: {
+                 'Content-Type': 'application/json',
+               }})
+               .then(response => {
+                    console.log('reponse received!');
+                   if (response.status == 200){
+                            console.log("added successfully");
+                            this.resetContent();
+                   }
+                   else {
+                             setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+                         }
+                   })
+                   .catch(err => {
+                        console.log("error occurred while adding");
+                     })
+  }
 
-    showButton() {
-        if (this.props.loading) {
-          return (
-            <View>
-              <ActivityIndicator size="small" />
-            </View>
-          );
-        } else {
-          return (
-            <Button mode="contained" onPress={this.submitContent.bind(this)}>
-              SAVE
-            </Button>
-          );
-        }
-      }
+  resetContent = () => {
+    console.log('reset content');
+    this.props.authContentChange ({field: 'contentURL',value: ''});
+    this.props.authContentChange ({field: 'Content Type', value: ''});
+    this.props.authContentChange ({field: 'contentDesc', value: ''});
+    this.props.authContentChange ({field: 'assessmentURL',value: ''});
+  }
 
-    showError() {
-       if (this.props.error) {
-          return <Paragraph>{this.props.error}</Paragraph>;
-       }
-    }
-     _onSave() {
-        return (
-          //   <Alert>Saved Successfully</Alert>
-          <View style={styles.container}>
-            <Paragraph>Saved Successfully</Paragraph>
+  render() {
+    return (
+      <ScrollView>
+        <Background>
+          <BackButton
+            goBack={() => this.props.navigation.navigate('AdminContentManagement')}
+          />
+          <Logo />
+          <Header>Dr. Reddy's Foundation</Header>
+          <Header>Add New Content</Header>
+          <View style={styles.formStyle}>
+            <form>
+              <TextInput label="Video URL" returnKeyType="next" value={this.props.contentURL}
+                onChangeText={value => this.props.authContentChange({field: 'contentURL',value: value, })}/>
+              <RNPickerSelect placeholder={{ label: 'Content Type', value: '' }} value={this.props.contentType}
+                style={pickerStyle} onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })} items={contentTypeOptions}/>
+              <TextInput label="Description" returnKeyType="next" value={this.props.contentDesc}  blurOnSubmit="true"
+                onChangeText={value => this.props.authContentChange({ field: 'contentDesc', value: value,})}/>
+              <TextInput label="Assessment URL" returnKeyType="next" value={this.props.assessmentURL}
+                onChangeText={value => this.props.authContentChange({field: 'assessmentURL',value: value, })}/>
+            </form>
           </View>
-        );
-      };
 
-    render(){
-        return (
-            <ScrollView>
-              <Background>
-                <BackButton goBack={() => this.props.navigation.navigate('HomeScreen') } />
-                <Logo />
-                <Header>Dr. Reddy's Foundation</Header>
-                <Header>Add New Content</Header>
-                <View style={styles.formStyle}>
-                  <form>
-                     <TextInput  label="Video URL" returnKeyType="next" value={this.props.url}
-                              onChangeText={text => this.props.authContentChange({ field: 'url', value: text }) }
-                              autoCapitalize="none" />
-                     <TextInput  label="Description" returnKeyType="next" value={this.props.description}
-                                 onChangeText={text => this.props.authContentChange({ field: 'description', value: text }) }
-                                 autoCapitalize="none" />
-                     <TextInput  label="Assessment URL" returnKeyType="next" value={this.props.assessURL}
-                                  onChangeText={text => this.props.authContentChange({ field: 'assessURL', value: text }) }
-                                  autoCapitalize="none" />
-                  </form>
-                </View>
-
-                  <Button mode="contained" onPress={this.submitContent.bind(this)} >
-                            SAVE
-                          </Button>
-                  <Button mode="contained" onPress={() => this.props.navigation.navigate('AdminAddContentScreen') }>
-                            RESET
-                   </Button>
-
-              </Background>
-            </ScrollView>
-          );
-    }
+          <Button mode="contained" onPress={this.handleSubmit.bind(this)}> SAVE </Button>
+          <Button mode="contained" onPress={this.resetContent.bind(this)}> RESET </Button>
+        </Background>
+      </ScrollView>
+    );
+  }
 }
+const pickerStyle = StyleSheet.create({
+  inputAndroid: {
+    backgroundColor: theme.colors.surface,
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingRight: 4,
+    borderRadius: 4,
+    width: '100%',
+    marginVertical: 12,
+    color: '#999',
+    borderColor: '#808080',
+  },
+});
 
 const styles = StyleSheet.create({
   label: {
@@ -137,13 +141,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    url: state.auth.url,
-    description: state.auth.description,
-    assessURL: state.auth.assessURL,
-    loading: state.auth.loading,
+    contentURL: state.addContent.contentURL,
+    contentType: state.addContent.contentType,
+    contentDesc: state.addContent.contentDesc,
+    assessmentURL: state.addContent.assessmentURL,
+    loading: state.addContent.loading,
   };
 };
 
-export default connect(mapStateToProps, { authContentChange, addContent })(
-  AdminAddContentScreen
-);
+export default connect(mapStateToProps)(memo(AdminAddContentScreen));
+

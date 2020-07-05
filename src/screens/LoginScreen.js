@@ -60,7 +60,7 @@ class LoginScreen extends React.Component {
     return (
       <Background>
         <Logo />
-        <Header>Dr. Reddy's Foundation</Header>
+        <Header>Dr. Reddy's Foundation - DEV</Header>
 
         <TextInput
           label="Email"

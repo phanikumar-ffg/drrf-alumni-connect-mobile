@@ -1,7 +1,8 @@
 import {
   AUTH_ADD_CONTENT,
   ADD_CONTENT_FAILURE,
-  ADD_CONTENT_SUCCESS
+  ADD_CONTENT_SUCCESS,
+  LOADING
 } from './actionTypes';
 
 export const authContentChange = ({ field, value }) => {
@@ -11,60 +12,36 @@ export const authContentChange = ({ field, value }) => {
   };
 };
 
-export const addContent = ({ url, description, assessURL }) => {
-  console.debug('in add Content action');
-  console.debug(url);
-  console.debug(description);
-  console.debug(assessURL)
+export const addContent = ({ contentURL, contentType, contentDesc, assessmentURL }) => {
+  console.log('in add Content action');
+   return dispatch => {
+     dispatch({ type: LOADING });
+     fetch('http://localhost:8080/api/v1/content/request', {
+       method: 'POST',
+       headers: {
+         Accept: 'application/json',
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({
+         contentURL: contentURL,
+         contentType: contentType,
+         contentDesc: contentDesc,
+         assessmentURL: assessmentURL
+       }),
+     })
+//       .then(response => response.json())
+       .then(res => {
+         console.log('result SDFGHJ : '+res.text());
+         //const content_valid = res;
+        /* if(res.errorMessage){
+            dispatch({ type: ADD_CONTENT_FAILURE, payload: res.errorMessage });
+         } else*/
+         dispatch({ type: ADD_CONTENT_SUCCESS, payload : res });
+       })
+       .catch(error => {
+         console.log('going into error :P');
+         dispatch({ type: ADD_CONTENT_FAILURE, payload: 'Cannot add data' });
+       });
 
-  const content = {
-    url: 'abc',
-    assessURL: 'abc',
-    description: 'abc'
-  };
-
-  return dispatch => {
-    dispatch({ type: ADD_CONTENT_SUCCESS, payload: content });
-  };
-
-  // return dispatch => {
-  //   dispatch({ type: LOADING });
-  //   fetch('http://10.0.2.2:8080/url', {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       url: url,
-  //       assessURL: assessURL,
-  //        description: description
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then(res => {
-  //       console.debug(res);
-  //       const user = {
-  //         email: res.email,
-  //         password: res.password,
-  //       };
-  //       dispatch({ type: LOGIN_SUCCESS, payload: user });
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //       dispatch({ type: LOGIN_FAILURE });
-  //     });
-
-  //   /* return firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(user => {
-  //       console.debug('login success');
-  //       dispatch({ type: LOGIN_SUCCESS, payload: user });
-  //     })
-  //     .catch(function(error) {
-  //       console.debug('login failure');
-  //       dispatch({ type: LOGIN_FAILURE });
-  //     }); */
-  // };
+   };
 };
