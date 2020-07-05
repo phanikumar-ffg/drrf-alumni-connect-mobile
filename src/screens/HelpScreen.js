@@ -12,7 +12,7 @@ import BackButton from '../components/BackButton';
 import RNPickerSelect from 'react-native-picker-select';
 import { connect } from 'react-redux';
 import { userSubmitHelp,authInputChange } from '../actions';
-
+import config from '../config/index.js'
 
 class HelpScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -53,7 +53,7 @@ class HelpScreen extends React.Component {
   componentDidMount(){
     const headers = { 'Content-Type': 'application/json' }
 
-    fetch("http://localhost:8080/api/v1/helpDetails/help_type='Problem Type'",{headers},{mode:"no-cors"})
+    fetch(config.baseurl+"/api/v1/helpDetails/help_type='Problem Type'",{headers},{mode:"no-cors"})
     .then(response =>
       response.json()
 
@@ -69,7 +69,7 @@ class HelpScreen extends React.Component {
         console.error();
       });
 
-    fetch("http://localhost:8080/api/v1/helpDetails/help_type='Problem Details'",{headers},{mode:"no-cors"})
+    fetch(config.baseurl+"/api/v1/helpDetails/help_type='Problem Details'",{headers},{mode:"no-cors"})
     .then(response =>
       response.json()
 

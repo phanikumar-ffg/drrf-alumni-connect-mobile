@@ -4,6 +4,7 @@ import {
     PROFILE_UPDATE_SUCCESS,
     LOADING,
   } from './actionTypes';
+import config from '../config/index.js'
   
   export const authInputChange1 = ({ field, value }) => {
     return {
@@ -30,7 +31,7 @@ import {
   
     return dispatch => {
     dispatch({ type: LOADING });
-    fetch('http://10.0.2.2:8080/updateProfile', {
+    fetch(config.baseurl+'/updateProfile', {
     method: 'POST',
     headers: {
           Accept: 'application/json',

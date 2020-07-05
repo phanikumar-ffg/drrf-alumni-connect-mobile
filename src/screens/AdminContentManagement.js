@@ -10,6 +10,7 @@ import Button from '../components/Button';
 import { connect } from 'react-redux';
 import {authContentGet, getContent } from '../actions';
 import {authContentDelete, deleteContent} from '../actions';
+import config from '../config/index.js'
 
 const AdminContentManagement = ({ props, navigation }) => {
     var [data, setData] = useState({value:[]})
@@ -22,7 +23,7 @@ const AdminContentManagement = ({ props, navigation }) => {
     var [showAlert, setAlertVisibility] = useState(false)
 
     useEffect(() => {
-              fetch("http://localhost:8080/api/v1/content/details")
+              fetch(config.baseurl+"/api/v1/content/details")
               .then(response => {
                   if (response.status != 200){
                       setLoaderVisibility(false)
@@ -68,7 +69,7 @@ const AdminContentManagement = ({ props, navigation }) => {
           setButtonLoading(true)
           let contentDetails = {...data.value[index], "index": index}
           setContentSelected(contentDetails)
-          fetch('http://localhost:8080/api/v1/content/delete', {
+          fetch(config.baseurl+'/api/v1/content/delete', {
              method: 'POST',
              body: JSON.stringify({
              contentURL: content.contentURL,

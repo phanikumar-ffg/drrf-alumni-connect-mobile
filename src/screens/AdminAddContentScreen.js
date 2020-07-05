@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { authContentChange, addContent } from '../actions';
 import {} from '../core/utils';
 import PropTypes from 'prop-types';
-
+import config from '../config/index.js'
 const contentTypeOptions = [
   { label: 'Video', value: 'Video' },
   { label: 'Document', value: 'Document' },
@@ -32,7 +32,7 @@ class AdminAddContentScreen extends React.Component {
     if(!contentType.length) {alert('Content Type should not be empty'); return;}
     if(!contentDesc.length) {alert('Content Description should not be empty'); return; }
     if(!assessmentURL.length) {alert('Assessment URL should not be empty'); return;}
-     fetch('http://localhost:8080/api/v1/content/request', {
+     fetch(config.baseurl+'/api/v1/content/request', {
                  method: 'POST',
                  body: JSON.stringify({
                  contentURL: this.props.contentURL,

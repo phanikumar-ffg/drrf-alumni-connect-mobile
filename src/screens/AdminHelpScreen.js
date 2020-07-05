@@ -12,6 +12,7 @@ import { theme } from '../core/theme';
 import { connect } from 'react-redux';
 import { adminHelpRequest } from '../actions/index'
 import axios from "axios";
+import config from '../config/index.js'
 
 
 const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
@@ -44,7 +45,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                                             { cancelable: false }
                                         )
                                         inpdt([...inp, j])
-                                        axios.put(`http://localhost:8080/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
+                                        axios.put(config.baseurl+`/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
                                             .then(response => console.log(response))
                                             .catch(err => { setiserror(true), console.log(err) })
 
@@ -102,7 +103,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                                                 [{ text: "OK" }],
                                                 { cancelable: false }
                                             )
-                                            axios.put(`http://localhost:8080/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
+                                            axios.put(config.baseurl+`/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
                                                 .then(response => console.log(response))
                                                 .catch(err => { setiserror(true) })
                                             inpdt(inp.filter(obj => j.Student_Id !== obj.Student_Id))
@@ -153,7 +154,7 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
     const getAllAdminHelpRequests = async () => {
         try {
 
-            const response = await axios.get("http://localhost:8080/api/v1/adminhelp/")
+            const response = await axios.get(config.baseurl+"/api/v1/adminhelp/")
             // setData(response.data)
             FilterData(response);
             FilterInprogressData(response);

@@ -11,6 +11,7 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import RNPickerSelect from 'react-native-picker-select';
 import { Paragraph } from 'react-native-paper';
+import config from '../config/index.js'
 
 const AdminJobEntryScreen = ({ navigation },props) => {
     var [yesButtonLoading, setButtonLoading] = useState(false)
@@ -45,7 +46,7 @@ const AdminJobEntryScreen = ({ navigation },props) => {
   }
   useEffect(() => {
     //hardcoding url with studentId=1234 for testing
-    fetch('http://localhost:8080/api/v1/cityDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
+    fetch(config.baseurl+'/api/v1/cityDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
     .then(response => response.json())
     .then(json => {
       console.log(json);
@@ -73,7 +74,7 @@ const AdminJobEntryScreen = ({ navigation },props) => {
     console.log("JobId"+jobId.value);
     console.log("Qualification required"+qualification.value);
     console.log("City Id"+cityId);
-    fetch('http://localhost:8080/api/v1/saveJobInfo', {
+    fetch(config.baseurl+'/api/v1/saveJobInfo', {
         method: 'POST',
         body: JSON.stringify({
             companyName:companyName.value,

@@ -1,5 +1,5 @@
 import {SUBMIT_HELP_SUCCESS, SUBMIT_HELP_FAILURE,AUTH_INPUT_CHANG,LOADING} from './actionTypes';
-
+import config from '../config/index.js'
 /*export const authInputChange = ({ field, value }) => {
   return {
     type: AUTH_INPUT_CHANGE,
@@ -27,7 +27,7 @@ export const userSubmitHelp = ( prblmType, prblmDesc, additionalDetails,studentI
 
    return dispatch => {
         dispatch({ type: LOADING });
-        fetch('http://localhost:8080/api/v1/help', {
+        fetch(config.baseurl+'/api/v1/help', {
           method: 'POST',
           body: JSON.stringify({
             studentId:studentId,

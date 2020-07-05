@@ -6,6 +6,7 @@ import { Button as PaperButton } from 'react-native-paper';
 import Button from '../components/Button';
 import { theme } from '../core/theme';
 import {connect} from 'react-redux';
+import config from '../config/index.js'
 
 //Main Job Search React Component
 const JobSearch = (props) => {
@@ -80,7 +81,7 @@ const JobSearch = (props) => {
 
     //Function runs once only when Job Search screen is rendered to get job data
     useEffect(() => {
-        fetch('http://localhost:8080/api/v1/jobs/'+props.user.studentId)
+        fetch(config.baseurl+'/api/v1/jobs/'+props.user.studentId)
         .then(response => {
             if (response.status != 200){
                 setLoaderVisibility(false)
@@ -169,7 +170,7 @@ const JobSearch = (props) => {
      //Send Job Request to the backend with job and user details
      const sendJobRequest = () => {
         setButtonLoading(true)
-        fetch('http://localhost:8080/api/v1/jobrequest', {
+        fetch(config.baseurl+'/api/v1/jobrequest', {
             method: 'POST',
             body: JSON.stringify({
                 studentId: props.user.studentId,
