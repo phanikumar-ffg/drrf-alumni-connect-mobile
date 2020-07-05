@@ -1,4 +1,4 @@
-import React, { memo, connect,useState } from 'react';
+/*import React, { memo, connect,useState } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import {
@@ -201,5 +201,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, { authInputChange, updateProfile })(
   ProfileScreen
 );
-
+*/
 

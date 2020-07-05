@@ -10,7 +10,7 @@ import AdminContentManagement from './AdminContentManagement';
 import {View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import ProfileScreen from './ProfileScreen';
+//import ProfileScreen from './ProfileScreen';
 import { createAppContainer } from 'react-navigation';
 import HomePage from './HomePage';
 
@@ -50,7 +50,7 @@ const TabNavigator= createMaterialBottomTabNavigator(
                     )
                 }
         },
-        Profile: { screen: ProfileScreen,
+     /*   Profile: { screen: ProfileScreen,
                 navigationOptions: {
                     tabBarLabel:'Profile',   
                     activeColor:"#600EE1",
@@ -60,7 +60,7 @@ const TabNavigator= createMaterialBottomTabNavigator(
                         </View>
                     )
                 }
-        },
+        },*/
       },
       {
         initialRouteName: 'Home',
