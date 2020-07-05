@@ -5,21 +5,24 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 import TextInput from '../components/TextInput';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { emailValidator } from '../core/utils';
+import { Card, ListItem, Icon, SearchBar } from 'react-native-elements';
 import { theme } from '../core/theme';
 import BackButton from '../components/BackButton';
 import RNPickerSelect from 'react-native-picker-select';
 import { connect } from 'react-redux';
-import { userSubmitHelp,authInputChange } from '../actions';
-
+import { userSubmitHelp, userSubmitEmptyDetails,clearDetails } from '../actions';
 
 class HelpScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.error);
     if (!_.isEmpty(nextProps.user)) {
       this.props.navigation.navigate('Dashboard', nextProps.user);
     }
   }
+  isActive = false;
+   Alert = null;
   state={
     problemType:[],
     selectedProblemType:"",
@@ -27,37 +30,76 @@ class HelpScreen extends React.Component {
     problemDetails:[],
     selectedProblemDetails:"",
     additionalDetails:"",
-    dummyvl:["test1","test2"]
+    dummyvl:["test1","test2"],
+    error:"Please fill required details"
   };
 
   submitDetails(){
     const { prblmType,prblmDesc,additionalDetails,user } = this.props;
     console.debug('submit Details');
     console.log("inside submit "+this.state.selectedProblemType);
-
-   let studentId=1 ; // should use this.props.user.studentId;
-   let centerId=1;
-    console.debug(this.props.additionalDetails);
-
-    this.props.userSubmitHelp(this.state.selectedProblemType,this.state.selectedProblemDetails, this.state.additionalDetails,studentId,centerId );
+    if(this.state.selectedProblemType=='' || this.state.selectedProblemDetails==''){
+      this.props.userSubmitEmptyDetails(this.state.selectedProblemType,this.state.selectedProblemDetails, this.state.additionalDetails)
+     /* return <Paragraph>Test</Paragraph>;*/
+    }
+   else{
+      let aspirantId=1 ; // should use this.props.user.aspirantId;
+      let centerId=1;
+      console.debug(this.props.additionalDetails);
+      this.props.userSubmitHelp(this.state.selectedProblemType,this.state.selectedProblemDetails, this.state.additionalDetails,aspirantId,centerId );
+   }
   }
 
   showError() {
-    if(prblmType=='' || prblmDesc=='' || additionalDetails==''){
-      console.log("error");
-    }
     if (this.props.error) {
-      return <Paragraph>{this.props.error}</Paragraph>;
+      console.log("Inside props error");
+      this.isActive=true; 
+      return(<View style={{ backgroundColor: 'lightblue',flexDirection: 'row'}}>
+        <Paragraph >{this.props.error}</Paragraph>
+        <Icon name = 'clear' size = {25}  onPress = {() => this.clear(this)} />
+        </View> );
     }
+    else{
+      return ;
+    } 
+  }
+  clear(){
+  if(this.isActive){
+    this.props.clearDetails();
+    return<Paragraph></Paragraph>
+  }
+  }
+  showButton(){
+    if (this.props.loading) {
+      return (
+        <View>
+          <ActivityIndicator size="small" />
+        </View>
+      );
+    }
+    else{
+      return (
+    <Button mode="contained" onPress={this.submitDetails.bind(this) }>
+      Submit
+    </Button>
+      );
+    }
+
   }
   componentDidMount(){
     const headers = { 'Content-Type': 'application/json' }
 
     fetch("http://localhost:8080/api/v1/helpDetails/help_type='Problem Type'",{headers},{mode:"no-cors"})
-    .then(response =>
-      response.json()
-
-    )
+    .then(response =>{
+      if (response.status != 200){
+        setLoaderVisibility(false)
+        setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+        setAlertVisibility(true)
+    }
+    else{
+        return response.json()
+}
+})
        .then(data =>{
         console.log("data=>"+data);
         console.log("problemType=>"+data);
@@ -93,8 +135,10 @@ class HelpScreen extends React.Component {
     <BackButton goBack={() => this.props.navigation.navigate('Dashboard')} />
     <Logo />
     <Paragraph>Need help - Tell us more</Paragraph>
+    {this.showError()}
     <View style={styles.container}>
       <select
+      ref={r=>this.firstNameInput=r}
       style={{height: 4+'em'}}
         value={this.state.selectedProblemType}
         onChange={e =>
@@ -117,8 +161,8 @@ class HelpScreen extends React.Component {
           </option>))
           }
       </select>
-      <div style={{ color:"red", marginTop:"5px"}}>
-        {this.state.validationError}
+      <div style={ {color: 'red'}}>
+       <Paragraph>{this.state.validationError}</Paragraph> 
       </div>
       </View>
     <View style={styles.container}>
@@ -144,9 +188,6 @@ class HelpScreen extends React.Component {
           </option>))
           }
       </select>
-      <div style={{ color:"red", marginTop:"5px"}}>
-        {this.state.validationError}
-      </div>
     </View>
     <TextInput
       label="Additional-Details"
@@ -158,11 +199,13 @@ class HelpScreen extends React.Component {
        // this.props.userSubmitHelp({additionalDetails:text})
       }
     />
-    <Button mode="contained" onPress={this.submitDetails.bind(this) }>
-      Submit
-    </Button>
+   
+    {this.showButton()}
+    
+    
   </Background>
-    );
+  
+ );
   }
 }
 const pickerStyle = StyleSheet.create({
@@ -187,6 +230,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 12,
   },
+  formStyle:{
+    backgroundColor: theme.colors.surface
+  }
 });
 const mapStateToProps = state => {
   return {
@@ -198,6 +244,6 @@ const mapStateToProps = state => {
     error:state.help.error,
   };
 };
-export default connect(mapStateToProps, { userSubmitHelp })(
+export default connect(mapStateToProps, { userSubmitHelp, userSubmitEmptyDetails,clearDetails })(
   HelpScreen
 );
