@@ -4,6 +4,7 @@ import {
   SIGNUP_SUCCESS,
   LOADING,
 } from './actionTypes';
+import config from '../config/index.js';
 
 export const onboardInputChange = ({ field, value }) => {
   return dispatch => {
@@ -21,18 +22,19 @@ export const signup=(details)=>{
           //dispatch({ type: SIGNUP_SUCCESS ,payload: signup_validation });
           //dispatch({type:SIGNUP_FAILURE});
           dispatch({type:LOADING});
-          fetch('http://localhost:8080/api/v1/signup', {
+          fetch(config.baseurl+'/api/v1/signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                  firstName:details.name.value,
-                  studentId:details.studentID.value,
-                  mobile:details.phone.value,
+                  firstName:details.firstName.value,
+                  lastName:details.lastName.value,
+                  aspirantId:details.studentID.value,
+                  phone:details.phone.value,
                   dob:details.dateOfBirth.value,
-                  email:details.email.value,
-                  centerId:details.centerName.value,
+                  emailId:details.email.value,
+                  centerName:details.centerName.value,
             }),
           })
             .then(response => response.json())
@@ -40,7 +42,7 @@ export const signup=(details)=>{
               console.debug(res);
               const userSignup = {
                   name:res.firstName,
-                  email:res.email,
+                  email:res.emailId,
               };
               dispatch({ type: SIGNUP_SUCCESS, payload: userSignup });
             })

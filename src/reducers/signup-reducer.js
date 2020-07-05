@@ -7,7 +7,8 @@ import{
 
 
 const initialState = {
-  name: {value:'',error:''},
+  firstName: {value:'',error:''},
+  lastName: {value:'',error:''},
   studentID: {value:'',error:''},
   phone: {value:'',error:''},
   dateOfBirth: {value:'',error:''},
@@ -17,6 +18,7 @@ const initialState = {
   error: '',
   loading: false,
   signup_valid: false,
+  centres: []
 };
 
 export default (state = initialState, action) => {

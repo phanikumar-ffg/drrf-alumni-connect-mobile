@@ -20,6 +20,7 @@ import 'react-dropdown/style.css';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import _ from 'lodash';
+import config from '../config/index.js'
 import { connect } from 'react-redux';
 import { onboardInputChange,signup } from '../actions';
 import Paragraph from '../components/Paragraph';
@@ -43,9 +44,12 @@ class RegisterScreen extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.signup_valid);
         console.log(nextProps.error);
-        //if(nextProps.user!=null){
-        if (!_.isEmpty(nextProps.user)) {
-            this.props.navigation.navigate('SignUpSuccessScreen', nextProps.user);
+        console.log(nextProps.user);
+        if(nextProps.user!=null){
+           if(nextProps.user.email!=null){
+           // if (!_.isEmpty(nextProps.user)) {
+                this.props.navigation.navigate('SignUpSuccessScreen', nextProps.user);
+            }
         }
     }
 
@@ -74,10 +78,28 @@ class RegisterScreen extends React.Component {
       }
     }
 
+    componentDidMount(){
+    fetch(config.baseurl+'/api/v1/centreDetails', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+                .then(response => response.json())
+                .then(res => {
+                  console.debug(res);
+                  this.props.onboardInputChange({ field: 'centres', value:res});
+                })
+                .catch(error => {
+                console.log(error);
+                });
+    }
+
   onSignUpPressed = () => {
        console.log('fref');
-       console.log(this.props.name.value);
-       const nameError = nameValidator(this.props.name.value);
+       console.log(this.props.firstName.value);
+       const firstNameError = nameValidator(this.props.firstName.value);
+       const lastNameError = nameValidator(this.props.lastName.value);
        const studentIDError = studentIDValidator(this.props.studentID.value);
        const phoneError = phoneValidator(this.props.phone.value);
        const dateOfBirthError = dateOfBirthValidator(this.props.dateOfBirth.value);
@@ -85,14 +107,16 @@ class RegisterScreen extends React.Component {
        const centerNameError = centerNameValidator(this.props.centerName.value);
        console.log('onsignup');
        if (
-         nameError ||
+         firstNameError ||
+         lastNameError ||
          studentIDError ||
          phoneError ||
          dateOfBirthError ||
          emailError ||
          centerNameError
        ) {
-         this.props.onboardInputChange({field:'name', value:{value:this.props.name.value,error:nameError}});
+         this.props.onboardInputChange({field:'firstName', value:{value:this.props.firstName.value,error:firstNameError}});
+         this.props.onboardInputChange({field:'lastName', value:{value:this.props.lastName.value,error:lastNameError}});
          this.props.onboardInputChange({field:'studentID', value:{value:this.props.studentID.value,error:studentIDError}});
          this.props.onboardInputChange({field:'phone', value:{value:this.props.phone.value,error:phoneError}});
          this.props.onboardInputChange({field:'dateOfBirth', value:{value:this.props.dateOfBirth.value,error:dateOfBirthError}});
@@ -116,14 +140,24 @@ class RegisterScreen extends React.Component {
             <View style={styles.formStyle}>
 
                 <TextInput
-                  label="Name"
+                  label="First Name"
                   returnKeyType="next"
-                  value={this.props.name.value}
+                  value={this.props.firstName.value}
                   onChangeText={text => //this.setState({ name:{value:text,error:''} })}
-                  this.props.onboardInputChange({ field: 'name', value: {value:text,error:''}})}
+                  this.props.onboardInputChange({ field: 'firstName', value: {value:text,error:''}})}
 
-                  error={!!this.props.name.error}
-                  errorText={this.props.name.error}
+                  error={!!this.props.firstName.error}
+                  errorText={this.props.firstName.error}
+                />
+                <TextInput
+                  label="Last Name"
+                  returnKeyType="next"
+                  value={this.props.lastName.value}
+                  onChangeText={text => //this.setState({ name:{value:text,error:''} })}
+                  this.props.onboardInputChange({ field: 'lastName', value: {value:text,error:''}})}
+
+                  error={!!this.props.lastName.error}
+                  errorText={this.props.lastName.error}
                 />
 
                 <TextInput
@@ -178,7 +212,7 @@ class RegisterScreen extends React.Component {
                     value={this.props.centerName.value}
                     style={pickerStyle}
                     onValueChange={value => this.props.onboardInputChange({ field: 'centerName', value: {value:value,error:'' } })}
-                    items={options}
+                    items={this.props.centres.map(j=>({value:j.centreName,label:j.centreName}))}
                   />
                   {this.props.centerName.error ? (
                     <Text style={styles.error}>{this.props.centerName.error}</Text>
@@ -244,7 +278,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    name: state.onboard.name,
+    firstName: state.onboard.firstName,
+    lastName: state.onboard.lastName,
     studentID: state.onboard.studentID,
     phone: state.onboard.phone,
     dateOfBirth: state.onboard.dateOfBirth,
@@ -253,7 +288,8 @@ const mapStateToProps = state => {
     user: state.onboard.user,
     error: state.onboard.error,
     loading: state.onboard.loading,
-    signup_valid: state.onboard.signup_valid
+    signup_valid: state.onboard.signup_valid,
+    centres: state.onboard.centres
   };
 };
 
