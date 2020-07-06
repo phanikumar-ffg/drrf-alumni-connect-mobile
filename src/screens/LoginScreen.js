@@ -29,10 +29,10 @@ class LoginScreen extends React.Component {
   submitLogin() {
     console.debug('submitLogin');
     //console.debug({ this.email, this.props.emailpassword });
-    const { email, password } = this.props;
-    console.debug(email);
+    const { emailId, password } = this.props;
+    console.debug(emailId);
 
-    this.props.login({ email, password });
+    this.props.login({ emailId, password });
   }
 
   showButton() {
@@ -60,17 +60,17 @@ class LoginScreen extends React.Component {
     return (
       <Background>
         <Logo />
-        <Header>Dr. Reddy's Foundation - DEV</Header>
+        <Header>Dr. Reddy's Foundation</Header>
 
         <TextInput
           label="Email"
           returnKeyType="next"
-          value={this.props.email}
+          value={this.props.emailId}
           onChangeText={text =>
-            this.props.authInputChange({ field: 'email', value: text })
+            this.props.authInputChange({ field: 'emailId', value: text })
           }
           autoCapitalize="none"
-          autocompletetype="email"
+          autocompletetype="emailId"
           textContentType="emailAddress"
           keyboardType="email-address"
         />
@@ -107,22 +107,26 @@ class LoginScreen extends React.Component {
         </View>
 
         <View style={styles.row}>
-        <Text style={styles.label}>Do you want to enter Job details? </Text>
+          <Text style={styles.label}>Do you want to enter Job details? </Text>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')}
+            onPress={() =>
+              this.props.navigation.navigate('AdminJobEntryScreen')
+            }
           >
-          <Text style={styles.link}>JobDetails</Text>
+            <Text style={styles.link}>JobDetails</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.row}>
-                <Text style={styles.label}>Do you want to enter Job details? </Text>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('AdminContentManagement')}
-                  >
-                  <Text style={styles.link}>ContentManagement</Text>
-                  </TouchableOpacity>
-                </View>
+          <Text style={styles.label}>Do you want to enter Job details? </Text>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('AdminContentManagement')
+            }
+          >
+            <Text style={styles.link}>ContentManagement</Text>
+          </TouchableOpacity>
+        </View>
       </Background>
     );
   }
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    email: state.auth.email,
+    emailId: state.auth.emailId,
     password: state.auth.password,
     loading: state.auth.loading,
     user: state.auth.user,

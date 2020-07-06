@@ -6,7 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOADING,
 } from './actionTypes';
-import config from '../config/index.js'
+import config from '../config/index.js';
 
 export const authInputChange = ({ field, value }) => {
   return {
@@ -15,17 +15,17 @@ export const authInputChange = ({ field, value }) => {
   };
 };
 
-export const login = ({ email, password }) => {
+export const login = ({ emailId, password }) => {
   return dispatch => {
     dispatch({ type: LOADING });
-    fetch(config.baseurl+'/api/v1/login', {
+    fetch(config.baseurl + '/api/v1/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        emailId: email,
+        emailId: emailId,
         password: password,
       }),
     })
