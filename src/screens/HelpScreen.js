@@ -12,7 +12,9 @@ import { theme } from '../core/theme';
 import BackButton from '../components/BackButton';
 import RNPickerSelect from 'react-native-picker-select';
 import { connect } from 'react-redux';
+import config from '../config/index.js'
 import { userSubmitHelp, userSubmitEmptyDetails,clearDetails } from '../actions';
+
 
 class HelpScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -88,8 +90,7 @@ class HelpScreen extends React.Component {
   }
   componentDidMount(){
     const headers = { 'Content-Type': 'application/json' }
-
-    fetch("http://localhost:8080/api/v1/helpDetails/help_type='Problem Type'",{headers},{mode:"no-cors"})
+    fetch(config.baseurl+"/api/v1/helpDetails/help_type='Problem Type'",{headers},{mode:"no-cors"})
     .then(response =>{
       if (response.status != 200){
         setLoaderVisibility(false)
@@ -99,8 +100,7 @@ class HelpScreen extends React.Component {
     else{
         return response.json()
 }
-})
-       .then(data =>{
+}).then(data =>{
         console.log("data=>"+data);
         console.log("problemType=>"+data);
         this.setState({
@@ -111,7 +111,7 @@ class HelpScreen extends React.Component {
         console.error();
       });
 
-    fetch("http://localhost:8080/api/v1/helpDetails/help_type='Problem Details'",{headers},{mode:"no-cors"})
+    fetch(config.baseurl+"/api/v1/helpDetails/help_type='Problem Details'",{headers},{mode:"no-cors"})
     .then(response =>
       response.json()
 

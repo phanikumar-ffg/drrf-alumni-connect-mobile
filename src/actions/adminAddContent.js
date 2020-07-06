@@ -4,6 +4,7 @@ import {
   ADD_CONTENT_SUCCESS,
   LOADING
 } from './actionTypes';
+import config from '../config/index.js'
 
 export const authContentChange = ({ field, value }) => {
   return {
@@ -16,7 +17,7 @@ export const addContent = ({ contentURL, contentType, contentDesc, assessmentURL
   console.log('in add Content action');
    return dispatch => {
      dispatch({ type: LOADING });
-     fetch('http://localhost:8080/api/v1/content/request', {
+     fetch(config.baseurl+'/api/v1/content/request', {
        method: 'POST',
        headers: {
          Accept: 'application/json',
