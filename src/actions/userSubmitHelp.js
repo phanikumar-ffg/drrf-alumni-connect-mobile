@@ -1,18 +1,38 @@
-import {SUBMIT_HELP_SUCCESS, SUBMIT_HELP_FAILURE,AUTH_INPUT_CHANG,LOADING} from './actionTypes';
 import config from '../config/index.js'
+import {SUBMIT_HELP_SUCCESS, SUBMIT_HELP_FAILURE,HELP_EMPTY_DETAILS,LOADING,HELP_CLEAR} from './actionTypes';
+
 /*export const authInputChange = ({ field, value }) => {
   return {
     type: AUTH_INPUT_CHANGE,
     payload: { field, value },
   };
 }; */
+export const userSubmitEmptyDetails = (prblmType, prblmDesc, additionalDetails) =>{
 
-export const userSubmitHelp = ( prblmType, prblmDesc, additionalDetails,studentId,centerId ) =>{
+  if(prblmDesc =='' || prblmType == ''){
+   // error ='Please Fill All The Required Details';
+   // return HELP_EMPTY_DETAILS;
+    return dispatch => {
+      dispatch({ type: HELP_EMPTY_DETAILS });
+    }
+  }
+}
+
+export const clearDetails = () =>{
+ //  clear = true;
+  //if(clear){
+    return dispatch =>{
+      dispatch({type: HELP_CLEAR});
+    }
+  //}
+  
+}
+export const userSubmitHelp = ( prblmType, prblmDesc, additionalDetails,aspirantId,centerId ) =>{
     const userHelpDetails={
         prblmType:'abc',
         prblmDesc:'abc',
         additionalDetails:'',
-        studentId:''
+        aspirantId:''
     }
    /* return dispatch => {
         dispatch({ type: SUBMIT_HELP_SUCCESS, payload: userHelpDetails});
@@ -30,7 +50,7 @@ export const userSubmitHelp = ( prblmType, prblmDesc, additionalDetails,studentI
         fetch(config.baseurl+'/api/v1/help', {
           method: 'POST',
           body: JSON.stringify({
-            studentId:studentId,
+            aspirantId:aspirantId,
             reason: prblmType,
             details: prblmDesc,
             description: additionalDetails,
@@ -41,19 +61,22 @@ export const userSubmitHelp = ( prblmType, prblmDesc, additionalDetails,studentI
             'Content-Type': 'application/json;  charset=UTF-8',
           }
         })
-          .then(response => response.json())
-          .then(res => {
-            console.debug(res);
+          .then(response => {
+            if(response.status == 200){
+              dispatch({ type: SUBMIT_HELP_SUCCESS });
+            }
+            response.json()})
+         /* .then(res => {
+            console.log(res);
             const userHelpDetails = {
-                studentId: res.studentId,
+                aspirantId: res.aspirantId,
                 prblmType: res.prblmType,
                 prblmDesc: res.prblmDesc,
                 additionalDetails: res.additionalDetails,
-                centerId:1
-
+                centerId:1,
             };
-            dispatch({ type: SUBMIT_HELP_SUCCESS, payload: userHelpDetails });
-          })
+            dispatch({ type: SUBMIT_HELP_SUCCESS, payload: res });
+          })*/
           .catch(error => {
             console.error(error);
             dispatch({ type: SUBMIT_HELP_FAILURE });

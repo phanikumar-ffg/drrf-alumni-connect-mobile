@@ -13,7 +13,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { Paragraph } from 'react-native-paper';
 import config from '../config/index.js'
 
-const AdminJobEntryScreen = ({ navigation },props) => {
+const AdminJobEntryScreen = (props) => {
     var [yesButtonLoading, setButtonLoading] = useState(false)
     const [jobId, setJobId] = useState({ value: '', error: '' });
     const [companyName, setcompanyName] = useState({ value: '', error: '' });
@@ -24,22 +24,31 @@ const AdminJobEntryScreen = ({ navigation },props) => {
     var [city, setCity] = useState({value:[]});
     var[state, setState] = useState({value:[]});
     var[ cityData, setCityData]= useState([]);
-    var [showAlert, setAlertVisibility] = useState(true);
+    var[ stateData, setStateData] = useState([]);
+    var [showAlert, setAlertVisibility] = useState(false);
     var [cityId, setCityId] = useState(null);
     var [alertParameters, setAlertParameters] = useState({message:'', backgroundColor: '', icon: '', iconColor: ''});
     var Alert = null;
+    var stateId = null;
 
     const resAlert = (
-      <View>
-          <Text>Test</Text>
-      </View>
+      <View style = {{flex:1, flexDirection: 'row', paddingHorizontal: "5%", backgroundColor: alertParameters.backgroundColor}}>
+            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
+            <Paragraph style = {{fontSize: 20, flex: 5,}}>{alertParameters.message}</Paragraph>
+            <Icon name = 'clear' color = {alertParameters.iconColor} size = {25} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
+        </View> 
   );
   const resetForm = () => {
     setJobId({value:"",error:""});
     setcompanyName({value:"",error:""});
     setrole({value:"",error:""});
     setVacancyCount({value:"",error:""});
+    setqualification({value:"",error:""});
     setjobDescription({value:"",error:""});
+    setCity({value:""});
+    setState({value:""});
+    setStateData({value:""});
+    setCityData({value:""});
   };
   if (showAlert){
     Alert = resAlert;
@@ -48,14 +57,25 @@ const AdminJobEntryScreen = ({ navigation },props) => {
     //hardcoding url with studentId=1234 for testing
     fetch(config.baseurl+'/api/v1/cityDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
     .then(response => response.json())
+    fetch('http://localhost:8080/api/v1/stateDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
+    .then(response => {
+      if (response.status != 200){
+          setLoaderVisibility(false)
+          setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+          setAlertVisibility(true)
+      }
+      else{
+          return response.json()
+  }})
+
     .then(json => {
       console.log(json);
-      setCityData(json);
+      setStateData(json);
       let citylist=[];
       let statelist=[];
       json.forEach(i =>{
       //  citylist.push({label:i.city, value: i.city});
-        statelist.push({label:i.state, value: i.state});
+        statelist.push({label:i.stateName, value: i.stateName});
       })
       console.log(citylist);
      // setCity({value:citylist});
@@ -63,11 +83,8 @@ const AdminJobEntryScreen = ({ navigation },props) => {
       console.log(city);
     })
     .catch(err => {
-        console.log(err);
-        setAlertParameters({message: "Unable to fetch jobs", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
-        setAlertVisibility(true)
+      
     })
-
 },[]);
   const sendJobDetails=()=>{
     let student_details = props.user
@@ -93,11 +110,11 @@ const AdminJobEntryScreen = ({ navigation },props) => {
       if (response.status == 200){
       setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'});
       setAlertVisibility(true);
-      console.log("Details saved successfully");
         setButtonLoading(false);
         setTimeout(()=>{
           setAlertVisibility(false)
       }, 6000)
+      resetForm();
       }
       else{
         setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
@@ -121,25 +138,51 @@ const AdminJobEntryScreen = ({ navigation },props) => {
   const getCityId=(selectedCity)=>{
      console.log(selectedCity);
     let selectedcityList= cityData.filter(i => {
-       return i.city == selectedCity;
+       return i.cityName == selectedCity;
      });
      console.log(selectedcityList[0].cityId);
      setCityId(selectedcityList[0].cityId);
   }
 
+
   const getState=(selectedState)=>{
     let citylist=[];
     console.log(selectedState);
-    cityData.forEach(i =>{
-      if(i.state == selectedState){
-        citylist.push({label:i.city, value: i.city});
+    let selectedStateList = stateData.filter(i => {
+      return i.stateName == selectedState;
+    });
+    console.log(selectedStateList[0].stateId);
+    stateId = selectedStateList[0].stateId;
+    console.log("stateId"+stateId);
+    const headers = { 'Content-Type': 'application/json' }
+    fetch('http://localhost:8080/api/v1/cityDetails/'+stateId,{headers},{mode:"no-cors"})
+    .then(response =>  {
+      if (response.status != 200){
+          setLoaderVisibility(false)
+          setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+          setAlertVisibility(true)
       }
-    });
-    console.log(citylist);
-    setCity({value:citylist});
-    let selectedStateList= cityData.filter(i => {
-      return i.state == selectedState;
-    });
+      else{
+          return response.json()
+  }})
+    .then(json => {
+      setCityData(json);
+      json.forEach(i =>{
+        citylist.push({label: i.cityName, value: i.cityName});
+        cityData.push(i.cityName);
+      })
+      setCity({value:citylist});
+    }).catch(err => {})
+   // cityData.forEach(i =>{
+     // if(i.state == selectedState){
+       // citylist.push({label:i.city, value: i.city});
+      //}
+    //});
+    //console.log(citylist);
+    //setCity({value:citylist});
+    //let selectedStateList= cityData.filter(i => {
+      //return i.state == selectedState;
+    //});
 
   }
   return (
@@ -148,7 +191,7 @@ const AdminJobEntryScreen = ({ navigation },props) => {
         <BackButton goBack={() => navigation.navigate('LoginScreen')} />
         <Logo />
         <Header>New Job Entry - Admin</Header>
-
+        {Alert}
         <TextInput label="Company Name"  value= {companyName.value}
       onChangeText={text =>
         setcompanyName({value:text, error:''})
@@ -219,6 +262,24 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 17,
   },
+  success:{
+    flex:1, 
+    flexDirection: 'row',
+    paddingHorizontal: "90%", 
+   // paddingBottom: "10%",
+    backgroundColor:'#b6e0bc',
+    color: 'red',
+    borderColor: '#808080'
+  },
+  error:{
+    flex:1, 
+    flexDirection: 'row',
+    paddingHorizontal: "90%", 
+   // paddingBottom: "10%",
+    backgroundColor:'#e6c8c8',
+    color: 'red',
+    borderColor: '#808080'
+  }
 });
 const pickerStyle = StyleSheet.create({
   inputAndroid: {
