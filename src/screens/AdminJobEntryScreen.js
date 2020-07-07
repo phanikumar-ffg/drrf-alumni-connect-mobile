@@ -11,7 +11,7 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import RNPickerSelect from 'react-native-picker-select';
 import { Paragraph } from 'react-native-paper';
-import config from '../config/index.js'
+import config from '../config/index.js';
 
 const AdminJobEntryScreen = (props) => {
     var [yesButtonLoading, setButtonLoading] = useState(false)
@@ -45,19 +45,17 @@ const AdminJobEntryScreen = (props) => {
     setVacancyCount({value:"",error:""});
     setqualification({value:"",error:""});
     setjobDescription({value:"",error:""});
-    setCity({value:""});
-    setState({value:""});
-    setStateData({value:""});
-    setCityData({value:""});
+  //  setCity({value:""});
+    //setState({value:""});
+   // setStateData({value:""});
+    //setCityData({value:""});
   };
   if (showAlert){
     Alert = resAlert;
   }
   useEffect(() => {
     //hardcoding url with studentId=1234 for testing
-    fetch(config.baseurl+'/api/v1/cityDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
-    .then(response => response.json())
-    fetch('http://localhost:8080/api/v1/stateDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
+    fetch(config.baseurl+'/api/v1/stateDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
     .then(response => {
       if (response.status != 200){
           setLoaderVisibility(false)
@@ -67,7 +65,6 @@ const AdminJobEntryScreen = (props) => {
       else{
           return response.json()
   }})
-
     .then(json => {
       console.log(json);
       setStateData(json);
@@ -155,7 +152,7 @@ const AdminJobEntryScreen = (props) => {
     stateId = selectedStateList[0].stateId;
     console.log("stateId"+stateId);
     const headers = { 'Content-Type': 'application/json' }
-    fetch('http://localhost:8080/api/v1/cityDetails/'+stateId,{headers},{mode:"no-cors"})
+    fetch(config.baseurl+'/api/v1/cityDetails/'+stateId,{headers},{mode:"no-cors"})
     .then(response =>  {
       if (response.status != 200){
           setLoaderVisibility(false)
