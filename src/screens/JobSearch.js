@@ -85,7 +85,7 @@ const JobSearch = (props) => {
         .then(response => {
             if (response.status != 200){
                 setLoaderVisibility(false)
-                setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+                setAlertParameters({message: "Unable to fetch jobs", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
                 setAlertVisibility(true)
                 return "Internal Server error"
             }
@@ -192,11 +192,11 @@ const JobSearch = (props) => {
             setButtonLoading(false)
             setdialogVisibility(false)
             if (response.status == 200){
-                setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
+                setAlertParameters({message: "Request successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
                 removeAppliedJobEntry();
             }
             else {
-                setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+                setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             }
             setAlertVisibility(true)
             setTimeout(()=>{
