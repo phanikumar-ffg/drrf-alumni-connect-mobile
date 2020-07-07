@@ -16,7 +16,9 @@ import {
   HomePage,
   AdminContentManagement,
   AdminAddContentScreen,
-  AdminHelpScreen
+  AdminHelpScreen,
+  UserHomeScreen,
+  AdminHomeScreen
 
 } from './screens';
 
@@ -36,10 +38,12 @@ const Router = createStackNavigator(
     HomePage,
     AdminContentManagement,
     AdminAddContentScreen,
-//    AdminHelpScreen
+    UserHomeScreen,
+    AdminHelpScreen,
+    AdminHomeScreen
   },
   {
-    initialRouteName: 'HomeScreen',
+    initialRouteName: 'AdminHomeScreen',
     headerMode: 'none',
   }
 );
