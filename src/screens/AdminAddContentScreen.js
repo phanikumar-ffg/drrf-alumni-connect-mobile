@@ -45,13 +45,15 @@ class AdminAddContentScreen extends React.Component {
                }})
                .then(response => {
                     console.log('reponse received!');
-                   if (response.status == 200){
-                            console.log("added successfully");
-                            this.resetContent();
+                   if (response.status != 200){
+                           console.log("Error occured while saving data");
+                           setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
                    }
                    else {
-                             setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
-                         }
+                            console.log("added successfully");
+                            alert(" Deleted Data Sucessfully");
+                            this.resetContent();
+                   }
                    })
                    .catch(err => {
                         console.log("error occurred while adding");
@@ -149,5 +151,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(memo(AdminAddContentScreen));
-
+export default connect(mapStateToProps, { authContentChange })(
+  AdminAddContentScreen
+);

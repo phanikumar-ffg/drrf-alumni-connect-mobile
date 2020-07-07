@@ -171,10 +171,10 @@ const AdminContentManagement = ({ props, navigation }) => {
              'Content-Type': 'application/json',
            }})
            .then(response => {
-                console.log('reponse received!');
-                setButtonLoading(false)
-                setdialogVisibility(false)
-               if (response.status == 200){
+                console.log('reponse received with status - ' + response.status);
+//                setButtonLoading(false)
+//                setdialogVisibility(false)
+               if (response.status === 200){
                         setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
                         removeDeletedContent();
                }
