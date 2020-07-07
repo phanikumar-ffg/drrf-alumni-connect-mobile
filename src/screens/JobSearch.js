@@ -54,9 +54,9 @@ const JobSearch = (props) => {
                 <Icon name='place' color="#0b2652" size={25} style = {{flex:1}}/>   
                 <Text style={styles.popupText}> {jobSelected.cityName}</Text>
             </View>
-            <Text style={{flex:1, width: "100%"}}><hr /></Text>
+            <Text style={{flex:1, margin: 'auto', width: "100%"}}><hr /></Text>
             <View style = {{flex:1, flexDirection: 'row'}}>
-                <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onPress = {() => {setdialogVisibility(false)}}>No</PaperButton>
+                <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onClick = {() => {setdialogVisibility(false)}}>No</PaperButton>
                 <PaperButton mode = "contained"  labelStyle = {styles.text} style={styles.yesButton} onPress = {() => sendJobRequest()} loading = {yesButtonLoading}>Yes</PaperButton>
             </View>
         </View>
@@ -75,7 +75,7 @@ const JobSearch = (props) => {
 
     //Touchable opacity view component
     const TouchableOpacityView = (
-        <TouchableOpacity style = {styles.touchOpacity} onPress ={ ()=>{setdialogVisibility(false)}}></TouchableOpacity>
+        <TouchableOpacity disabled = {true} style = {styles.touchOpacity} onPress ={ ()=>{setdialogVisibility(false)}}></TouchableOpacity>
     )
 
 
@@ -83,7 +83,6 @@ const JobSearch = (props) => {
     useEffect(() => {
         fetch(config.baseurl+'/api/v1/jobs/'+props.user.aspirantId)
         .then(response => {
-            console.log(response.status)
             if (response.status != 200){
                 setLoaderVisibility(false)
                 setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
@@ -94,7 +93,6 @@ const JobSearch = (props) => {
                 return response.json()
         }})
         .then(res => {
-            console.log(res)
             setLoaderVisibility(false)
             if (Array.isArray(res) && res.length) {
             setData({value: res});
@@ -266,16 +264,12 @@ const styles = StyleSheet.create({
   },
   yesButton: {
     flex: 0.5,
-    marginRight: "20%",
-    marginLeft: "2%",
-    marginVertical: '3%',
+    margin: "3%",
     backgroundColor: '#3f9e3a'
   },
   noButton: {
     flex: 0.5, 
-    marginLeft: "20%",
-    marginRight: "2%",
-    marginVertical: '3%',
+    margin: "3%",
     backgroundColor: '#e35b5b'
   },
 popupContainer: {
@@ -315,6 +309,7 @@ loader: {
     padding: "5%"
   },
 touchOpacity: {
+    zIndex: 3,
     width: "100%", 
     height: "100%",
     backgroundColor: "black", 
