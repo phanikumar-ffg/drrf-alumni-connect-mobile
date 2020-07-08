@@ -32,3 +32,4 @@ Port: 3306
 UserName: alumniadmin@alumniconnectarvind
 Password: Alpha@123
 DefaultSchema:alumniconnect
+https://alumniweb.azurewebsites.net/
