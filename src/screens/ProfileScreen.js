@@ -1,4 +1,4 @@
-import React, { memo, connect,useState } from 'react';
+import React, { memo, useState } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import {
@@ -14,6 +14,8 @@ import BackButton from '../components/BackButton';
 import Paragraph from '../components/Paragraph';
 import { Component } from 'react';
 import Header from '../components/Header';
+import {connect} from 'react-redux';
+import {updateProfile} from '../actions/userProfile';
 import {
   Table,
   TableWrapper,
@@ -61,15 +63,16 @@ class ProfileTable extends Component {
   }
 }
 
-const ProfileScreen = ({ navigation }) => {
-  const [name, setName] = useState({ value: 'Ramu', error: '' });
-  const [email, setEmail] = useState({ value: 'ramu@gmail.com', error: '' });
-  const [mobile, setMobile] = useState({ value: '8885551234', error: '' });
-  const [state, setState] = useState({ value: 'Telengana', error: '' });
-  const [city, setCity] = useState({ value: 'Hyderabad', error: '' });
+const ProfileScreen = (props) => {
+  const [name, setName] = useState({ value: props.user.firstName + ' ' + props.user.lastName, error: '' });
+  const [email, setEmail] = useState({ value: props.user.email, error: '' });
+  const [mobile, setMobile] = useState({ value: props.user.mobile, error: '' });
+  const [state, setState] = useState({ value: props.user.centerName, error: '' });
+  const [city, setCity] = useState({ value: props.user.cityName, error: '' });
+  const [CurrentCompany, setCurrentCompany] = useState({ value: props.user.currentOrganization, error: '' });
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
+    /*const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const mobileError = mobileValidator(mobile.value);
     const stateError = stateValidator(state.value);
@@ -81,19 +84,21 @@ const ProfileScreen = ({ navigation }) => {
       setMobile({ ...mobile, error: mobileError });
       setState({ ...state, error: stateError });
       setCity({ ...city, error: cityError });
-      return;      const userProfile = {
-        email: 'abc@gmail.com',
-        name: 'harsh',
-        mobile: '8374754487',
-        state: 'Hyd',
-        city: 'Hyd'
+      return;*/
+      const userProfile = {
+        email: props.user.emailId,
+        name: props.user.firstName + ' ' + props.user.lastName,
+        mobile: props.user.mobile,
+        state: props.user.centerName,
+        city: props.user.cityName,
+        CurrentCompany: props.user.currentOrganization
 
       };
       this.props.updateProfile({userProfile});
     }
 
-    navigation.navigate('ProfileScreen');
-  };
+    //navigation.navigate('ProfileScreen');
+  
 
   return (
     <ScrollView>
@@ -134,7 +139,7 @@ const ProfileScreen = ({ navigation }) => {
         />
 
         <TextInput
-          label="State"
+          label="CenterName"
           returnKeyType="next"
           value={state.value}
           onChangeText={text => setState({ value: text, error: '' })}
@@ -149,6 +154,15 @@ const ProfileScreen = ({ navigation }) => {
           onChangeText={text => setCity({ value: text, error: '' })}
           error={!!city.error}
           errorText={city.error}
+        />
+
+<TextInput
+          label="Current Company"
+          returnKeyType="next"
+          value={CurrentCompany.value}
+          onChangeText={text => setCurrentCompany({ value: text, error: '' })}
+          error={!!CurrentCompany.error}
+          errorText={CurrentCompany.error}
         />
 
         <Button
@@ -185,22 +199,17 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    email: state.auth.email,
-    mobile: state.auth.mobile,
-    name: state.auth.name,
-    state: state.auth.state,
-    city: state.auth.city,
+    user: state.auth.user
   };
 };
-export default ProfileScreen;
- /*const mapDispatchToProps = dispatch => {
+/* const mapDispatchToProps = dispatch => {
   return {
     login: () => dispatch(login()),
   };
-}; 
-{ authInputChange, login } mapDispatchToProps
-export default connect(mapStateToProps, { authInputChange, updateProfile })(
+}; */
+//{ authInputChange, login } mapDispatchToProps
+export default connect(mapStateToProps, {  updateProfile })(
   ProfileScreen
 );
-*/
+
 
