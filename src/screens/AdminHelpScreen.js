@@ -23,7 +23,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
             <ScrollView>
                 <TouchableOpacity>
                     {dt.map(j => (
-                        <Card key={j.Student_Id}>
+                        <Card >
                             <CardTitle
 
                                 color={theme.colors.primary}
@@ -83,7 +83,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                 <ScrollView>
                     <TouchableOpacity>
                         {inp.map(j => (
-                            <Card key={j.Student_Id}>
+                            <Card>
                                 <CardTitle
                                 />
                                 <CardContent ><Text ><b>Student Id:</b> {j.Student_Id}</Text></CardContent>
