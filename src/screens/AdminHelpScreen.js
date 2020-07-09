@@ -23,7 +23,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
             <ScrollView>
                 <TouchableOpacity>
                     {dt.map(j => (
-                        <Card >
+                        <Card key={j.Student_Id}>
                             <CardTitle
 
                                 color={theme.colors.primary}
@@ -45,7 +45,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                                             { cancelable: false }
                                         )
                                         inpdt([...inp, j])
-                                        axios.put(config.baseurl+`/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
+                                        axios.put(config.baseurl + `/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
                                             .then(response => console.log(response))
                                             .catch(err => { setiserror(true), console.log(err) })
 
@@ -83,7 +83,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                 <ScrollView>
                     <TouchableOpacity>
                         {inp.map(j => (
-                            <Card>
+                            <Card key={j.Student_Id}>
                                 <CardTitle
                                 />
                                 <CardContent ><Text ><b>Student Id:</b> {j.Student_Id}</Text></CardContent>
@@ -103,7 +103,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                                                 [{ text: "OK" }],
                                                 { cancelable: false }
                                             )
-                                            axios.put(config.baseurl+`/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
+                                            axios.put(config.baseurl + `/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
                                                 .then(response => console.log(response))
                                                 .catch(err => { setiserror(true) })
                                             inpdt(inp.filter(obj => j.Student_Id !== obj.Student_Id))
@@ -154,7 +154,7 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
     const getAllAdminHelpRequests = async () => {
         try {
 
-            const response = await axios.get(config.baseurl+"/api/v1/adminhelp/")
+            const response = await axios.get(config.baseurl + "/api/v1/adminhelp/")
             // setData(response.data)
             FilterData(response);
             FilterInprogressData(response);

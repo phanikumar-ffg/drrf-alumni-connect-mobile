@@ -127,6 +127,17 @@ class LoginScreen extends React.Component {
             <Text style={styles.link}>ContentManagement</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>Do you want to complaint for help? </Text>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('AdminHelpScreen')
+            }
+          >
+            <Text style={styles.link}>AdminHelpRequests</Text>
+          </TouchableOpacity>
+        </View>
       </Background>
     );
   }
