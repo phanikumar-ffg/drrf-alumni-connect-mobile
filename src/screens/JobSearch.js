@@ -1,8 +1,9 @@
 import { ScrollView, View, Text, ActivityIndicator} from 'react-native'
-import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
+import { Card, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect } from 'react';
-import { TouchableOpacity, StyleSheet} from 'react-native';
+import { TouchableOpacity, Image,StyleSheet} from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Button from '../components/Button';
 import { theme } from '../core/theme';
 import {connect} from 'react-redux';
@@ -217,12 +218,18 @@ const JobSearch = (props) => {
 
     return (
         <View style = {{flex: 1}}>
-            <SearchBar 
-                clearIcon
-                placeholder='Search Location'
-                onChangeText={text=>searchJob(text)}
-                value = {searchText.value}
-            />
+                <SearchBar 
+                    inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
+                    searchIcon
+                    clearIcon
+                    placeholder='Search Location'
+                    onChangeText={text=>searchJob(text)}
+                    value = {searchText.value}
+                />
+                <TouchableOpacity onPress={() => {props.navigation.navigate("UserHomeScreen")}} style={styles.backContainer}>
+                    <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
+                </TouchableOpacity>
+  
 
             {loader}
             {Alert}
@@ -314,7 +321,17 @@ touchOpacity: {
     backgroundColor: "black", 
     opacity: 0.7, 
     position: "absolute"
-  }
+  },
+  backContainer: {
+    position: 'absolute',
+    top: 20 + getStatusBarHeight(),
+    left: 10,
+  },
+  backImage: {
+    width: 24,
+    height: 24,
+    tintColor: "#86939e"
+  },
 });
 
 
@@ -324,6 +341,5 @@ const mapPropstoState = state => {
         user: state.auth.user 
     }
 }
-
 
 export default connect(mapPropstoState)(memo(JobSearch));
