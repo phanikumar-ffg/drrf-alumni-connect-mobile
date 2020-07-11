@@ -12,7 +12,7 @@ import { theme } from '../core/theme';
 import { connect } from 'react-redux';
 import { adminHelpRequest } from '../actions/index'
 import axios from "axios";
-import config from '../config/index.js'
+import config from '../config/index.js';
 
 
 const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
@@ -172,7 +172,7 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
     if (!isloading && !iserror) {
         return (
             <Background>
-                <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+                <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
                 <ScrollView>
                     <Logo />
                     <TouchableOpacity>

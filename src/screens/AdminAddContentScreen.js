@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { authContentChange, addContent } from '../actions';
 import {} from '../core/utils';
 import PropTypes from 'prop-types';
-import config from '../config/index.js'
+import config from '../config/index.js';
 const contentTypeOptions = [
   { label: 'Video', value: 'Video' },
   { label: 'Document', value: 'Document' },

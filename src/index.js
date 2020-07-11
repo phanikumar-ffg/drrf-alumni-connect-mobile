@@ -43,7 +43,7 @@ const Router = createStackNavigator(
     AdminHomeScreen
   },
   {
-    initialRouteName: 'AdminHomeScreen',
+    initialRouteName: 'HomeScreen',
     headerMode: 'none',
   }
 );

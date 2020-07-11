@@ -22,7 +22,10 @@ import _ from 'lodash';
 class LoginScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!_.isEmpty(nextProps.user)) {
-      this.props.navigation.navigate('Dashboard', nextProps.user);
+        if(nextProps.user.isAdmin=="N")
+            this.props.navigation.navigate('UserHomeScreen', nextProps.user);
+        else
+            this.props.navigation.navigate('AdminHomeScreen', nextProps.user);
     }
   }
 
@@ -103,39 +106,6 @@ class LoginScreen extends React.Component {
             onPress={() => this.props.navigation.navigate('RegisterScreen')}
           >
             <Text style={styles.link}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>Do you want to enter Job details? </Text>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('AdminJobEntryScreen')
-            }
-          >
-            <Text style={styles.link}>JobDetails</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>Do you want to enter Job details? </Text>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('AdminContentManagement')
-            }
-          >
-            <Text style={styles.link}>ContentManagement</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>Do you want to complaint for help? </Text>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('AdminHelpScreen')
-            }
-          >
-            <Text style={styles.link}>AdminHelpRequests</Text>
           </TouchableOpacity>
         </View>
       </Background>

@@ -9,7 +9,8 @@ import Header from '../components/Header';
 import { theme } from '../core/theme';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
-import config from '../config/index.js'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import config from '../config/index.js';
 
 const AdminContentManagement = ({ props, navigation }) => {
     var [data, setData] = useState({value:[]})
@@ -199,7 +200,17 @@ const AdminContentManagement = ({ props, navigation }) => {
 
     return (
         <View>
-        <SearchBar  clearIcon placeholder='Search Content' onChangeText={text=>searchContent(text)} value={searchText.value} />
+        <SearchBar
+             inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
+             darkTheme
+             clearIcon
+             placeholder='Search Content'
+            onChangeText={text=>searchContent(text)}
+            value = {searchText.value}
+        />
+        <TouchableOpacity onPress={() => {navigation.navigate("AdminHomeScreen")}} style={styles.backContainer}>
+               <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
+        </TouchableOpacity>
         <ScrollView style={{marginTop:28}}>
             {loader}
             {Alert}
@@ -303,7 +314,17 @@ const styles = StyleSheet.create({
         backgroundColor: "black",
         opacity: 0.7,
         position: "absolute"
-      }
+      },
+      backContainer: {
+        position: 'absolute',
+        top: 20 + getStatusBarHeight(),
+        left: 10,
+      },
+      backImage: {
+        width: 24,
+        height: 24,
+        tintColor: "#86939e"
+      },
 });
 
 const mapStateToProps = state => {

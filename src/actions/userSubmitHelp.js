@@ -1,4 +1,4 @@
-import config from '../config/index.js'
+import config from '../config/index.js';
 import {SUBMIT_HELP_SUCCESS, SUBMIT_HELP_FAILURE,HELP_EMPTY_DETAILS,LOADING,HELP_CLEAR} from './actionTypes';
 
 /*export const authInputChange = ({ field, value }) => {
