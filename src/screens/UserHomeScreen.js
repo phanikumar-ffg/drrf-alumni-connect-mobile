@@ -32,7 +32,7 @@ export default class UserHomeScreen extends Component {
                  <Text style = {styles.text} > DRF Help </Text>
              </Card>
              <Card containerStyle={{width:'50%'}} style = {styles.icon} >
-                  <Icon name='image'  size={100} onPress={() => this.props.navigation.navigate('AdminContentManagement')} />
+                  <Icon name='image'  size={100} onPress={() => this.props.navigation.navigate('HomePage')} />
                   <Text style = {styles.text} > New Content </Text>
              </Card>
           </View>

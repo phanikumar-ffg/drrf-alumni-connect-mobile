@@ -4,7 +4,7 @@ import {
   ADD_CONTENT_SUCCESS,
   LOADING
 } from './actionTypes';
-import config from '../config/index.js'
+import config from '../config/index.js';
 
 export const authContentChange = ({ field, value }) => {
   return {

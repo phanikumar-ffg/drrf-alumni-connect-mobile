@@ -7,7 +7,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Button from '../components/Button';
 import { theme } from '../core/theme';
 import {connect} from 'react-redux';
-import config from '../config/index.js'
+import config from '../config/index.js';
 
 //Main Job Search React Component
 const JobSearch = (props) => {

@@ -24,6 +24,7 @@ import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import { theme } from '../core/theme';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Button from '../components/Button';
 import {
   View,
@@ -64,12 +65,16 @@ const HomePage= ({ navigation }) => {
     return (
 <ScrollView style={{marginTop:28}}>
             <SearchBar
+                 inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
                  darkTheme
                  clearIcon
                  placeholder='Search Content'
                 onChangeText={text=>searchContent(text)}
                 value = {searchText.value}
             />
+            <TouchableOpacity onPress={() => {navigation.navigate("UserHomeScreen")}} style={styles.backContainer}>
+                   <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
+            </TouchableOpacity>
             {data.value.map(j=>(
             <Card
             key={j.content_id}
@@ -101,6 +106,16 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center'
+    },
+    backContainer: {
+      position: 'absolute',
+      top: 20 + getStatusBarHeight(),
+      left: 10,
+    },
+    backImage: {
+      width: 24,
+      height: 24,
+      tintColor: "#86939e"
     },
 });
 export default memo(HomePage);

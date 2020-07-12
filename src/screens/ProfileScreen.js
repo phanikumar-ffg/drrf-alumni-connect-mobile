@@ -103,7 +103,7 @@ const ProfileScreen = (props) => {
   return (
     <ScrollView>
       <Background>
-        <BackButton goBack={() => navigation.navigate('Dashboard')} />
+        <BackButton goBack={() => props.navigation.navigate('UserHomeScreen')} />
         <Logo />
         <Header>Dr. Reddy's Foundation</Header>
 

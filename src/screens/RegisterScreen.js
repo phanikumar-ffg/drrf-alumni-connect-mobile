@@ -20,7 +20,7 @@ import 'react-dropdown/style.css';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import _ from 'lodash';
-import config from '../config/index.js'
+import config from '../config/index.js';
 import { connect } from 'react-redux';
 import { onboardInputChange,signup } from '../actions';
 import Paragraph from '../components/Paragraph';

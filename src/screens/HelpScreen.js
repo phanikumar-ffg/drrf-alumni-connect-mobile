@@ -12,7 +12,7 @@ import { theme } from '../core/theme';
 import BackButton from '../components/BackButton';
 import RNPickerSelect from 'react-native-picker-select';
 import { connect } from 'react-redux';
-import config from '../config/index.js'
+import config from '../config/index.js';
 import { userSubmitHelp, userSubmitEmptyDetails,clearDetails } from '../actions';
 
 
@@ -132,7 +132,7 @@ class HelpScreen extends React.Component {
   render(){
     return(
       <Background>
-    <BackButton goBack={() => this.props.navigation.navigate('Dashboard')} />
+    <BackButton goBack={() => this.props.navigation.navigate('UserHomeScreen')} />
     <Logo />
     <Paragraph>Need help - Tell us more</Paragraph>
     {this.showError()}
