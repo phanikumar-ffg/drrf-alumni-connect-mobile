@@ -97,6 +97,11 @@ const ProfileScreen = (props) => {
       this.props.updateProfile({userProfile});
     }
 
+    const _onPasswordChange = () => {
+      console.log('on password change method');
+      props.navigation.navigate('ChangePasswordScreen');
+    };
+
     //navigation.navigate('ProfileScreen');
   
 
@@ -172,6 +177,14 @@ const ProfileScreen = (props) => {
         >
           Save
         </Button>
+
+        <Button
+          mode="contained"
+          onPress={_onPasswordChange}
+          style={styles.button}
+        >            Change Password
+          </Button>
+
       </Background>
     </ScrollView>
   );

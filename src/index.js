@@ -18,7 +18,8 @@ import {
   AdminAddContentScreen,
   AdminHelpScreen,
   UserHomeScreen,
-  AdminHomeScreen
+  AdminHomeScreen,
+  ChangePasswordScreen
 
 } from './screens';
 
@@ -40,7 +41,8 @@ const Router = createStackNavigator(
     AdminAddContentScreen,
     UserHomeScreen,
     AdminHelpScreen,
-    AdminHomeScreen
+    AdminHomeScreen,
+    ChangePasswordScreen
   },
   {
     initialRouteName: 'HomeScreen',
