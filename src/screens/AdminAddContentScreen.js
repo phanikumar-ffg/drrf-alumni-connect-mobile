@@ -9,7 +9,7 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import _ from 'lodash';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+//import 'react-dropdown/style.css';
 import RNPickerSelect from 'react-native-picker-select';
 import { connect } from 'react-redux';
 import { authContentChange, addContent } from '../actions';

@@ -15,7 +15,7 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+//import 'react-dropdown/style.css';
 //import DatePicker from 'react-date-picker';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
