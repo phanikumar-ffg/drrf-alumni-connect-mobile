@@ -15,3 +15,4 @@ export { default as AdminAddContentScreen } from './AdminAddContentScreen';
 export { default as UserHomeScreen } from './UserHomeScreen';
 export { default as AdminHelpScreen } from './AdminHelpScreen';
 export { default as AdminHomeScreen } from './AdminHomeScreen';
+export { default as ChangePasswordScreen } from './ChangePasswordScreen';
