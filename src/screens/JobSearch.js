@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, ActivityIndicator} from 'react-native'
+import { ScrollView, View, Text,StatusBar, ActivityIndicator} from 'react-native'
 import { Card, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect } from 'react';
 import { TouchableOpacity, Image,StyleSheet} from 'react-native';
@@ -212,8 +212,10 @@ const JobSearch = (props) => {
 
     return (
         <View style = {{flex: 1}}>
+                <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
                 <SearchBar 
-                    inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
+                    containerStyle = {{backgroundColor: "#151517"}}
+                    inputContainerStyle = {{marginLeft: '10%',width:'88%', marginTop: '2%', marginBottom: '2%', backgroundColor: '#202024'}}
                     searchIcon
                     clearIcon
                     placeholder='Search Location'
@@ -322,7 +324,7 @@ touchOpacity: {
   },
   backContainer: {
     position: 'absolute',
-    top: 20,
+    top: 22,
     left: '3%',
   },
   backImage: {
