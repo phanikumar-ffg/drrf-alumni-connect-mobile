@@ -40,7 +40,7 @@ const AdminContentManagement = ({ props, navigation }) => {
     //Popup view component
     const popup = (
             <View style={styles.popupContainer}>
-                <Text  style = {styles.popupHeaderText}>Confirmation<Header /></Text>
+                <Text  style = {styles.popupHeaderText}>Confirmation<hr /></Text>
                 <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
                     <Icon name='link' color="#0b2652" size={25} style = {{flex:1}}/>
                     <Text style={styles.popupText}> {contentSelected.contentURL}</Text>

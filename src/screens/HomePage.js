@@ -132,7 +132,7 @@ const AdminContentManagement = ({ props, navigation }) => {
         <ScrollView style={{marginTop:28}}>
             {loader}
             {Alert}
-            {data.value.map((j,index)=>(
+            {data.value.map((j,index)=>(<View style={styles.viewStyle}>
                 <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
                     <Image onPress={()=>Linking.openURL(j.contentURL)} source={require('../assets/video-icon.png')} style={styles.image}/>
@@ -142,6 +142,7 @@ const AdminContentManagement = ({ props, navigation }) => {
                     <Button mode="contained" >Quiz</Button>
                     </TouchableOpacity>
                 </Card>
+                </View>
             ))}
 
             {showTouchOpacity}
