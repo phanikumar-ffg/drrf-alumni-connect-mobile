@@ -128,7 +128,7 @@ const AdminContentManagement = ({ props, navigation }) => {
         searchText = text.trim().toLowerCase();
         if (!searchText == "") {
             var filteredData = dataBackup.value.filter(l => {
-                return l.city.trim().toLowerCase().startsWith( searchText );
+                return l.contentDesc.trim().toLowerCase().startsWith( searchText );
             });
             setData({value: filteredData})
         }
@@ -145,15 +145,15 @@ const AdminContentManagement = ({ props, navigation }) => {
 
     const removeDeletedContent = () => {
             console.log('delete content in UI');
-            let updatedContentList = [...data.value]
+            let UpdatedDataContentList = [...data.value]
             let updatedBackupContentList = [...dataBackup.value]
             let backupIndex = dataBackup.value.findIndex((contentDetails)=>{
-              return contentDetails.content_id == contentSelected.content_id
+              return contentDetails.contentDesc == contentSelected.contentDesc
             })
             UpdatedDataContentList.splice(contentSelected.index,1)
-            UpdatedBackupContentList.splice(backupIndex,1)
+            updatedBackupContentList.splice(backupIndex,1)
             setData({value: UpdatedDataContentList})
-            setDataBackup({value: UpdatedBackupContentList})
+            setDataBackup({value: updatedBackupContentList})
     }
 
     const deleteContent = () => {
@@ -169,14 +169,15 @@ const AdminContentManagement = ({ props, navigation }) => {
              assessmentURL: contentSelected.assessmentURL
           }),
           headers: {
-             'Content-Type': 'application/json',
-           }})
+                     "Content-type": "application/json; charset=UTF-8"
+          }})
            .then(response => {
                 console.log('reponse received with status - ' + response.status);
-//                setButtonLoading(false)
-//                setdialogVisibility(false)
-               if (response.status === 200){
-                        setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
+                setButtonLoading(false)
+                setdialogVisibility(false)
+               if (response.status == 200 ){
+                        alert("Successfully deleted content");
+                        setAlertParameters({message: "Request sent successfully", backgroundColor: '##b6e0bc', icon: 'check-circle', iconColor: '#146110'})
                         removeDeletedContent();
                }
                else {
