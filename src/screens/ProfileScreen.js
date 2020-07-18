@@ -65,8 +65,8 @@ class ProfileTable extends Component {
 
 const ProfileScreen = (props) => {
   const [name, setName] = useState({ value: props.user.firstName + ' ' + props.user.lastName, error: '' });
-  const [email, setEmail] = useState({ value: props.user.email, error: '' });
-  const [mobile, setMobile] = useState({ value: props.user.mobile, error: '' });
+  const [email, setEmail] = useState({ value: props.user.emailId, error: '' });
+  const [mobile, setMobile] = useState({ value: props.user.phone, error: '' });
   const [state, setState] = useState({ value: props.user.centerName, error: '' });
   const [city, setCity] = useState({ value: props.user.cityName, error: '' });
   const [CurrentCompany, setCurrentCompany] = useState({ value: props.user.currentOrganization, error: '' });
@@ -88,7 +88,7 @@ const ProfileScreen = (props) => {
       const userProfile = {
         email: props.user.emailId,
         name: props.user.firstName + ' ' + props.user.lastName,
-        mobile: props.user.mobile,
+        mobile: props.user.phone,
         state: props.user.centerName,
         city: props.user.cityName,
         CurrentCompany: props.user.currentOrganization
@@ -116,6 +116,7 @@ const ProfileScreen = (props) => {
           label="Name"
           returnKeyType="next"
           value={name.value}
+          editable={false}
           onChangeText={text => setName({ value: text, error: '' })}
           error={!!name.error}
           errorText={name.error}
@@ -134,6 +135,7 @@ const ProfileScreen = (props) => {
           label="Email"
           returnKeyType="next"
           value={email.value}
+          editable={false}
           onChangeText={text => setEmail({ value: text, error: '' })}
           error={!!email.error}
           errorText={email.error}
