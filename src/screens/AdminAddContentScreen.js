@@ -31,7 +31,6 @@ class AdminAddContentScreen extends React.Component {
     if(!contentURL.length) {alert('Content URL should not be empty'); return;}
     if(!contentType.length) {alert('Content Type should not be empty'); return;}
     if(!contentDesc.length) {alert('Content Description should not be empty'); return; }
-    if(!assessmentURL.length) {alert('Assessment URL should not be empty'); return;}
      fetch(config.baseurl+'/api/v1/content/request', {
                  method: 'POST',
                  body: JSON.stringify({
@@ -51,7 +50,7 @@ class AdminAddContentScreen extends React.Component {
                    }
                    else {
                             console.log("added successfully");
-                            alert(" Deleted Data Sucessfully");
+                            alert("Data added successfully");
                             this.resetContent();
                    }
                    })
