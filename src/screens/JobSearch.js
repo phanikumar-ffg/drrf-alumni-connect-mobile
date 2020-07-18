@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, ActivityIndicator} from 'react-native'
+import { ScrollView, View, Text,StatusBar, ActivityIndicator} from 'react-native'
 import { Card, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect } from 'react';
 import { TouchableOpacity, Image,StyleSheet} from 'react-native';
@@ -42,7 +42,7 @@ const JobSearch = (props) => {
     //Popup view component
     const popup = (
         <View style={styles.popupContainer}>
-            <Text  style = {styles.popupHeaderText}>Confirmation<hr /></Text>
+            <Text  style = {styles.popupHeaderText}>Confirmation</Text>
             <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
                 <Icon name='assignment-ind' color="#0b2652" size={25} style = {{flex:1}}/>   
                 <Text style={styles.popupText}> {jobSelected.designation}</Text>
@@ -55,10 +55,10 @@ const JobSearch = (props) => {
                 <Icon name='place' color="#0b2652" size={25} style = {{flex:1}}/>   
                 <Text style={styles.popupText}> {jobSelected.cityName}</Text>
             </View>
-            <Text style={{flex:1, width: "100%"}}><hr /></Text>
-            <View style = {{flex:1, flexDirection: 'row'}}>
-                <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onClick = {() => {setdialogVisibility(false)}}>No</PaperButton>
-                <PaperButton mode = "contained"  labelStyle = {styles.text} style={styles.yesButton} onClick = {() => sendJobRequest()} loading = {yesButtonLoading}>Yes</PaperButton>
+            <Text style={{flex:1, width: "100%"}}></Text>
+            <View style = {{flex:1, flexDirection: 'row', borderTopWidth: 1, borderTopColor: 'grey'}}>
+                <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onPress = {() => {setdialogVisibility(false)}}>No</PaperButton>
+                <PaperButton mode = "contained"  labelStyle = {styles.text} style={styles.yesButton} onPress = {() => sendJobRequest()} loading = {yesButtonLoading}>Yes</PaperButton>
             </View>
         </View>
     )
@@ -66,10 +66,10 @@ const JobSearch = (props) => {
 
     //Alert view Component; Created dynamically based on request response status
     const resAlert = (
-        <View style = {{flex:1, flexDirection: 'row', paddingTop: "5%", paddingHorizontal: "5%", paddingBottom: "10%", backgroundColor: alertParameters.backgroundColor}}>
-            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
-            <Text style = {{fontSize: 20, flex: 5,}}>{alertParameters.message}</Text>
-            <Icon name = 'clear' color = {alertParameters.iconColor} size = {25} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
+        <View style = {{flexDirection: 'row', padding: '5%', alignItems: 'center',backgroundColor: alertParameters.backgroundColor}}>
+            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} />
+            <Text style = {{fontSize: 20, width: '90%'}}>{alertParameters.message}</Text>
+            <Icon name = 'clear' color = {alertParameters.iconColor} size = {20}  onPress = {() => setAlertVisibility(false)} />
         </View>
     )
 
@@ -200,26 +200,22 @@ const JobSearch = (props) => {
                 setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             }
             setAlertVisibility(true)
-            setTimeout(()=>{
-                setAlertVisibility(false)
-            }, 6000)                        // Alert gets automatically cleared after 6 sec
         })
         .catch(err => {
             setButtonLoading(false)
             setdialogVisibility(false)
             setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             setAlertVisibility(true)
-            setTimeout(()=>{
-                setAlertVisibility(false)
-            }, 6000)
         })
 
      }
 
     return (
         <View style = {{flex: 1}}>
+                <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
                 <SearchBar 
-                    inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
+                    containerStyle = {{backgroundColor: "#151517"}}
+                    inputContainerStyle = {{marginLeft: '10%',width:'88%', marginTop: '2%', marginBottom: '2%', backgroundColor: '#202024'}}
                     searchIcon
                     clearIcon
                     placeholder='Search Location'
@@ -249,7 +245,7 @@ const JobSearch = (props) => {
                     <Text style={{marginBottom: 8}}>
                         Description: {j.jobDescription}
                     </Text>
-                <Button mode="contained" onClick = {() => {applyJobHandler(index)}}>Apply Now</Button>
+                <Button mode="contained" onPress = {() => {applyJobHandler(index)}}>Apply Now</Button>
                 </Card>))}
             </ScrollView>
             
@@ -299,10 +295,14 @@ popupContainer: {
 popupHeaderText: {
     flex: 1, 
     textAlign: 'center', 
-    marginTop: "2%", width: '100%', 
+    marginTop: "2%",
+    marginBottom: '5%',
+    width: '100%', 
     fontSize: 22,
     color: '#1a2638',
-    fontWeight: "bold"
+    fontWeight: "bold",
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey'
   },
 popupText: {
     flex: 1,
@@ -324,8 +324,8 @@ touchOpacity: {
   },
   backContainer: {
     position: 'absolute',
-    top: 20 + getStatusBarHeight(),
-    left: 10,
+    top: 22,
+    left: '3%',
   },
   backImage: {
     width: 24,

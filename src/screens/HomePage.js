@@ -11,6 +11,7 @@ import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import config from '../config/index.js';
+import * as Linking from 'expo-linking';
 
 const AdminContentManagement = ({ props, navigation }) => {
     var [data, setData] = useState({value:[]})
@@ -125,19 +126,24 @@ const AdminContentManagement = ({ props, navigation }) => {
             onChangeText={text=>searchContent(text)}
             value = {searchText.value}
         />
-        <TouchableOpacity onPress={() => {navigation.navigate("AdminHomeScreen")}} style={styles.backContainer}>
+        <TouchableOpacity onPress={() => {navigation.navigate("UserHomeScreen")}} style={styles.backContainer}>
                <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
         </TouchableOpacity>
         <ScrollView style={{marginTop:28}}>
             {loader}
             {Alert}
-            {data.value.map((j,index)=>( <View style={styles.viewStyle}>
+            {data.value.map((j,index)=>(<View style={styles.viewStyle}>
                 <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
-                    <a href={j.contentURL}> <Image source={require('../assets/video-icon.png')} style={styles.image} to={j.assessment_url}/></a>
-                    <Text> {j.contentDesc} </Text>
-                    <a href={j.assessmentURL} className="button"> <Button mode="contained" >Quiz</Button></a>
+                    <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
+                    <Image onPress={()=>Linking.openURL(j.contentURL)} source={require('../assets/video-icon.png')} style={styles.image}/>
+                    </TouchableOpacity>
+                    <Text>{j.contentDesc}</Text>
+                    <TouchableOpacity onPress={()=>Linking.openURL(j.assessmentURL)}>
+                    <Button mode="contained" >Quiz</Button>
+                    </TouchableOpacity>
                 </Card>
-            </View>))}
+                </View>
+            ))}
 
             {showTouchOpacity}
         </ScrollView>
