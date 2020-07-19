@@ -5,9 +5,8 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 import TextInput from '../components/TextInput';
-import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { emailValidator } from '../core/utils';
-import { Card, ListItem, Icon, SearchBar } from 'react-native-elements';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import {  Icon } from 'react-native-elements';
 import { theme } from '../core/theme';
 import BackButton from '../components/BackButton';
 import RNPickerSelect from 'react-native-picker-select';
@@ -40,13 +39,12 @@ class HelpScreen extends React.Component {
     const { prblmType,prblmDesc,additionalDetails,user } = this.props;
     console.debug('submit Details');
     console.log("inside submit "+this.state.selectedProblemType);
-    if(this.state.selectedProblemType=='' || this.state.selectedProblemDetails==''){
+    if(this.state.selectedProblemType=='' || this.state.selectedProblemType == null || this.state.selectedProblemDetails=='' || this.state.selectedProblemDetails==null){
       this.props.userSubmitEmptyDetails(this.state.selectedProblemType,this.state.selectedProblemDetails, this.state.additionalDetails)
-     /* return <Paragraph>Test</Paragraph>;*/
     }
    else{
-      let aspirantId=1 ; // should use this.props.user.aspirantId;
-      let centerId=1;
+      let aspirantId= this.props.user.aspirantId;
+      let centerId=this.props.user.centerId;
       console.debug(this.props.additionalDetails);
       this.props.userSubmitHelp(this.state.selectedProblemType,this.state.selectedProblemDetails, this.state.additionalDetails,aspirantId,centerId );
    }
@@ -120,9 +118,7 @@ class HelpScreen extends React.Component {
         console.log("data=>"+data);
         console.log("problemType=>"+data);
         this.setState({
-        //  problemType: data,
           problemDetails:data
-        //problemType:[{ value:'', display:'(Select your Problem Type)'}].concat(prblmTypeApi)
         });
 
       }).catch(error=>{
@@ -137,57 +133,37 @@ class HelpScreen extends React.Component {
     <Paragraph>Need help - Tell us more</Paragraph>
     {this.showError()}
     <View style={styles.container}>
-      <select
-      ref={r=>this.firstNameInput=r}
-      style={{height: 4+'em'}}
-        value={this.state.selectedProblemType}
-        onChange={e =>
-        this.setState({
-          selectedProblemType: e.target.value,
-          validationError:
-            e.target.value === ""
-            ? "Please select a problem type"
-            :""
-        })
-      }
-      >
-        <option value="" disabled selected>Select Problem Type</option>
-        {this.state.problemType.map(prtype =>(
-          <option
-          key={prtype.helpValue}
-          value={prtype.helpValue}
-          >
-            {prtype.helpValue}
-          </option>))
-          }
-      </select>
-      <div style={ {color: 'red'}}>
-       <Paragraph>{this.state.validationError}</Paragraph> 
-      </div>
+      <RNPickerSelect
+            placeholder={{
+              label: 'Select a Problem Type',
+              value: null,
+            }}
+            value={this.state.selectedProblemType}
+            style={pickerStyle}
+            onValueChange={e=>{console.log(e);
+            this.setState(
+              {
+                selectedProblemType : e
+              }
+            )}
+         }
+            items={this.state.problemType.map(j=>({value:j.helpValue,label:j.helpValue}))}
+          />
       </View>
     <View style={styles.container}>
-    <select
-        value={this.state.selectedProblemDetails}
-        onChange={e =>
-        this.setState({
-          selectedProblemDetails: e.target.value,
-          validationError:
-            e.target.value === ""
-            ? "Please select a problem type"
-            :""
-        })
-      }
-     style={{height: 4+'em'}} >
-        <option value="" disabled selected>Select Problem Details</option>
-        {this.state.problemDetails.map(prtype =>(
-          <option
-          key={prtype.helpValue}
-          value={prtype.helpValue}
-          >
-            {prtype.helpValue}
-          </option>))
-          }
-      </select>
+      <RNPickerSelect
+            placeholder={{
+              label: 'Select Problem Details',
+              value: null,
+            }}
+            value={this.state.selectedProblemDetails}
+            style={pickerStyle}
+            onValueChange={e =>
+              this.setState({
+                selectedProblemDetails: e
+              })}
+            items={this.state.problemDetails.map(j=>({value:j.helpValue,label:j.helpValue}))}
+          />
     </View>
     <TextInput
       label="Additional-Details"
@@ -216,10 +192,7 @@ const pickerStyle = StyleSheet.create({
     paddingLeft: 8,
     borderRadius: 4,
     borderColor: '#808080',
-  },
-  placeholder: {
-    placeholderColor: '#808080',
-  },
+  }
 });
 const styles = StyleSheet.create({
   input: {

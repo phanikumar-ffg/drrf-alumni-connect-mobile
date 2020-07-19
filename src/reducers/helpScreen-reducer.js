@@ -36,7 +36,7 @@ export default (state = initialHelpState, action) => {
                 console.debug('loading reducer');
                 return {
                   ...state,
-                  loading: true,
+                  loading: true
                 };
         case HELP_EMPTY_DETAILS :
             return{
