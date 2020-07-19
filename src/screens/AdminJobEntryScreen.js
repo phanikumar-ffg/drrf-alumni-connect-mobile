@@ -30,7 +30,8 @@ const AdminJobEntryScreen = (props) => {
     var [alertParameters, setAlertParameters] = useState({message:'', backgroundColor: '', icon: '', iconColor: ''});
     var Alert = null;
     var stateId = null;
-
+    var [selectedStateItem,setSelectedState]= useState({value: '', error:''});
+    var [selectedCityItem,setSelectedCityItem]=useState({value:'',error:''}) ;
     const resAlert = (
       <View style = {{flex:1, flexDirection: 'row', paddingHorizontal: "5%", backgroundColor: alertParameters.backgroundColor}}>
             <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
@@ -45,16 +46,18 @@ const AdminJobEntryScreen = (props) => {
     setVacancyCount({value:"",error:""});
     setqualification({value:"",error:""});
     setjobDescription({value:"",error:""});
-  //  setCity({value:""});
-    //setState({value:""});
-   // setStateData({value:""});
-    //setCityData({value:""});
+    setSelectedState({value:"",item:""});
+  setState({value:"Select State",error:""});
+  selectedStateItem= 'Select State';
+  setSelectedState({value:"Select state",error:""});
+    setCity({value:"Select City", error:""});
+    selectedCityItem= 'Select City';
+    stateFetch();
   };
   if (showAlert){
     Alert = resAlert;
   }
-  useEffect(() => {
-    //hardcoding url with studentId=1234 for testing
+  const stateFetch=() =>{
     fetch(config.baseurl+'/api/v1/stateDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
     .then(response => {
       if (response.status != 200){
@@ -82,6 +85,9 @@ const AdminJobEntryScreen = (props) => {
     .catch(err => {
       
     })
+  }
+  useEffect(() => {
+   stateFetch();
 },[]);
   const sendJobDetails=()=>{
     let student_details = props.user
@@ -134,17 +140,24 @@ const AdminJobEntryScreen = (props) => {
   }
   const getCityId=(selectedCity)=>{
      console.log(selectedCity);
-    let selectedcityList= cityData.filter(i => {
-       return i.cityName == selectedCity;
-     });
-     console.log(selectedcityList[0].cityId);
-     setCityId(selectedcityList[0].cityId);
+     setSelectedCityItem(selectedCity);
+     if(selectedCity != '' && selectedCity != null){
+      let selectedcityList= cityData.filter(i => {
+        return i.cityName == selectedCity;
+      });
+      console.log(selectedcityList[0].cityId);
+      setCityId(selectedcityList[0].cityId);
+     }
+    
   }
 
 
   const getState=(selectedState)=>{
     let citylist=[];
     console.log(selectedState);
+    setSelectedState(selectedState);
+  //  selectedStateItem = selectedState;
+   if(selectedState !='' && selectedState != null){   
     let selectedStateList = stateData.filter(i => {
       return i.stateName == selectedState;
     });
@@ -170,17 +183,8 @@ const AdminJobEntryScreen = (props) => {
       })
       setCity({value:citylist});
     }).catch(err => {})
-   // cityData.forEach(i =>{
-     // if(i.state == selectedState){
-       // citylist.push({label:i.city, value: i.city});
-      //}
-    //});
-    //console.log(citylist);
-    //setCity({value:citylist});
-    //let selectedStateList= cityData.filter(i => {
-      //return i.state == selectedState;
-    //});
-
+   
+  }
   }
   return (
        <ScrollView>
@@ -215,6 +219,7 @@ const AdminJobEntryScreen = (props) => {
               label: 'Select a State',
               value: null,
             }}
+      value={selectedStateItem}
             onValueChange={e => getState(e)}
             items={state.value}
             style={pickerStyle}
@@ -227,6 +232,7 @@ const AdminJobEntryScreen = (props) => {
               label: 'Select a City',
               value: null,
             }}
+            value={selectedCityItem}
             onValueChange={e => getCityId(e)}
             items={city.value}
             style={pickerStyle}
@@ -286,10 +292,7 @@ const pickerStyle = StyleSheet.create({
     paddingLeft: 8,
     borderRadius: 4,
     borderColor: '#808080',
-  },
-  placeholder: {
-    placeholderColor: '#808080',
-  },
+  }
 });
 
 

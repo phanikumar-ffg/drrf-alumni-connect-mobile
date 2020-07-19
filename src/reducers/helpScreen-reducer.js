@@ -37,6 +37,7 @@ export default (state = initialHelpState, action) => {
                 return {
                   ...state,
                   loading: true,
+                //  error: 'Loading'
                 };
         case HELP_EMPTY_DETAILS :
             return{
