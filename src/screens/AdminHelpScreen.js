@@ -7,74 +7,50 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import { Button } from 'react-native-elements';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import BackButton from '../components/BackButton';
-import {
-  Card,
-  CardTitle,
-  CardContent,
-  CardAction,
-  CardButton,
-  CardImage,
-} from 'react-native-cards';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
 import { theme } from '../core/theme';
 import { connect } from 'react-redux';
-import { adminHelpRequest } from '../actions/index';
-import axios from 'axios';
+import { adminHelpRequest } from '../actions/index'
+import axios from "axios";
 import config from '../config/index.js';
 
+
 const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
+
+
   if (si === 0) {
     return (
       <ScrollView>
         <TouchableOpacity>
           {dt.map(j => (
             <Card key={j.Student_Id}>
-              <CardTitle color={theme.colors.primary} />
-              <CardContent>
-                <Text>Student Id: {j.Student_Id}</Text>
-              </CardContent>
-              <CardContent>
-                <Text>Name: {j.Name}</Text>
-              </CardContent>
-              <CardContent>
-                <Text>Problem Type: {j.Problem_Type}</Text>
-              </CardContent>
-              <CardContent>
-                <Text>Problem Description: {j.Problem_description}</Text>
-              </CardContent>
-              <CardContent>
-                <Text>Other Details: {j.Other_Details}</Text>
-              </CardContent>
-              <CardContent>
-                <Text>Phone No: {j.Phone_No}</Text>
-              </CardContent>
-              <CardAction separator={true} inColumn={false}>
+              <CardTitle
+
+                color={theme.colors.primary}
+              />
+              <CardContent ><Text style={{ fontWeight: 'bold' }}>Student Id: {j.Student_Id}</Text></CardContent>
+              <CardContent ><Text style={{ fontWeight: 'bold' }}>Name: {j.Name}</Text></CardContent>
+              <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Type: {j.Problem_Type}</Text></CardContent>
+              <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Description: {j.Problem_description}</Text></CardContent>
+              <CardContent ><Text style={{ fontWeight: 'bold' }}>Other Details: {j.Other_Details}</Text></CardContent>
+              <CardContent ><Text style={{ fontWeight: 'bold' }}>Phone No: {j.Phone_No}</Text></CardContent>
+              <CardAction
+                separator={true}
+                inColumn={false}>
                 <CardButton
                   onPress={() => {
-                    Alert.alert(
-                      'Status Updated',
-                      [
-                        {
-                          text: 'OK',
-                          onPress: () => console.log('OK Pressed'),
-                        },
-                      ],
-                      { cancelable: false }
-                    );
-                    inpdt([...inp, j]);
-                    axios
-                      .put(
-                        config.baseurl +
-                          `/api/v1/update/${j.Student_Id}/${j.Request_Status}`
-                      )
+                    inpdt([...inp, j])
+                    axios.put(config.baseurl + `/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
                       .then(response => console.log(response))
-                      .catch(err => {
-                        setiserror(true), console.log(err);
-                      });
+                      .catch(err => { setiserror(true), console.log(err) })
 
-                    sdt(dt.filter(obj => j.Student_Id !== obj.Student_Id));
+                    sdt(dt.filter(obj => j.Student_Id !== obj.Student_Id))
+
                   }}
+                  alignItems='center'
                   title="In-progress"
                   color={theme.colors.primary}
+
                 />
                 {/* <CardButton
                                     onPress={() => { }}
@@ -83,120 +59,111 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                                 /> */}
               </CardAction>
             </Card>
-          ))}
+          )
+          )
+          }
         </TouchableOpacity>
       </ScrollView>
-    );
-  } else {
+    )
+  }
+  else {
     if (inp.length < 1) {
       return (
         <ScrollView>
           <Text>NO-DATA</Text>
         </ScrollView>
-      );
-    } else {
+      )
+    }
+    else {
       return (
         <ScrollView>
           <TouchableOpacity>
             {inp.map(j => (
               <Card key={j.Student_Id}>
-                <CardTitle />
-                <CardContent>
-                  <Text>Student Id: {j.Student_Id}</Text>
-                </CardContent>
-                <CardContent>
-                  <Text>Name: {j.Name}</Text>
-                </CardContent>
-                <CardContent>
-                  <Text>Problem Type: {j.Problem_Type}</Text>
-                </CardContent>
-                <CardContent>
-                  <Text>Problem Description: {j.Problem_description}</Text>
-                </CardContent>
-                <CardContent>
-                  <Text>Other Details:</Text>
-                </CardContent>
-                <CardContent>
-                  <Text>Phone No:{j.Phone_No}</Text>
-                </CardContent>
-                <CardAction separator={true} inColumn={false}>
+                <CardTitle
+                />
+                <CardContent ><Text style={{ fontWeight: 'bold' }}>Student Id: {j.Student_Id}</Text></CardContent>
+                <CardContent ><Text style={{ fontWeight: 'bold' }}>Name: {j.Name}</Text></CardContent>
+                <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Type: {j.Problem_Type}</Text></CardContent>
+                <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Description: {j.Problem_description}</Text></CardContent>
+                <CardContent ><Text style={{ fontWeight: 'bold' }}>Other Details: {j.Other_Details}</Text></CardContent>
+                <CardContent ><Text style={{ fontWeight: 'bold' }}>Phone No: {j.Phone_No}</Text></CardContent>
+                <CardAction
+                  separator={true}
+                  inColumn={false}>
+
                   <CardButton
                     onPress={() => {
-                      Alert.alert('Status Updated', '', [{ text: 'OK' }], {
-                        cancelable: false,
-                      });
-                      axios
-                        .put(
-                          config.baseurl +
-                            `/api/v1/update/${j.Student_Id}/${j.Request_Status}`
-                        )
-                        .then(response => console.log(response))
-                        .catch(err => {
-                          setiserror(true);
-                        });
-                      inpdt(inp.filter(obj => j.Student_Id !== obj.Student_Id));
+
+                      axios.put(config.baseurl + `/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
+                        .catch(err => { setiserror(true) })
+                      inpdt(inp.filter(obj => j.Student_Id !== obj.Student_Id))
                     }}
                     title="Attended"
                     color={theme.colors.primary}
                   />
                 </CardAction>
               </Card>
-            ))}
+            )
+            )
+            }
           </TouchableOpacity>
         </ScrollView>
-      );
+      )
     }
+
   }
-};
+}
 
 const AdminHelpScreen = ({ navigation, adhreq }) => {
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [data, setData] = useState([]);
   const [inprogressdata, setinprogressdata] = useState([]);
   const [isloading, setisloading] = useState(false);
   const [iserror, setiserror] = useState(false);
 
-  const handleSingleIndexSelect = index => {
-    setSelectedIndex(index);
-    console.log(selectedIndex);
-  };
+  const handleSingleIndexSelect = (index) => {
+    setSelectedIndex(index)
+  }
 
-  const FilterData = res => {
-    var da_ta = res.data.filter(i => i.Request_Status === 'New');
-    setData(da_ta);
-  };
-  const FilterInprogressData = res => {
-    var inprogress_data = res.data.filter(
-      j => j.Request_Status === 'InProgress'
-    );
-    setinprogressdata(inprogress_data);
-  };
+  const FilterData = (res) => {
+    var da_ta = res.data.filter(i => (i.Request_Status === "New"))
+    setData(da_ta)
+  }
+  const FilterInprogressData = (res) => {
+    var inprogress_data = res.data.filter(j => (j.Request_Status === "InProgress"))
+    setinprogressdata(inprogress_data)
+  }
 
   useEffect(() => {
     setisloading(true);
     getAllAdminHelpRequests();
-  }, []);
+  }, [])
 
   const getAllAdminHelpRequests = async () => {
     try {
-      const response = await axios.get(config.baseurl + '/api/v1/adminhelp/');
+
+      const response = await axios.get(config.baseurl + "/api/v1/adminhelp/")
       // setData(response.data)
       FilterData(response);
       FilterInprogressData(response);
       setisloading(false);
-      adminHelpRequest(response.data);
-      console.log(adhreq);
-    } catch (err) {
-      setiserror(true);
-      adminHelpRequest('');
+      adminHelpRequest(response.data)
+      console.log(adhreq)
     }
-  };
+    catch (err) {
+      setiserror(true);
+      adminHelpRequest('')
+    }
+  }
+
 
   if (!isloading && !iserror) {
     return (
       <Background>
         <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
-        <ScrollView>
+        <ScrollView style={{ width: '100%' }}>
           <Logo />
           <TouchableOpacity>
             <View>
@@ -209,36 +176,28 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
                 onTabPress={handleSingleIndexSelect}
               />
             </View>
-            <Text>DRF-Admin Help Page</Text>
-            <Showdata
-              si={selectedIndex}
-              dt={data}
-              sdt={setData}
-              inp={inprogressdata}
-              inpdt={setinprogressdata}
-            />
+            <Text>
+              DRF-Admin Help Page
+                    </Text>
+            <Showdata si={selectedIndex} dt={data} sdt={setData} inp={inprogressdata} inpdt={setinprogressdata} />
           </TouchableOpacity>
         </ScrollView>
       </Background>
-    );
+    )
   }
 
   if (isloading) {
-    return (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </View>
-    );
+    return (<View style={[styles.container, styles.container]}>
+      <ActivityIndicator size="large" color={theme.colors.primary} />
+    </View>)
   }
   if (iserror) {
-    return (
-      <View style={[styles.container]}>
-        <Icon name="thumbs-down" size={50} color={theme.colors.secondary} />
-        <Text>"ERROR GETTING DATA"</Text>
-      </View>
-    );
+    return (<View style={[styles.container]}>
+      <Icon name="thumbs-down" size={50} color={theme.colors.secondary} />
+      <Text>"ERROR GETTING DATA"</Text>
+    </View>)
   }
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -246,36 +205,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 10,
-  },
-
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
-
-  tabContent: {
-    color: '#444444',
-    fontSize: 18,
-    margin: 24,
-  },
-  Seperator: {
-    marginHorizontal: -10,
-    alignSelf: 'stretch',
-    borderTopWidth: 1,
-    borderTopColor: '#888888',
-    marginTop: 24,
+    padding: 10
   },
   tabStyle: {
     flex: 1,
     borderColor: theme.colors.primary,
     borderRadius: 2,
-    paddingLeft: 45,
-    paddingRight: 45,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   activeTabStyle: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary
   },
 });
 
