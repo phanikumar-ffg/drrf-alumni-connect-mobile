@@ -28,22 +28,17 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
 
                                 color={theme.colors.primary}
                             />
-                            <CardContent ><Text ><b>Student Id:</b> {j.Student_Id}</Text></CardContent>
-                            <CardContent ><Text ><b>Name:</b> {j.Name}</Text></CardContent>
-                            <CardContent ><Text><b>Problem Type:</b> {j.Problem_Type}</Text></CardContent>
-                            <CardContent ><Text ><b>Problem Description:</b> {j.Problem_description}</Text></CardContent>
-                            <CardContent ><Text><b>Other Details:</b> {j.Other_Details}</Text></CardContent>
-                            <CardContent ><Text><b>Phone No:</b> {j.Phone_No}</Text></CardContent>
+                            <CardContent ><Text style={{ fontWeight: 'bold' }}>Student Id: {j.Student_Id}</Text></CardContent>
+                            <CardContent ><Text style={{ fontWeight: 'bold' }}>Name: {j.Name}</Text></CardContent>
+                            <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Type: {j.Problem_Type}</Text></CardContent>
+                            <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Description: {j.Problem_description}</Text></CardContent>
+                            <CardContent ><Text style={{ fontWeight: 'bold' }}>Other Details: {j.Other_Details}</Text></CardContent>
+                            <CardContent ><Text style={{ fontWeight: 'bold' }}>Phone No: {j.Phone_No}</Text></CardContent>
                             <CardAction
                                 separator={true}
                                 inColumn={false}>
                                 <CardButton
                                     onPress={() => {
-                                        Alert.alert(
-                                            "Status Updated",
-                                            [{ text: "OK", onPress: () => console.log('OK Pressed') }],
-                                            { cancelable: false }
-                                        )
                                         inpdt([...inp, j])
                                         axios.put(config.baseurl + `/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
                                             .then(response => console.log(response))
@@ -52,9 +47,10 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                                         sdt(dt.filter(obj => j.Student_Id !== obj.Student_Id))
 
                                     }}
-
+                                    alignItems='center'
                                     title="In-progress"
                                     color={theme.colors.primary}
+
                                 />
                                 {/* <CardButton
                                     onPress={() => { }}
@@ -86,25 +82,20 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                             <Card key={j.Student_Id}>
                                 <CardTitle
                                 />
-                                <CardContent ><Text ><b>Student Id:</b> {j.Student_Id}</Text></CardContent>
-                                <CardContent ><Text ><b>Name:</b> {j.Name}</Text></CardContent>
-                                <CardContent ><Text><b>Problem Type:</b> {j.Problem_Type}</Text></CardContent>
-                                <CardContent ><Text ><b>Problem Description:</b> {j.Problem_description}</Text></CardContent>
-                                <CardContent ><Text><b>Other Details: </b></Text></CardContent>
-                                <CardContent ><Text><b>Phone No: </b>{j.Phone_No}</Text></CardContent>
+                                <CardContent ><Text style={{ fontWeight: 'bold' }}>Student Id: {j.Student_Id}</Text></CardContent>
+                                <CardContent ><Text style={{ fontWeight: 'bold' }}>Name: {j.Name}</Text></CardContent>
+                                <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Type: {j.Problem_Type}</Text></CardContent>
+                                <CardContent ><Text style={{ fontWeight: 'bold' }}>Problem Description: {j.Problem_description}</Text></CardContent>
+                                <CardContent ><Text style={{ fontWeight: 'bold' }}>Other Details: {j.Other_Details}</Text></CardContent>
+                                <CardContent ><Text style={{ fontWeight: 'bold' }}>Phone No: {j.Phone_No}</Text></CardContent>
                                 <CardAction
                                     separator={true}
                                     inColumn={false}>
 
                                     <CardButton
                                         onPress={() => {
-                                            Alert.alert(
-                                                "Status Updated", "",
-                                                [{ text: "OK" }],
-                                                { cancelable: false }
-                                            )
+
                                             axios.put(config.baseurl + `/api/v1/update/${j.Student_Id}/${j.Request_Status}`)
-                                                .then(response => console.log(response))
                                                 .catch(err => { setiserror(true) })
                                             inpdt(inp.filter(obj => j.Student_Id !== obj.Student_Id))
                                         }}
@@ -134,7 +125,6 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
 
     const handleSingleIndexSelect = (index) => {
         setSelectedIndex(index)
-        console.log(selectedIndex)
     }
 
     const FilterData = (res) => {
@@ -173,10 +163,10 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
         return (
             <Background>
                 <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
-                <ScrollView>
+                <ScrollView style={{ width: '100%' }}>
                     <Logo />
                     <TouchableOpacity>
-                        <View >
+                        <View>
                             <SegmentedControlTab
                                 values={['New Requests', 'In Progress']}
                                 selectedIndex={selectedIndex}
@@ -197,7 +187,7 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
     }
 
     if (isloading) {
-        return (<View style={[styles.container, styles.horizontal]}>
+        return (<View style={[styles.container, styles.container]}>
             <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>)
     }
@@ -217,32 +207,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 10
     },
-
-    horizontal: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        padding: 10
-    },
-
-    tabContent: {
-        color: '#444444',
-        fontSize: 18,
-        margin: 24
-
-    },
-    Seperator: {
-        marginHorizontal: -10,
-        alignSelf: 'stretch',
-        borderTopWidth: 1,
-        borderTopColor: '#888888',
-        marginTop: 24
-    },
     tabStyle: {
         flex: 1,
         borderColor: theme.colors.primary,
         borderRadius: 2,
-        paddingLeft: 45,
-        paddingRight: 45
+        paddingLeft: 10,
+        paddingRight: 10
     },
     activeTabStyle: {
         backgroundColor: theme.colors.primary
