@@ -5,9 +5,8 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 import TextInput from '../components/TextInput';
-import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { emailValidator } from '../core/utils';
-import { Card, ListItem, Icon, SearchBar } from 'react-native-elements';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import {  Icon } from 'react-native-elements';
 import { theme } from '../core/theme';
 import BackButton from '../components/BackButton';
 import RNPickerSelect from 'react-native-picker-select';
@@ -119,9 +118,7 @@ class HelpScreen extends React.Component {
         console.log("data=>"+data);
         console.log("problemType=>"+data);
         this.setState({
-        //  problemType: data,
           problemDetails:data
-        //problemType:[{ value:'', display:'(Select your Problem Type)'}].concat(prblmTypeApi)
         });
 
       }).catch(error=>{

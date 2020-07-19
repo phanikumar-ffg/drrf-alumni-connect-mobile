@@ -11,6 +11,7 @@ import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import config from '../config/index.js';
+import * as Linking from 'expo-linking';
 
 const AdminContentManagement = ({ props, navigation }) => {
     var [data, setData] = useState({value:[]})
@@ -102,7 +103,7 @@ const AdminContentManagement = ({ props, navigation }) => {
                   setAlertVisibility(true)
               })
 
-          },[])
+          },[data])
 
     //Conditionally rendering popup
         if (dialogVisibility) {
@@ -128,7 +129,7 @@ const AdminContentManagement = ({ props, navigation }) => {
         searchText = text.trim().toLowerCase();
         if (!searchText == "") {
             var filteredData = dataBackup.value.filter(l => {
-                return l.city.trim().toLowerCase().startsWith( searchText );
+                return l.contentDesc.trim().toLowerCase().startsWith( searchText );
             });
             setData({value: filteredData})
         }
@@ -145,15 +146,15 @@ const AdminContentManagement = ({ props, navigation }) => {
 
     const removeDeletedContent = () => {
             console.log('delete content in UI');
-            let updatedContentList = [...data.value]
+            let UpdatedDataContentList = [...data.value]
             let updatedBackupContentList = [...dataBackup.value]
             let backupIndex = dataBackup.value.findIndex((contentDetails)=>{
-              return contentDetails.content_id == contentSelected.content_id
+              return contentDetails.contentDesc == contentSelected.contentDesc
             })
             UpdatedDataContentList.splice(contentSelected.index,1)
-            UpdatedBackupContentList.splice(backupIndex,1)
+            updatedBackupContentList.splice(backupIndex,1)
             setData({value: UpdatedDataContentList})
-            setDataBackup({value: UpdatedBackupContentList})
+            setDataBackup({value: updatedBackupContentList})
     }
 
     const deleteContent = () => {
@@ -169,14 +170,15 @@ const AdminContentManagement = ({ props, navigation }) => {
              assessmentURL: contentSelected.assessmentURL
           }),
           headers: {
-             'Content-Type': 'application/json',
-           }})
+                     "Content-type": "application/json; charset=UTF-8"
+          }})
            .then(response => {
                 console.log('reponse received with status - ' + response.status);
-//                setButtonLoading(false)
-//                setdialogVisibility(false)
-               if (response.status === 200){
-                        setAlertParameters({message: "Your request was successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'})
+                setButtonLoading(false)
+                setdialogVisibility(false)
+               if (response.status == 200 ){
+                        alert("Successfully deleted content");
+                        setAlertParameters({message: "Request sent successfully", backgroundColor: '##b6e0bc', icon: 'check-circle', iconColor: '#146110'})
                         removeDeletedContent();
                }
                else {
@@ -216,9 +218,13 @@ const AdminContentManagement = ({ props, navigation }) => {
             {Alert}
             {data.value.map((j,index)=>( <View style={styles.viewStyle}>
                 <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
-                    <a href={j.contentURL}> <Image source={require('../assets/video-icon.png')} style={styles.image} to={j.assessment_url}/></a>
-                    <Text> {j.contentDesc} </Text>
-                    <a href={j.assessmentURL} className="button"> <Button mode="contained" >Quiz</Button></a>
+                    <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
+                    <Image onPress={()=>Linking.openURL(j.contentURL)} source={require('../assets/video-icon.png')} style={styles.image}/>
+                    </TouchableOpacity>
+                    <Text>{j.contentDesc}</Text>
+                    <TouchableOpacity onPress={()=>Linking.openURL(j.assessmentURL)}>
+                    <Button mode="contained" >Quiz</Button>
+                    </TouchableOpacity>
                 </Card>
                 <Icon name='delete'  containerStyle={styles.icon} size={40} onPress={() => deleteContentHandler(index)}/>
             </View>))}

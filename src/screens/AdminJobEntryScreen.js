@@ -58,7 +58,7 @@ const AdminJobEntryScreen = (props) => {
     Alert = resAlert;
   }
   const stateFetch=() =>{
-    fetch(config.baseurl+'/api/v1/stateDetails') //should be 'http://localhost:8080/api/v1/jobs/'+props.user.studentId
+    fetch(config.baseurl+'/api/v1/stateDetails') 
     .then(response => {
       if (response.status != 200){
           setLoaderVisibility(false)
@@ -74,7 +74,6 @@ const AdminJobEntryScreen = (props) => {
       let citylist=[];
       let statelist=[];
       json.forEach(i =>{
-      //  citylist.push({label:i.city, value: i.city});
         statelist.push({label:i.stateName, value: i.stateName});
       })
       console.log(citylist);
