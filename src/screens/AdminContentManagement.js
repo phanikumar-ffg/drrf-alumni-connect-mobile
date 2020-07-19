@@ -1,15 +1,12 @@
 import { ScrollView, View, Text, Image, ActivityIndicator } from 'react-native'
-import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
+import { Card, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect} from 'react';
 import { TouchableOpacity, StyleSheet} from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
 import { theme } from '../core/theme';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import config from '../config/index.js';
 import * as Linking from 'expo-linking';
 
@@ -39,8 +36,8 @@ const AdminContentManagement = ({ props, navigation }) => {
 
     //Popup view component
     const popup = (
-            <View style={styles.popupContainer}>
-                <Text  style = {styles.popupHeaderText}>Confirmation<hr /></Text>
+        <View style={styles.popupContainer}>
+                <Text  style = {styles.popupHeaderText}>Confirmation</Text>
                 <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
                     <Icon name='link' color="#0b2652" size={25} style = {{flex:1}}/>
                     <Text style={styles.popupText}> {contentSelected.contentURL}</Text>
@@ -50,11 +47,11 @@ const AdminContentManagement = ({ props, navigation }) => {
                     <Text style={styles.popupText}> {contentSelected.contentDesc}</Text>
                 </View>
                 <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '10%', marginBottom: '10%'}}>
-                    <Icon name='type' color="#0b2652" size={25} style = {{flex:1}}/>
+                    <Icon name='link' color="#0b2652" size={25} style = {{flex:1}}/>
                     <Text style={styles.popupText}> {contentSelected.contentType}</Text>
                 </View>
-                <Text style={{flex:1, width: "100%"}}><hr /></Text>
-                <View style = {{flex:1, flexDirection: 'row'}}>
+                <Text style={{flex:1, width: "100%"}}></Text>
+                <View style = {{flex:1, flexDirection: 'row', borderTopWidth: 1, borderTopColor: 'grey'}}>
                     <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onPress = {() => {setdialogVisibility(false)}}>No</PaperButton>
                     <PaperButton mode = "contained"  labelStyle = {styles.text} style={styles.yesButton} onPress = {() => deleteContent()} loading = {yesButtonLoading}>Yes</PaperButton>
                 </View>
@@ -62,18 +59,18 @@ const AdminContentManagement = ({ props, navigation }) => {
     )
     //Alert view Component; Created dynamically based on request response status
     const resAlert = (
-        <View style = {{flex:1, flexDirection: 'row', paddingTop: "5%", paddingHorizontal: "5%", paddingBottom: "10%", backgroundColor: alertParameters.backgroundColor}}>
-            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
-            <Text style = {{fontSize: 20, flex: 5,}}>{alertParameters.message}</Text>
-            <Icon name = 'clear' color = {alertParameters.iconColor} size = {25} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
-        </View>
+       <View style = {{flexDirection: 'row', padding: '5%', alignItems: 'center',backgroundColor: alertParameters.backgroundColor}}>
+          <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} />
+          <Text style = {{fontSize: 20, width: '90%'}}>{alertParameters.message}</Text>
+          <Icon name = 'clear' color = {alertParameters.iconColor} size = {20}  onPress = {() => setAlertVisibility(false)} />
+       </View>
     )
 
 
     //Touchable opacity view component
     const TouchableOpacityView = (
-        <TouchableOpacity style = {styles.touchOpacity} onPress ={ ()=>{setdialogVisibility(false)}}></TouchableOpacity>
-    )
+            <TouchableOpacity disabled = {true} style = {styles.touchOpacity} onPress ={ ()=>{setdialogVisibility(false)}}></TouchableOpacity>
+     )
 
     useEffect(() => {
               fetch(config.baseurl+"/api/v1/content/details")
@@ -185,22 +182,17 @@ const AdminContentManagement = ({ props, navigation }) => {
                          setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
                      }
                      setAlertVisibility(true)
-                     setTimeout(()=>{
-                         setAlertVisibility(false)
-                     }, 6000)                        // Alert gets automatically cleared after 6 sec
                })
                .catch(err => {
                      setButtonLoading(false)
                      setdialogVisibility(false)
                      setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
                      setAlertVisibility(true)
-                     setTimeout(()=>{
-                         setAlertVisibility(false)
-                     }, 6000)
                  })
     }
 
     return (
+     <ScrollView style={{marginTop:28}}>
         <View>
         <SearchBar
              inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
@@ -213,11 +205,10 @@ const AdminContentManagement = ({ props, navigation }) => {
         <TouchableOpacity onPress={() => {navigation.navigate("AdminHomeScreen")}} style={styles.backContainer}>
                <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
         </TouchableOpacity>
-        <ScrollView style={{marginTop:28}}>
             {loader}
             {Alert}
             {data.value.map((j,index)=>( <View style={styles.viewStyle}>
-                <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
+                <Card key={j.contentURL} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
                     <Image onPress={()=>Linking.openURL(j.contentURL)} source={require('../assets/video-icon.png')} style={styles.image}/>
                     </TouchableOpacity>
@@ -232,8 +223,8 @@ const AdminContentManagement = ({ props, navigation }) => {
             <Button mode="contained"  mode="contained" onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
             {showTouchOpacity}
             {showPopup}
+         </View>
         </ScrollView>
-        </View>
     );
 };
 
@@ -265,19 +256,15 @@ const styles = StyleSheet.create({
         color: 'white'
   },
   yesButton: {
-        flex: 0.5,
-        marginRight: "20%",
-        marginLeft: "2%",
-        marginVertical: '3%',
-        backgroundColor: '#3f9e3a'
-  },
-  noButton: {
-        flex: 0.5,
-        marginLeft: "20%",
-        marginRight: "2%",
-        marginVertical: '3%',
-        backgroundColor: '#e35b5b'
-  },
+      flex: 0.5,
+      margin: '3%',
+      backgroundColor: '#3f9e3a'
+    },
+    noButton: {
+      flex: 0.5,
+       margin: '3%',
+      backgroundColor: '#e35b5b'
+    },
     popupContainer: {
         borderRadius: 20,
         position: 'absolute',
@@ -298,10 +285,14 @@ const styles = StyleSheet.create({
    popupHeaderText: {
         flex: 1,
         textAlign: 'center',
-        marginTop: "2%", width: '100%',
+        marginTop: "2%",
+        marginBottom: '5%',
+        width: '100%',
         fontSize: 22,
         color: '#1a2638',
-        fontWeight: "bold"
+        fontWeight: "bold",
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey',
       },
     popupText: {
         flex: 1,
@@ -323,7 +314,7 @@ const styles = StyleSheet.create({
       },
       backContainer: {
         position: 'absolute',
-        top: 20 + getStatusBarHeight(),
+        top: 22,
         left: 10,
       },
       backImage: {
