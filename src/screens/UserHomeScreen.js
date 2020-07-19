@@ -11,27 +11,26 @@ export default class UserHomeScreen extends Component {
   render() {
     return (
      <View>
-      <ScrollView>
       <Background>
           <Logo />
           <Header>Better Skills Better Jobs</Header>
           <View style = {{justifyContent: "flex-start",flexWrap: "wrap", marginLeft: 0}} >
           <View style ={{flex:1, flexDirection: 'row'}} >
-            <Card containerStyle={{width:'50%'}}   style = {styles.icon}>
-               <Icon name='help'  size={100} onPress={() => this.props.navigation.navigate('ProfileScreen')} />
+            <Card containerStyle={{width:'40%'}}   style = {styles.icon}>
+               <Icon name='person'  size={100} onPress={() => this.props.navigation.navigate('ProfileScreen')} />
                <Text style = {styles.text} > Profile Maintenance </Text>
             </Card>
-            <Card containerStyle={{width:'50%'}}  style = {styles.icon}  >
+            <Card containerStyle={{width:'40%'}}  style = {styles.icon}  >
                <Icon name='search'  size={100}  onPress={() => this.props.navigation.navigate('JobSearch')}/>
                <Text style = {styles.text} > Job Search </Text>
             </Card>
           </View>
           <View style ={{flex:1, flexDirection: 'row'}} >
-             <Card containerStyle={{width:'50%'}}   style = {styles.icon} >
-                 <Icon name='user'  size={100}  onPress={() => this.props.navigation.navigate('HelpScreen')}/>
+             <Card containerStyle={{width:'40%'}}   style = {styles.icon} >
+                 <Icon name='help'  size={100}  onPress={() => this.props.navigation.navigate('HelpScreen')}/>
                  <Text style = {styles.text} > DRF Help </Text>
              </Card>
-             <Card containerStyle={{width:'50%'}} style = {styles.icon} >
+             <Card containerStyle={{width:'40%'}} style = {styles.icon} >
                   <Icon name='image'  size={100} onPress={() => this.props.navigation.navigate('HomePage')} />
                   <Text style = {styles.text} > New Content </Text>
              </Card>
@@ -39,8 +38,8 @@ export default class UserHomeScreen extends Component {
           </View>
 
        </Background>
-       </ScrollView>
       </View >
+
     );
   }
 }

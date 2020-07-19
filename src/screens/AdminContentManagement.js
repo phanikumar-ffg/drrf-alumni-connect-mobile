@@ -103,7 +103,7 @@ const AdminContentManagement = ({ props, navigation }) => {
                   setAlertVisibility(true)
               })
 
-          },[])
+          },[data])
 
     //Conditionally rendering popup
         if (dialogVisibility) {
