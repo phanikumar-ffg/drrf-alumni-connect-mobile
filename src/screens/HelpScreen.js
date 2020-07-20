@@ -19,7 +19,7 @@ class HelpScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
     console.log(nextProps.error);
     if (!_.isEmpty(nextProps.user)) {
-      this.props.navigation.navigate('HelpScreen', nextProps.user);
+      this.props.navigation.navigate('Dashboard', nextProps.user);
     }
   }
   isActive = false;
