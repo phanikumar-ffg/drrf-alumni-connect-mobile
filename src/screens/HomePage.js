@@ -107,7 +107,7 @@ const AdminContentManagement = ({ props, navigation }) => {
         searchText = text.trim().toLowerCase();
         if (!searchText == "") {
             var filteredData = dataBackup.value.filter(l => {
-                return l.city.trim().toLowerCase().startsWith( searchText );
+                return l.contentDesc.trim().toLowerCase().startsWith( searchText );
             });
             setData({value: filteredData})
         }
@@ -117,6 +117,7 @@ const AdminContentManagement = ({ props, navigation }) => {
     }
 
     return (
+        <ScrollView style={{marginTop:28}}>
         <View>
         <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
         <SearchBar
@@ -131,7 +132,6 @@ const AdminContentManagement = ({ props, navigation }) => {
         <TouchableOpacity onPress={() => {navigation.navigate("UserHomeScreen")}} style={styles.backContainer}>
                <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
         </TouchableOpacity>
-        <ScrollView style={{marginTop:28}}>
             {loader}
             {Alert}
             {data.value.map((j,index)=>(<View style={styles.viewStyle}>
@@ -148,8 +148,8 @@ const AdminContentManagement = ({ props, navigation }) => {
             ))}
 
             {showTouchOpacity}
-        </ScrollView>
         </View>
+        </ScrollView>
     );
 };
 

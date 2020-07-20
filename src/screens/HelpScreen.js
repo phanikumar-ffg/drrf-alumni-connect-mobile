@@ -191,7 +191,9 @@ const pickerStyle = StyleSheet.create({
     paddingBottom: 16,
     paddingLeft: 8,
     borderRadius: 4,
-    borderColor: '#808080',
+    width: '100%',
+    color: '#999',
+    borderColor: 'black',
   }
 });
 const styles = StyleSheet.create({
