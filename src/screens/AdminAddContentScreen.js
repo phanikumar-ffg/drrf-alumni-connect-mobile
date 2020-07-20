@@ -78,16 +78,14 @@ class AdminAddContentScreen extends React.Component {
           <Header>Dr. Reddy's Foundation</Header>
           <Header>Add New Content</Header>
           <View style={styles.formStyle}>
-            <form>
               <TextInput label="Video URL" returnKeyType="next" value={this.props.contentURL}
                 onChangeText={value => this.props.authContentChange({field: 'contentURL',value: value, })}/>
               <RNPickerSelect placeholder={{ label: 'Content Type', value: '' }} value={this.props.contentType}
                 style={pickerStyle} onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })} items={contentTypeOptions}/>
-              <TextInput label="Description" returnKeyType="next" value={this.props.contentDesc}  blurOnSubmit="true"
+              <TextInput label="Description" returnKeyType="next" value={this.props.contentDesc}
                 onChangeText={value => this.props.authContentChange({ field: 'contentDesc', value: value,})}/>
               <TextInput label="Assessment URL" returnKeyType="next" value={this.props.assessmentURL}
                 onChangeText={value => this.props.authContentChange({field: 'assessmentURL',value: value, })}/>
-            </form>
           </View>
 
           <Button mode="contained" onPress={this.handleSubmit.bind(this)}> SAVE </Button>

@@ -10,32 +10,32 @@ import Header from '../components/Header';
 export default class AdminHomeScreen extends Component {
   render() {
     return (
-     <View>
-     <Background>
+     <ScrollView>
+        <Background>
           <Logo />
           <Header>Better Skills Better Jobs</Header>
           <View style ={{flex:1, flexDirection: 'row'}} >
-            <Card containerStyle={{width:'40%'}}   style = {styles.icon}>
+            <Card containerStyle={styles.container}   style = {styles.icon}>
                <Icon name='help'  size={100} onPress={() => this.props.navigation.navigate('AdminHelpScreen')} />
                <Text style = {styles.text} > Help </Text>
             </Card>
-            <Card containerStyle={{width:'40%'}}  style = {styles.icon}  >
+            <Card containerStyle={styles.container}  style = {styles.icon}  >
                <Icon name='search'  size={100}  onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')}/>
                <Text style = {styles.text} > Job Admin </Text>
             </Card>
           </View>
           <View style ={{flex:1, flexDirection: 'row'}} >
-             <Card containerStyle={{width:'40%'}}   style = {styles.icon} >
-                 <Icon name='user'  size={100}  onPress={() => this.props.navigation.navigate('ProfileScreen')}/>
+             <Card containerStyle={styles.container}   style = {styles.icon} >
+                 <Icon name='person'  size={100}  onPress={() => this.props.navigation.navigate('ProfileScreen')}/>
                  <Text style = {styles.text} > Profile Admin </Text>
              </Card>
-             <Card containerStyle={{width:'40%'}} style = {styles.icon} >
+             <Card containerStyle={styles.container} style = {styles.icon} >
                   <Icon name='image'  size={100} onPress={() => this.props.navigation.navigate('AdminContentManagement')} />
                   <Text style = {styles.text} > Manage Content </Text>
              </Card>
           </View>
-          </Background>
-      </View >
+        </Background>
+      </ScrollView >
     );
   }
 }
