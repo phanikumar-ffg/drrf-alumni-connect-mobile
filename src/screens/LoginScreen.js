@@ -61,6 +61,7 @@ class LoginScreen extends React.Component {
   }
   render() {
     return (
+     <ScrollView>
       <Background>
         <Logo />
         <Header>Dr. Reddy's Foundation</Header>
@@ -109,6 +110,7 @@ class LoginScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </Background>
+     </ScrollView>       
     );
   }
 }
