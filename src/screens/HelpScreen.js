@@ -190,7 +190,8 @@ const pickerStyle = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 16,
     paddingLeft: 8,
-    borderRadius: 4,
+    borderRadius: 10,
+    borderWidth: 1,
     width: '100%',
     color: '#999',
     borderColor: 'black',
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
     height: 120,
   },
   container: {
+    borderWidth: 1,
     width: '100%',
     marginVertical: 12,
   },
