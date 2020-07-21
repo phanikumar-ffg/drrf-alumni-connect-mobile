@@ -3,6 +3,7 @@ import {
   PROFILE_UPDATE_FAILURE,
   PROFILE_UPDATE_SUCCESS,
   LOADING,
+  PASSWORD_CHANGE_SUCCESS
 } from './actionTypes';
 import config from '../config/index.js';
 
@@ -12,6 +13,13 @@ export const authInputChange1 = ({ field, value }) => {
     payload: { field, value }, //field: 'email', 'text'
   };
 };
+
+export const changePassword = () => {
+  return {
+    type: PASSWORD_CHANGE_SUCCESS,
+    payload: {},
+  };
+}; 
 
 /* export const login = ({ email, password }) => {
   return {
