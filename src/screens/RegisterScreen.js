@@ -235,14 +235,13 @@ class RegisterScreen extends React.Component {
 }
 const pickerStyle = StyleSheet.create({
     inputAndroid: {
-      backgroundColor: theme.colors.surface,
       paddingTop: 16,
       paddingBottom: 16,
       paddingRight: 4,
       borderRadius: 4,
       width: '100%',
-      marginVertical: 12,
-      color: '#999',
+      marginVertical: 6,
+      color: 'black',
       borderColor: '#808080',
     },
   });
@@ -272,7 +271,11 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
   container: {
+    borderWidth : 1,
     width: '100%',
+    marginVertical: 20,
+    borderRadius: 4,
+    borderColor: '#808080',
   },
 });
 
