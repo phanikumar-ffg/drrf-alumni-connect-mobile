@@ -54,7 +54,7 @@ class RegisterScreen extends React.Component {
     }
 
     showButton(){
-      if (this.props.loading) {
+      if (this.props.signup_loading) {
         return (
           <View>
             <ActivityIndicator size="small" />
@@ -290,7 +290,7 @@ const mapStateToProps = state => {
     centerName: state.onboard.centerName,
     user: state.onboard.user,
     error: state.onboard.error,
-    loading: state.onboard.loading,
+    signup_loading: state.onboard.signup_loading,
     signup_valid: state.onboard.signup_valid,
     centres: state.onboard.centres
   };

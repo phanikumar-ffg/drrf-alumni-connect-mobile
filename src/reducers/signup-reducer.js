@@ -1,7 +1,7 @@
 import{
  SIGNUP_SUCCESS,
  SIGNUP_FAILURE,
- LOADING,
+ SIGNUP_LOADING,
  AUTH_INPUT_CHANGE,
 } from '../actions/actionTypes';
 
@@ -16,7 +16,7 @@ const initialState = {
   centerName: {value:'',error:''},
   user: {},
   error: '',
-  loading: false,
+  signup_loading: false,
   signup_valid: false,
   centres: []
 };
@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
         user: action.payload,
         error:'',
         //signup_valid: action.payload,
-        loading: false,
+        signup_loading: false,
       };
     case SIGNUP_FAILURE:
       console.debug('SIGNUP_FAILURE');
@@ -47,13 +47,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: "You already have an account/Your details doesn't match records",
-        loading: false,
+        signup_loading: false,
       };
-    case LOADING:
+    case SIGNUP_LOADING:
        console.debug('loading reducer');
        return {
          ...state,
-         loading: true,
+         signup_loading: true,
        };
 
     default:
