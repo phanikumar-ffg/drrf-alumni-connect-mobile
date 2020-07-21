@@ -1,7 +1,7 @@
 import { ScrollView, View, Text, Image, ActivityIndicator } from 'react-native'
 import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect} from 'react';
-import { TouchableOpacity, StyleSheet} from 'react-native';
+import { TouchableOpacity,StatusBar, StyleSheet} from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -119,8 +119,10 @@ const AdminContentManagement = ({ props, navigation }) => {
     return (
         <ScrollView style={{marginTop:28}}>
         <View>
+        <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
         <SearchBar
-             inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
+             containerStyle = {{backgroundColor: "#151517"}}
+             inputContainerStyle = {{marginLeft: '10%',width:'88%', marginTop: '2%', marginBottom: '2%', backgroundColor: '#202024'}}
              darkTheme
              clearIcon
              placeholder='Search Content'
@@ -237,7 +239,7 @@ const styles = StyleSheet.create({
       },
       backContainer: {
         position: 'absolute',
-        top: 20 + getStatusBarHeight(),
+        top:  22,
         left: 10,
       },
       backImage: {
