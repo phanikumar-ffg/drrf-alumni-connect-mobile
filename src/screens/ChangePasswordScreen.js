@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
-import {
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {  StyleSheet, ScrollView} from 'react-native';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
@@ -12,11 +9,14 @@ import Paragraph from '../components/Paragraph';
 import {memo, Component } from 'react';
 import Header from '../components/Header';
 import {connect} from 'react-redux';
+import {PASSWORD_CHANGE_SUCCESS} from '../actions/actionTypes.js';
+import {changePassword} from '../actions'
 import config from '../config/index.js'
 
 
-const ChangePasswordScreen = ({ navigation,user }) => {
+const ChangePasswordScreen = ({ navigation,user, changePassword }) => {
   var [password, setPassword] = useState({ value: '', error: '' });
+  var [submitButtonLoading, setButtonLoading] = useState(false)
   var [reEnteredPassword, setReEnteredPassword] = useState({ value: '', error: '' });
 
 
@@ -53,7 +53,7 @@ const ChangePasswordScreen = ({ navigation,user }) => {
 
     setPassword({value: password.value, error: "" });
     setReEnteredPassword({value: reEnteredPassword.value, error: "" })
-
+    setButtonLoading(true)
     fetch(config.baseurl+'/api/v1/updatePassword', {
       method: 'POST',
       body: JSON.stringify({
@@ -65,18 +65,22 @@ const ChangePasswordScreen = ({ navigation,user }) => {
       }
       })
       .then(response => {
+        setButtonLoading(false)
           if (response.status == 200){
-            setTimeout(()=>{
+            console.log("Reached here!!")
+              changePassword()
               navigation.navigate('HomeScreen');
-          }, 5000)
           }
           else{
+
             setReqResponse({message:'Error: Cannot change password'})
             setPassword({value: password.value, error: "Error: cannot change Password"});
             setReEnteredPassword({value: reEnteredPassword.value, error: "Error: cannot change Password" })
           }
       })
       .catch(err => {
+        setButtonLoading(false)
+        console.log(err)
         setPassword({value: password.value, error: "Error: cannot change Password"});
         setReEnteredPassword({value: reEnteredPassword.value, error: "Error: cannot change Password" })
       })
@@ -112,6 +116,7 @@ const ChangePasswordScreen = ({ navigation,user }) => {
 
         <Button
           mode="contained"
+          loading = {submitButtonLoading}
           onPress={_onSendPressed}
           style={styles.button}
         >            Submit
@@ -147,4 +152,4 @@ const mapPropstoState = state => {
   }
 }
 
-export default connect(mapPropstoState)(memo(ChangePasswordScreen))
+export default connect(mapPropstoState, {changePassword})(memo(ChangePasswordScreen))
