@@ -55,3 +55,7 @@
 [0704/233909.304:ERROR:crash_report_database_win.cc(445)] failed to read records
 [0704/235409.306:ERROR:file_io.cc(89)] ReadExactly: expected 14056, observed 0
 [0704/235409.306:ERROR:crash_report_database_win.cc(445)] failed to read records
+[0719/200908.704:ERROR:process_info.cc(359)] UncheckedAllocate
+[0719/201701.770:ERROR:process_info.cc(359)] UncheckedAllocate
+[0719/201709.364:ERROR:process_info.cc(359)] UncheckedAllocate
+[0720/191534.966:ERROR:process_info.cc(359)] UncheckedAllocate
