@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   container: {
+    borderWidth: 1,
     width: '100%',
     paddingTop: 17,
   },
@@ -290,6 +291,7 @@ const pickerStyle = StyleSheet.create({
     paddingBottom: 16,
     paddingLeft: 8,
     borderRadius: 4,
+    borderWidth: 1,
     borderColor: '#808080',
   }
 });
