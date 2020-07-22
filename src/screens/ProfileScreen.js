@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import {
@@ -7,15 +7,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert
 } from 'react-native';
+import Icon from 'react-native-elements';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import Paragraph from '../components/Paragraph';
+import { theme } from '../core/theme';
+import RNPickerSelect from 'react-native-picker-select';
 import { Component } from 'react';
 import Header from '../components/Header';
 import {connect} from 'react-redux';
 import {updateProfile} from '../actions/userProfile';
+import config from '../config/index.js';
 import {
   Table,
   TableWrapper,
@@ -64,37 +69,159 @@ class ProfileTable extends Component {
 }
 
 const ProfileScreen = (props) => {
-  const [name, setName] = useState({ value: props.user.firstName + ' ' + props.user.lastName, error: '' });
-  const [email, setEmail] = useState({ value: props.user.emailId, error: '' });
-  const [mobile, setMobile] = useState({ value: props.user.phone, error: '' });
-  const [state, setState] = useState({ value: props.user.centerName, error: '' });
-  const [city, setCity] = useState({ value: props.user.cityName, error: '' });
-  const [CurrentCompany, setCurrentCompany] = useState({ value: props.user.currentOrganization, error: '' });
+  var [name, setName] = useState({ value: props.user.firstName + ' ' + props.user.lastName, error: '' });
+  var [email, setEmail] = useState({ value: props.user.emailId, error: '' });
+  var [mobile, setMobile] = useState({ value: props.user.phone, error: '' });
+  
+    var [city, setCity] = useState({value: []});
+    var[state, setState] = useState({value:[]});
+    var[ cityData, setCityData]= useState([]);
+    var[ stateData, setStateData] = useState([]);
+    var [cityId, setCityId] = useState(null);
+    var stateId = null;
+    var [selectedStateItem,setSelectedState]= useState({value: '', error:''});
+    var [selectedCityItem,setSelectedCityItem]=useState({value:'',error:''}) ;
+  var [CurrentCompany, setCurrentCompany] = useState({ value: props.user.currentOrganization, error: '' });
+  var [showAlert, setAlertVisibility] = useState(false);
+  var [alertParameters, setAlertParameters] = useState({message:'', backgroundColor: '', icon: '', iconColor: ''});
+  var Alert = null;
 
-  const _onSignUpPressed = () => {
-    /*const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const mobileError = mobileValidator(mobile.value);
-    const stateError = stateValidator(state.value);
-    const cityError = cityValidator(city.value);
+  const resAlert = (
+    <View style = {{flex:1, flexDirection: 'row', paddingHorizontal: "5%", backgroundColor: alertParameters.backgroundColor}}>
+          <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
+          <Paragraph style = {{fontSize: 20, flex: 5,}}>{alertParameters.message}</Paragraph>
+          <Icon name = 'clear' color = {alertParameters.iconColor} size = {25} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
+      </View> 
+);
+if (showAlert){
+  Alert = resAlert;
+}
+  
 
-    if (emailError || mobileError || nameError || stateError || cityError) {
-      setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
-      setMobile({ ...mobile, error: mobileError });
-      setState({ ...state, error: stateError });
-      setCity({ ...city, error: cityError });
-      return;*/
-      const userProfile = {
-        email: props.user.emailId,
-        name: props.user.firstName + ' ' + props.user.lastName,
-        mobile: props.user.phone,
-        state: props.user.centerName,
-        city: props.user.cityName,
-        CurrentCompany: props.user.currentOrganization
+  const stateFetch=() =>{
+    fetch(config.baseurl+'/api/v1/stateDetails') 
+    .then(response => {
+      if (response.status != 200){
+          setLoaderVisibility(false)
+          setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+          setAlertVisibility(true)
+      }
+      else{
+          return response.json()
+  }})
+    .then(json => {
+      console.log(json);
+      setStateData(json);
+      let citylist=[];
+      let statelist=[];
+      json.forEach(i =>{
+        statelist.push({label:i.stateName, value: i.stateName});
+      })
+      console.log(citylist);
+     // setCity({value:citylist});
+      setState({value:statelist});
+      console.log(city);
+    })
+    .catch(err => {
+      
+    })
+  }
+  useEffect(() => {
+   stateFetch();
+},[]);
+const getCityId=(selectedCity)=>{
+  console.log(selectedCity);
+  setSelectedCityItem(selectedCity);
+  if(selectedCity != '' && selectedCity != null){
+   let selectedcityList= cityData.filter(i => {
+     return i.cityName == selectedCity;
+   });
+   console.log(selectedcityList[0].cityId);
+   setCityId(selectedcityList[0].cityId);
+  }
+ 
+}
 
-      };
-      this.props.updateProfile({userProfile});
+
+const getState=(selectedState)=>{
+ let citylist=[];
+ console.log(selectedState);
+ setSelectedState(selectedState);
+//  selectedStateItem = selectedState;
+if(selectedState !='' && selectedState != null){   
+ let selectedStateList = stateData.filter(i => {
+   return i.stateName == selectedState;
+ });
+ console.log(selectedStateList[0].stateId);
+ stateId = selectedStateList[0].stateId;
+ console.log("stateId"+stateId);
+ const headers = { 'Content-Type': 'application/json' }
+ fetch(config.baseurl+'/api/v1/cityDetails/'+stateId,{headers},{mode:"no-cors"})
+ .then(response =>  {
+   if (response.status != 200){
+       setLoaderVisibility(false)
+       setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+       setAlertVisibility(true)
+   }
+   else{
+       return response.json()
+}})
+ .then(json => {
+   setCityData(json);
+   json.forEach(i =>{
+     citylist.push({label: i.cityName, value: i.cityName});
+     cityData.push(i.cityName);
+   })
+   setCity({value:citylist});
+ }).catch(err => {})
+
+}
+}
+
+
+  const _onSavePressed = () => {
+    
+  
+      console.log("Sending details ");
+      fetch(config.baseurl+'/api/v1/updateProfile', {
+        method: 'POST',
+        headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+            emailId:props.user.emailId,
+            phone:mobile.value,
+            cityId:cityId,
+            currentOrganization:CurrentCompany.value
+             }),
+           })
+           .then(response => {
+           if (response.status == 200){
+            setAlertParameters({message: "Profile details successfully updated", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'});
+            setAlertVisibility(true);
+              setTimeout(()=>{
+                setAlertVisibility(false)
+            }, 6000)
+          }
+          else{
+            setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
+            setAlertVisibility(true);
+            setTimeout(()=>{
+              setAlertVisibility(false)
+          }, 6000)
+          }
+        })
+            .catch(error => {
+              setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
+              setAlertVisibility(true);
+              console.log(" error occured while saving Details");
+                setTimeout(()=>{
+                  setAlertVisibility(false)
+              }, 6000)
+             
+            });
+      
     }
 
     const _onPasswordChange = () => {
@@ -110,7 +237,7 @@ const ProfileScreen = (props) => {
       <Background>
         <BackButton goBack={() => props.navigation.navigate('UserHomeScreen')} />
         <Logo />
-        <Header>Dr. Reddy's Foundation</Header>
+        {Alert}
 
         <TextInput
           label="Name"
@@ -125,7 +252,7 @@ const ProfileScreen = (props) => {
         <TextInput
           label="Mobile"
           returnKeyType="next"
-          value={mobile.value}
+          value={mobile.value.toString()}
           onChangeText={text => setMobile({ value: text, error: '' })}
           error={!!mobile.error}
           errorText={mobile.error}
@@ -145,23 +272,34 @@ const ProfileScreen = (props) => {
           keyboardType="email-address"
         />
 
-        <TextInput
-          label="CenterName"
-          returnKeyType="next"
-          value={state.value}
-          onChangeText={text => setState({ value: text, error: '' })}
-          error={!!state.error}
-          errorText={state.error}
-        />
 
-        <TextInput
-          label="City"
-          returnKeyType="next"
-          value={city.value}
-          onChangeText={text => setCity({ value: text, error: '' })}
-          error={!!city.error}
-          errorText={city.error}
-        />
+<View style={styles.container}>
+          <RNPickerSelect
+            placeholder={{
+              label: 'Select a State',
+              value: null,
+            }}
+      value={selectedStateItem}
+            onValueChange={e => getState(e)}
+            items={state.value}
+            style={pickerStyle}
+          />
+        </View>
+
+        <View style={styles.container}>
+           <RNPickerSelect
+            placeholder={{
+              label: 'Select a City',
+              value: null,
+            }}
+            value={selectedCityItem}
+            onValueChange={e => getCityId(e)}
+            items={city.value}
+            style={pickerStyle}
+          />
+
+        </View>
+
 
 <TextInput
           label="Current Company"
@@ -174,7 +312,7 @@ const ProfileScreen = (props) => {
 
         <Button
           mode="contained"
-          onPress={_onSignUpPressed}
+          onPress={_onSavePressed}
           style={styles.button}
         >
           Save
@@ -197,10 +335,8 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   container: {
-    flex: 1,
-    padding: 18,
-    paddingTop: 35,
-    backgroundColor: '#ffffff',
+    width: '100%',
+    paddingTop: 17,
   },
   HeadStyle: {
     height: 50,
@@ -210,6 +346,19 @@ const styles = StyleSheet.create({
   TableText: {
     margin: 10,
   },
+  input: {
+    backgroundColor: theme.colors.surface,
+  },
+});
+const pickerStyle = StyleSheet.create({
+  inputAndroid: {
+    backgroundColor: theme.colors.surface,
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 8,
+    borderRadius: 4,
+    borderColor: '#808080',
+  }
 });
 
 const mapStateToProps = state => {
