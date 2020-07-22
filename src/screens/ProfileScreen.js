@@ -1,72 +1,26 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, Component} from 'react';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Alert
-} from 'react-native';
-import Icon from 'react-native-elements';
+import { View,Text, StyleSheet,TouchableOpacity,ScrollView,Alert} from 'react-native';
+import {Icon} from 'react-native-elements';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import Paragraph from '../components/Paragraph';
 import { theme } from '../core/theme';
 import RNPickerSelect from 'react-native-picker-select';
-import { Component } from 'react';
 import Header from '../components/Header';
 import {connect} from 'react-redux';
-import {updateProfile} from '../actions/userProfile';
+import {updateProfile} from '../actions';
 import config from '../config/index.js';
 import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-  Cols,
-  Cell,
-} from 'react-native-table-component';
-import {
-  emailValidator,
-  mobileValidator,
-  nameValidator,
+  companyValidator,
+  phoneValidator,
   stateValidator,
-  cityValidator,
+  cityValidator
 } from '../core/utils';
 
-class ProfileTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      HeadTable: ['Company Name', 'Profile', 'From', 'To'],
-      DataTable: [
-        ['Lemon Tree Hotel', 'FrontDesk Executive', 'Jan-19', 'Aug-19'],
-        ['Skywalk Hospitality', 'DataEntry operator', 'Sep-19', 'Jan-20'],
-      ],
-    };
-  }
 
-  render() {
-    const state = this.state;
-
-    return (
-      <View style={styles.container}>
-        <Table borderStyle={{ borderWidth: 1 }}>
-          <Row
-            data={state.HeadTable}
-            style={styles.HeadStyle}
-            textStyle={styles.TableText}
-          />
-          <Rows data={state.DataTable} textStyle={styles.TableText} />
-        </Table>
-      </View>
-    );
-  }
-}
 
 const ProfileScreen = (props) => {
   var [name, setName] = useState({ value: props.user.firstName + ' ' + props.user.lastName, error: '' });
@@ -78,12 +32,13 @@ const ProfileScreen = (props) => {
     var[ cityData, setCityData]= useState([]);
     var[ stateData, setStateData] = useState([]);
     var [cityId, setCityId] = useState(null);
-    var stateId = null;
-    var [selectedStateItem,setSelectedState]= useState({value: '', error:''});
-    var [selectedCityItem,setSelectedCityItem]=useState({value:'',error:''}) ;
+    var [currentStateId, setStateId] = useState(null);
+    var [selectedStateItem,setSelectedState]= useState(props.user.stateName);
+    var [selectedCityItem,setSelectedCityItem]=useState(props.user.cityName) ;
   var [CurrentCompany, setCurrentCompany] = useState({ value: props.user.currentOrganization, error: '' });
   var [showAlert, setAlertVisibility] = useState(false);
   var [alertParameters, setAlertParameters] = useState({message:'', backgroundColor: '', icon: '', iconColor: ''});
+  var stateId = null;
   var Alert = null;
 
   const resAlert = (
@@ -108,81 +63,112 @@ if (showAlert){
       }
       else{
           return response.json()
-  }})
-    .then(json => {
-      console.log(json);
-      setStateData(json);
-      let citylist=[];
-      let statelist=[];
-      json.forEach(i =>{
-        statelist.push({label:i.stateName, value: i.stateName});
-      })
-      console.log(citylist);
-     // setCity({value:citylist});
-      setState({value:statelist});
-      console.log(city);
-    })
-    .catch(err => {
-      
-    })
-  }
-  useEffect(() => {
-   stateFetch();
-},[]);
-const getCityId=(selectedCity)=>{
-  console.log(selectedCity);
-  setSelectedCityItem(selectedCity);
-  if(selectedCity != '' && selectedCity != null){
-   let selectedcityList= cityData.filter(i => {
-     return i.cityName == selectedCity;
-   });
-   console.log(selectedcityList[0].cityId);
-   setCityId(selectedcityList[0].cityId);
-  }
- 
-}
+      }})
+        .then(json => {
+          setStateData(json);
+          let citylist=[];
+          let statelist=[];
+          json.forEach(i =>{
+            statelist.push({label:i.stateName, value: i.stateName});
+          })
+          setState({value:statelist});
+        })
+      }
+
+    useEffect(() => {
+        stateFetch();
+      },[]);
+
+  const getCityId=(selectedCity)=>{
+      setSelectedCityItem(selectedCity);
+      if(selectedCity != '' && selectedCity != null){
+      let selectedcityList= cityData.filter(i => {
+        return i.cityName == selectedCity;
+      });
+      setCityId(selectedcityList[0].cityId);
+      }
+  
+    }
 
 
 const getState=(selectedState)=>{
  let citylist=[];
- console.log(selectedState);
  setSelectedState(selectedState);
-//  selectedStateItem = selectedState;
-if(selectedState !='' && selectedState != null){   
- let selectedStateList = stateData.filter(i => {
-   return i.stateName == selectedState;
- });
- console.log(selectedStateList[0].stateId);
- stateId = selectedStateList[0].stateId;
- console.log("stateId"+stateId);
- const headers = { 'Content-Type': 'application/json' }
- fetch(config.baseurl+'/api/v1/cityDetails/'+stateId,{headers},{mode:"no-cors"})
- .then(response =>  {
-   if (response.status != 200){
-       setLoaderVisibility(false)
-       setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
-       setAlertVisibility(true)
-   }
-   else{
-       return response.json()
-}})
- .then(json => {
-   setCityData(json);
-   json.forEach(i =>{
-     citylist.push({label: i.cityName, value: i.cityName});
-     cityData.push(i.cityName);
-   })
-   setCity({value:citylist});
- }).catch(err => {})
+  if(selectedState !='' && selectedState != null){   
+  let selectedStateList = stateData.filter(i => {
+    return i.stateName == selectedState;
+  });
+  stateId = selectedStateList[0].stateId;
+  setStateId(stateId)
+  const headers = { 'Content-Type': 'application/json' }
+  fetch(config.baseurl+'/api/v1/cityDetails/'+stateId,{headers},{mode:"no-cors"})
+  .then(response =>  {
+    if (response.status != 200){
+        setLoaderVisibility(false)
+        setAlertParameters({message: "Unable to fetch jobs, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+        setAlertVisibility(true)
+    }
+    else{
+        return response.json()
+  }})
+  .then(json => {
+    setCityData(json);
+    json.forEach(i =>{
+      citylist.push({label: i.cityName, value: i.cityName});
+      cityData.push(i.cityName);
+    })
+    setCity({value:citylist});
+  }).catch(err => {})
 
-}
+  }
 }
 
+  const fieldValidation = () => {
+    var valPass = true
+    var mobileError = phoneValidator(mobile.value)
+    var companyError = companyValidator(CurrentCompany.value)
+    var cityError = cityValidator(selectedCityItem)
+    if (mobileError){
+      setMobile({value: mobile.value, error: mobileError})
+      valPass = false
+    }
+    if (companyError){
+      setCurrentCompany({value: CurrentCompany.value, error: companyError})
+      valPass = false
+    }
+    if (cityError) {
+      setAlertParameters({message: "City cannot be empty", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
+      setAlertVisibility(true)
+      valPass = false
+    }
+    return valPass
+  }
+
+  const _onProfileUpdateSuccess = () => {
+      var newUserDetails = {
+        aspirantId:props.user.aspirantId,
+        firstName:props.user.firstName,
+        lastName:props.user.lastName,
+        emailId:props.user.emailId,
+        phone:mobile.value,
+        dob:props.user.dob,
+        currentOrganization:CurrentCompany.value,
+        cityId:cityId,
+        cityName:selectedCityItem,
+        stateId:currentStateId,
+        stateName:selectedStateItem,
+        centerId:props.user.centerId,
+        centerName:props.user.centerName,
+        isAdmin:props.user.isAdmin
+      } 
+      props.updateProfile(newUserDetails)
+  }
 
   const _onSavePressed = () => {
-    
+      if (!fieldValidation()){
+        return "Input Incorrect"
+      }  
   
-      console.log("Sending details ");
       fetch(config.baseurl+'/api/v1/updateProfile', {
         method: 'POST',
         headers: {
@@ -200,42 +186,35 @@ if(selectedState !='' && selectedState != null){
            if (response.status == 200){
             setAlertParameters({message: "Profile details successfully updated", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'});
             setAlertVisibility(true);
-              setTimeout(()=>{
-                setAlertVisibility(false)
-            }, 6000)
+            _onProfileUpdateSuccess()
           }
           else{
             setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
             setAlertVisibility(true);
-            setTimeout(()=>{
-              setAlertVisibility(false)
-          }, 6000)
           }
         })
             .catch(error => {
               setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
               setAlertVisibility(true);
-              console.log(" error occured while saving Details");
-                setTimeout(()=>{
-                  setAlertVisibility(false)
-              }, 6000)
-             
             });
       
     }
 
     const _onPasswordChange = () => {
-      console.log('on password change method');
       props.navigation.navigate('ChangePasswordScreen');
     };
 
-    //navigation.navigate('ProfileScreen');
   
 
   return (
     <ScrollView>
       <Background>
-        <BackButton goBack={() => props.navigation.navigate('UserHomeScreen')} />
+        <BackButton goBack={() => {
+          if(props.user.isAdmin=="N")
+            props.navigation.navigate('UserHomeScreen');
+          else
+            props.navigation.navigate('AdminHomeScreen');
+            }} />
         <Logo />
         {Alert}
 
@@ -263,23 +242,12 @@ if(selectedState !='' && selectedState != null){
           returnKeyType="next"
           value={email.value}
           editable={false}
-          onChangeText={text => setEmail({ value: text, error: '' })}
-          error={!!email.error}
-          errorText={email.error}
-          autoCapitalize="none"
-          autoCompleteType="email"
-          textContentType="emailAddress"
-          keyboardType="email-address"
         />
 
 
-<View style={styles.container}>
+    <View style={styles.container}>
           <RNPickerSelect
-            placeholder={{
-              label: 'Select a State',
-              value: null,
-            }}
-      value={selectedStateItem}
+          value={selectedStateItem}
             onValueChange={e => getState(e)}
             items={state.value}
             style={pickerStyle}
@@ -288,10 +256,6 @@ if(selectedState !='' && selectedState != null){
 
         <View style={styles.container}>
            <RNPickerSelect
-            placeholder={{
-              label: 'Select a City',
-              value: null,
-            }}
             value={selectedCityItem}
             onValueChange={e => getCityId(e)}
             items={city.value}
@@ -366,14 +330,5 @@ const mapStateToProps = state => {
     user: state.auth.user
   };
 };
-/* const mapDispatchToProps = dispatch => {
-  return {
-    login: () => dispatch(login()),
-  };
-}; */
-//{ authInputChange, login } mapDispatchToProps
-export default connect(mapStateToProps, {  updateProfile })(
-  ProfileScreen
-);
 
-
+export default connect(mapStateToProps, {updateProfile })(memo(ProfileScreen));
