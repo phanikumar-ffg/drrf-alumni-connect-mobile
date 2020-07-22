@@ -17,6 +17,12 @@ export const companyValidator = name => {
   return '';
 };
 
+export const nameValidator = name => {
+  if (!name || name.length <= 0) return 'Field cannot be empty.';
+
+  return '';
+};
+
 export const studentIDValidator = studentID => {
   if (!studentID || studentID.length <= 0) return 'StudentID cannot be empty.';
 
