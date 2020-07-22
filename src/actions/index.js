@@ -4,5 +4,5 @@ export { authContentChange, addContent } from './adminAddContent'
 export { userSubmitHelp, userSubmitEmptyDetails,clearDetails } from './userSubmitHelp';
 export { authContentDelete, deleteContent } from './adminDeleteContent';
 export { authContentGet, getContent } from './adminGetContent';
-export { authInputChange1, updateProfile, changePassword } from './userProfile';
+export { updateProfile, changePassword } from './userProfile';
 export { adminHelpRequest } from './adminHelpRequest';
