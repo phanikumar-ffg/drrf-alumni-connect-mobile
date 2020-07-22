@@ -186,7 +186,6 @@ class HelpScreen extends React.Component {
 }
 const pickerStyle = StyleSheet.create({
   inputAndroid: {
-    backgroundColor: theme.colors.surface,
     paddingTop: 16,
     paddingBottom: 16,
     paddingLeft: 8,
