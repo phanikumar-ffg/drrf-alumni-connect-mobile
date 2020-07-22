@@ -184,10 +184,10 @@ const getState=(selectedState)=>{
              }),
            })
            .then(response => {
+           setButtonLoading(false)
            if (response.status == 200){
             setAlertParameters({message: "Profile details successfully updated", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'});
             setAlertVisibility(true);
-            setButtonLoading(false)
             setTimeout(()=>{
                   _onProfileUpdateSuccess()
             },4000)
@@ -198,6 +198,7 @@ const getState=(selectedState)=>{
           }
         })
             .catch(error => {
+              setButtonLoading(false)
               setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
               setAlertVisibility(true);
             });
