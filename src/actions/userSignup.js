@@ -2,7 +2,7 @@ import {
   AUTH_INPUT_CHANGE,
   SIGNUP_FAILURE,
   SIGNUP_SUCCESS,
-  LOADING,
+  SIGNUP_LOADING,
 } from './actionTypes';
 import config from '../config/index.js';
 
@@ -21,7 +21,7 @@ export const signup=(details)=>{
     return dispatch => {
           //dispatch({ type: SIGNUP_SUCCESS ,payload: signup_validation });
           //dispatch({type:SIGNUP_FAILURE});
-          dispatch({type:LOADING});
+          dispatch({type:SIGNUP_LOADING});
           fetch(config.baseurl+'/api/v1/signup', {
             method: 'POST',
             headers: {

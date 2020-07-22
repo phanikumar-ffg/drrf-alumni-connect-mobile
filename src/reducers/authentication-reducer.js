@@ -5,6 +5,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOADING,
+  PASSWORD_CHANGE_SUCCESS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -37,6 +38,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+      };
+      case PASSWORD_CHANGE_SUCCESS:
+      return {
+        ...state,
+        user: {},
+        emailId: '',
+        password: '',
+        loading: false
       };
 
     default:

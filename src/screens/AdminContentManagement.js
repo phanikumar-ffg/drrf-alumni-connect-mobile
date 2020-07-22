@@ -192,7 +192,7 @@ const AdminContentManagement = ({ props, navigation }) => {
     }
 
     return (
-     <ScrollView style={{marginTop:28}}>
+     <ScrollView>
         <View>
         <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
         <SearchBar

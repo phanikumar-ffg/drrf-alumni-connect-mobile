@@ -54,7 +54,7 @@ class RegisterScreen extends React.Component {
     }
 
     showButton(){
-      if (this.props.loading) {
+      if (this.props.signup_loading) {
         return (
           <View>
             <ActivityIndicator size="small" />
@@ -235,14 +235,13 @@ class RegisterScreen extends React.Component {
 }
 const pickerStyle = StyleSheet.create({
     inputAndroid: {
-      backgroundColor: theme.colors.surface,
       paddingTop: 16,
       paddingBottom: 16,
       paddingRight: 4,
       borderRadius: 4,
       width: '100%',
-      marginVertical: 12,
-      color: '#999',
+      marginVertical: 6,
+      color: 'black',
       borderColor: '#808080',
     },
   });
@@ -272,7 +271,11 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
   container: {
+    borderWidth : 1,
     width: '100%',
+    marginVertical: 20,
+    borderRadius: 4,
+    borderColor: '#808080',
   },
 });
 
@@ -287,7 +290,7 @@ const mapStateToProps = state => {
     centerName: state.onboard.centerName,
     user: state.onboard.user,
     error: state.onboard.error,
-    loading: state.onboard.loading,
+    signup_loading: state.onboard.signup_loading,
     signup_valid: state.onboard.signup_valid,
     centres: state.onboard.centres
   };
