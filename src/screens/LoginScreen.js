@@ -13,6 +13,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+import { ScrollView } from 'react-native-gesture-handler';
 import { emailValidator, passwordValidator } from '../core/utils';
 import { connect } from 'react-redux';
 import { authInputChange, login } from '../actions';
@@ -22,10 +23,10 @@ import _ from 'lodash';
 class LoginScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!_.isEmpty(nextProps.user)) {
-        if(nextProps.user.isAdmin=="N")
-            this.props.navigation.navigate('UserHomeScreen', nextProps.user);
-        else
-            this.props.navigation.navigate('AdminHomeScreen', nextProps.user);
+      if (nextProps.user.isAdmin == "N")
+        this.props.navigation.navigate('UserHomeScreen', nextProps.user);
+      else
+        this.props.navigation.navigate('AdminHomeScreen', nextProps.user);
     }
   }
 
@@ -61,56 +62,56 @@ class LoginScreen extends React.Component {
   }
   render() {
     return (
-     <ScrollView>
-      <Background>
-        <Logo />
-        <Header>Dr. Reddy's Foundation</Header>
+      <ScrollView>
+        <Background>
+          <Logo />
+          <Header>Dr. Reddy's Foundation</Header>
 
-        <TextInput
-          label="Email"
-          returnKeyType="next"
-          value={this.props.emailId}
-          onChangeText={text =>
-            this.props.authInputChange({ field: 'emailId', value: text })
-          }
-          autoCapitalize="none"
-          autocompletetype="emailId"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-        />
-
-        <TextInput
-          label="Password"
-          returnKeyType="done"
-          value={this.props.password}
-          onChangeText={text =>
-            this.props.authInputChange({ field: 'password', value: text })
-          }
-          secureTextEntry
-        />
-
-        <View style={styles.forgotPassword}>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('ForgotPasswordScreen')
+          <TextInput
+            label="Email"
+            returnKeyType="next"
+            value={this.props.emailId}
+            onChangeText={text =>
+              this.props.authInputChange({ field: 'emailId', value: text })
             }
-          >
-            <Text style={styles.normalLink}>Forgot your password?</Text>
-          </TouchableOpacity>
-        </View>
-        {this.showError()}
-        {this.showButton()}
+            autoCapitalize="none"
+            autocompletetype="emailId"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
 
-        <View style={styles.row}>
-          <Text style={styles.label}>Don’t have an account? </Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('RegisterScreen')}
-          >
-            <Text style={styles.link}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
-      </Background>
-     </ScrollView>       
+          <TextInput
+            label="Password"
+            returnKeyType="done"
+            value={this.props.password}
+            onChangeText={text =>
+              this.props.authInputChange({ field: 'password', value: text })
+            }
+            secureTextEntry
+          />
+
+          <View style={styles.forgotPassword}>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('ForgotPasswordScreen')
+              }
+            >
+              <Text style={styles.normalLink}>Forgot your password?</Text>
+            </TouchableOpacity>
+          </View>
+          {this.showError()}
+          {this.showButton()}
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Don’t have an account? </Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('RegisterScreen')}
+            >
+              <Text style={styles.link}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+        </Background>
+      </ScrollView>
     );
   }
 }
