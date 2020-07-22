@@ -214,10 +214,11 @@ class RegisterScreen extends React.Component {
                     onValueChange={value => this.props.onboardInputChange({ field: 'centerName', value: {value:value,error:'' } })}
                     items={this.props.centres.map(j=>({value:j.centreName,label:j.centreName}))}
                   />
+                  </View>
                   {this.props.centerName.error ? (
                     <Text style={styles.error}>{this.props.centerName.error}</Text>
                   ) : null}
-                  </View>
+
             </View>
 
             {this.showError()}
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
   container: {
     borderWidth : 1,
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 15,
     borderRadius: 4,
     borderColor: '#808080',
   },
