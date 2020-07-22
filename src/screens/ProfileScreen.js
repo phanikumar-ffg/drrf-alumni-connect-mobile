@@ -38,6 +38,7 @@ const ProfileScreen = (props) => {
   var [CurrentCompany, setCurrentCompany] = useState({ value: props.user.currentOrganization, error: '' });
   var [showAlert, setAlertVisibility] = useState(false);
   var [alertParameters, setAlertParameters] = useState({message:'', backgroundColor: '', icon: '', iconColor: ''});
+  var [submitButtonLoading, setButtonLoading] = useState(false)
   var stateId = null;
   var Alert = null;
 
@@ -168,7 +169,7 @@ const getState=(selectedState)=>{
       if (!fieldValidation()){
         return "Input Incorrect"
       }  
-  
+      setButtonLoading(true)
       fetch(config.baseurl+'/api/v1/updateProfile', {
         method: 'POST',
         headers: {
@@ -186,7 +187,10 @@ const getState=(selectedState)=>{
            if (response.status == 200){
             setAlertParameters({message: "Profile details successfully updated", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'});
             setAlertVisibility(true);
-            _onProfileUpdateSuccess()
+            setButtonLoading(false)
+            setTimeout(()=>{
+                  _onProfileUpdateSuccess()
+            },4000)
           }
           else{
             setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
@@ -276,6 +280,7 @@ const getState=(selectedState)=>{
 
         <Button
           mode="contained"
+          loading = {submitButtonLoading}
           onPress={_onSavePressed}
           style={styles.button}
         >
