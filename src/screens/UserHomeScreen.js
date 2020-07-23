@@ -5,6 +5,7 @@ const { width } = Dimensions.get("window");
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
+import {changePassword} from '../actions'
 
 
 export default class UserHomeScreen extends Component {
@@ -16,25 +17,35 @@ export default class UserHomeScreen extends Component {
               <Header>Better Skills Better Jobs</Header>
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
-                   <Icon name='person'  size={100} onPress={() => this.props.navigation.navigate('ProfileScreen')} />
+                   <Icon name='person'  size={80} onPress={() => this.props.navigation.navigate('ProfileScreen')} />
                    <Text style = {styles.text} > Profile Maintenance </Text>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon}  >
-                   <Icon name='search'  size={100}  onPress={() => this.props.navigation.navigate('JobSearch')}/>
+                   <Icon name='search'  size={80}  onPress={() => this.props.navigation.navigate('JobSearch')}/>
                    <Text style = {styles.text} > Job Search </Text>
                 </Card>
               </View>
               <View style ={{flex:1, flexDirection: 'row'}} >
-                 <Card containerStyle={styles.container}   style = {styles.icon} >
-                     <Icon name='help'  size={100}  onPress={() => this.props.navigation.navigate('HelpScreen')}/>
-                     <Text style = {styles.text} > DRF Help </Text>
-                 </Card>
-                 <Card containerStyle={styles.container} style = {styles.icon} >
-                      <Icon name='image'  size={100} onPress={() => this.props.navigation.navigate('HomePage')} />
-                      <Text style = {styles.text} > New Content </Text>
-                 </Card>
+                <Card containerStyle={styles.container}   style = {styles.icon}>
+                   <Icon name='help'  size={80} onPress={() => this.props.navigation.navigate('HelpScreen')} />
+                   <Text style = {styles.text} > DRF Help </Text>
+                </Card>
+                <Card containerStyle={styles.container}  style = {styles.icon}  >
+                   <Icon name='image'  size={80}  onPress={() => this.props.navigation.navigate('HomePage')}/>
+                   <Text style = {styles.text} > Learning </Text>
+                </Card>
               </View>
-              </Background>
+              <View style ={{flex:1, flexDirection: 'row'}} >
+                <Card containerStyle={styles.container}   style = {styles.icon}>
+                   <Icon name='lock'  size={80} onPress={{changePassword}} />
+                   <Text style = {styles.text} > Change Password </Text>
+                </Card>
+                <Card containerStyle={styles.container}  style = {styles.icon}  >
+                   <Icon name='launch'  size={80}  onPress={() => this.props.navigation.navigate('JobSearch')}/>
+                   <Text style = {styles.text} > Logout </Text>
+                </Card>
+              </View>
+            </Background>
           </ScrollView >
     );
   }
@@ -50,7 +61,7 @@ const styles = StyleSheet.create({
   text: {
     alignItems: 'center',
     justifyContent: 'center',
-//    fontSize: 20
+    fontSize: 10
   },
   icon: {
      alignItems: 'center',
