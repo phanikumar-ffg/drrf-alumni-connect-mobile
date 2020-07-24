@@ -116,6 +116,18 @@ const AdminContentManagement = ({ props, navigation }) => {
         }
     }
 
+    const isDisabled = (val) => {
+        if(val == "" || val == null)
+            return true;
+        return false;
+    }
+    const getIconName = (name) => {
+        console.log("content type  : "+ name);
+        if(name == "Video")     return "image";
+        if(name == "Document")  return "file";
+        if(name == "Website")   return "website";
+    }
+
     return (
         <ScrollView >
         <View>
@@ -137,11 +149,11 @@ const AdminContentManagement = ({ props, navigation }) => {
             {data.value.map((j,index)=>(<View style={styles.viewStyle}>
                 <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
-                    <Image onPress={()=>Linking.openURL(j.contentURL)} source={require('../assets/video-icon.png')} style={styles.image}/>
+                    <Icon name={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
                     </TouchableOpacity>
                     <Text>{j.contentDesc}</Text>
                     <TouchableOpacity onPress={()=>Linking.openURL(j.assessmentURL)}>
-                    <Button mode="contained" >Quiz</Button>
+                    <Button mode="contained" disabled = {isDisabled(j.assessmentURL)}>Quiz</Button>
                     </TouchableOpacity>
                 </Card>
                 </View>

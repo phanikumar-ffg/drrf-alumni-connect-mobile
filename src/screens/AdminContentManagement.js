@@ -17,6 +17,7 @@ const AdminContentManagement = ({ props, navigation }) => {
     var [dialogVisibility, setdialogVisibility] = useState(false)
     var [contentSelected, setContentSelected] = useState({})
     var [showLoader, setLoaderVisibility] = useState(true)
+    const [loading, setloading] = useState(true)
     var [alertParameters, setAlertParameters] = useState({message:'', backgroundColor: '', icon: '', iconColor: ''})
     var [yesButtonLoading, setButtonLoading] = useState(false)
     var [showAlert, setAlertVisibility] = useState(false)
@@ -186,10 +187,21 @@ const AdminContentManagement = ({ props, navigation }) => {
                .catch(err => {
                      setButtonLoading(false)
                      setdialogVisibility(false)
-                     setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
-                     setAlertVisibility(true)
+                     console.log("error occurred internally");
                  })
     }
+     const isDisabled = (val) => {
+            if(val == "" || val == null)
+                return true;
+            return false;
+      }
+      const getIconName = (name) => {
+              console.log("content type  : "+ name);
+              if(name == "Video")     return "image";
+              if(name == "Document")  return "link";
+              if(name == "Website")   return "website";
+          }
+
 
     return (
      <ScrollView>
@@ -209,18 +221,19 @@ const AdminContentManagement = ({ props, navigation }) => {
         </TouchableOpacity>
             {loader}
             {Alert}
-            {data.value.map((j,index)=>( <View style={styles.viewStyle}>
-                <Card key={j.contentURL} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
+            {data.value.map((j,index)=>(
+                <Card key={index} wrapperStyle={styles.content} containerStyle={{width:'100%'}} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
-                    <Image onPress={()=>Linking.openURL(j.contentURL)} source={require('../assets/video-icon.png')} style={styles.image}/>
+                    <Icon name={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
                     </TouchableOpacity>
                     <Text>{j.contentDesc}</Text>
-                    <TouchableOpacity onPress={()=>Linking.openURL(j.assessmentURL)}>
-                    <Button mode="contained" >Quiz</Button>
+                    <TouchableOpacity onPress={()=>{j.assessmentURL? Linking.openURL(j.assessmentURL) : Linking.openURL()}}>
+                    <Button mode="contained" disabled = {isDisabled(j.assessmentURL)} >Quiz</Button>
                     </TouchableOpacity>
+                    <Icon name='delete'  containerStyle={styles.icon} size={40} onPress={() => deleteContentHandler(index)}/>
                 </Card>
-                <Icon name='delete'  containerStyle={styles.icon} size={40} onPress={() => deleteContentHandler(index)}/>
-            </View>))}
+
+            ))}
 
             <Button mode="contained"  mode="contained" onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
             {showTouchOpacity}
@@ -247,7 +260,6 @@ const styles = StyleSheet.create({
        justifyContent:'space-around',
     },
     icon: {
-        marginLeft:'0.25%',
         alignItems:'center',
         justifyContent:'center'
     },

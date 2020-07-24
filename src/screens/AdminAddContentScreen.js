@@ -43,7 +43,7 @@ class AdminAddContentScreen extends React.Component {
                  'Content-Type': 'application/json',
                }})
                .then(response => {
-                    console.log('reponse received!');
+                   console.log('reponse received!' + response.status);
                    if (response.status != 200){
                            console.log("Error occured while saving data");
                            setAlertParameters({message: "Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
