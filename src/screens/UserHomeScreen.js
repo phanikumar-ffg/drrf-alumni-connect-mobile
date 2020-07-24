@@ -41,7 +41,7 @@ export default class UserHomeScreen extends Component {
                    <Text style = {styles.text} > Change Password </Text>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon}  >
-                   <Icon name='launch'  size={80}  onPress={() => this.props.navigation.navigate('JobSearch')}/>
+                   <Icon name='launch'  size={80}  onPress={() => this.props.navigation.navigate('HomeScreen')}/>
                    <Text style = {styles.text} > Logout </Text>
                 </Card>
               </View>
