@@ -5,6 +5,7 @@ const { width } = Dimensions.get("window");
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
+import {changePassword} from '../actions'
 
 
 export default class AdminHomeScreen extends Component {
@@ -16,23 +17,33 @@ export default class AdminHomeScreen extends Component {
           <Header>Better Skills Better Jobs</Header>
           <View style ={{flex:1, flexDirection: 'row'}} >
             <Card containerStyle={styles.container}   style = {styles.icon}>
-               <Icon name='help'  size={100} onPress={() => this.props.navigation.navigate('AdminHelpScreen')} />
+               <Image source={require('../assets/home-page-logos/help_center.svg')} onPress={() => this.props.navigation.navigate('AdminHelpScreen')} style={styles.image}/>
                <Text style = {styles.text} > Help </Text>
             </Card>
             <Card containerStyle={styles.container}  style = {styles.icon}  >
-               <Icon name='search'  size={100}  onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')}/>
+               <Image source={require('../assets/home-page-logos/search.svg')} onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')} style={styles.image}/>
                <Text style = {styles.text} > Job Admin </Text>
             </Card>
           </View>
           <View style ={{flex:1, flexDirection: 'row'}} >
              <Card containerStyle={styles.container}   style = {styles.icon} >
-                 <Icon name='person'  size={100}  onPress={() => this.props.navigation.navigate('ProfileScreen')}/>
+                 <Image source={require('../assets/home-page-logos/person.svg')} onPress={() => this.props.navigation.navigate('ProfileScreen')} style={styles.image}/>
                  <Text style = {styles.text} > Profile Admin </Text>
              </Card>
              <Card containerStyle={styles.container} style = {styles.icon} >
-                  <Icon name='image'  size={100} onPress={() => this.props.navigation.navigate('AdminContentManagement')} />
+                  <Image source={require('../assets/home-page-logos/local_library.svg')} onPress={() => this.props.navigation.navigate('AdminContentManagement')} style={styles.image}/>
                   <Text style = {styles.text} > Manage Content </Text>
              </Card>
+          </View>
+          <View style ={{flex:1, flexDirection: 'row'}} >
+            <Card containerStyle={styles.container}   style = {styles.icon}>
+                <Image source={require('../assets/home-page-logos/lock_open.svg')} onPress={{changePassword}} style={styles.image}/>
+                <Text style = {styles.text} > Change Password </Text>
+            </Card>
+            <Card containerStyle={styles.container}  style = {styles.icon}  >
+                <Image source={require('../assets/home-page-logos/exit_to_app.svg')} onPress={() => this.props.navigation.navigate('HomeScreen')} style={styles.image}/>
+                <Text style = {styles.text} > Logout </Text>
+            </Card>
           </View>
         </Background>
       </ScrollView >
@@ -41,6 +52,10 @@ export default class AdminHomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  image: {
+     width: 100,
+     height: 100,
+  },
   container: {
      justifyContent: "flex-start",
      flexDirection: "row",
@@ -50,7 +65,7 @@ const styles = StyleSheet.create({
   text: {
     alignItems: 'center',
     justifyContent: 'center',
-//    fontSize: 20
+    fontSize: 10
   },
   icon: {
      alignItems: 'center',
