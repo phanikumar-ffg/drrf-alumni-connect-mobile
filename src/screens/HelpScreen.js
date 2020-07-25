@@ -54,7 +54,7 @@ class HelpScreen extends React.Component {
     if (this.props.error) {
       console.log("Inside props error");
       this.isActive=true; 
-      return(<View style={{ backgroundColor: 'lightblue'}}>
+      return(<View style={{ backgroundColor: 'lightblue',flexDirection: 'row'}}>
         <Paragraph >{this.props.error}</Paragraph>
         <Icon name = 'clear' size = {25}  onPress = {() => this.clear(this)} />
         </View> );
