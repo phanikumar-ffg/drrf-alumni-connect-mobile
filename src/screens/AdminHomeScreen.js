@@ -23,7 +23,7 @@ export default class AdminHomeScreen extends Component {
                </ TouchableOpacity>
             </Card>
             <Card containerStyle={styles.container}  style = {styles.icon}  >
-               <TouchableOpacity onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')} >
+               <TouchableOpacity onPress={() => this.props.navigation.navigate('AdminJobManagement')} >
                    <Image source={require('../assets/home-page-logos/search.png')} style={styles.image}/>
                    <Text style = {styles.text} > Job Admin </Text>
                </TouchableOpacity>
