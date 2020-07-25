@@ -165,9 +165,11 @@ class HelpScreen extends React.Component {
             items={this.state.problemDetails.map(j=>({value:j.helpValue,label:j.helpValue}))}
           />
     </View>
+  
     <TextInput
       label="Additional-Details"
       multiline={true}
+      numberOfLines={10}
       style={styles.input}
       value= {this.state.additionalDetails}
       onChangeText={text =>
@@ -199,13 +201,18 @@ const pickerStyle = StyleSheet.create({
 const styles = StyleSheet.create({
   input: {
     backgroundColor: theme.colors.surface,
-    height: 120,
+    textAlignVertical: 'top',
+    //height: 120,
+    width:'100%',
+    paddingTop:0,
+    paddingBottom:0,
   },
   container: {
     borderWidth: 1,
     width: '100%',
     marginVertical: 12,
   },
+
   formStyle:{
     backgroundColor: theme.colors.surface
   }
