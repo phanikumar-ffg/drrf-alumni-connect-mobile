@@ -54,7 +54,7 @@ class HelpScreen extends React.Component {
     if (this.props.error) {
       console.log("Inside props error");
       this.isActive=true; 
-      return(<View style={{ backgroundColor: 'lightblue',flexDirection: 'row'}}>
+      return(<View style={{ backgroundColor: 'lightblue'}}>
         <Paragraph >{this.props.error}</Paragraph>
         <Icon name = 'clear' size = {25}  onPress = {() => this.clear(this)} />
         </View> );
@@ -165,9 +165,11 @@ class HelpScreen extends React.Component {
             items={this.state.problemDetails.map(j=>({value:j.helpValue,label:j.helpValue}))}
           />
     </View>
+  
     <TextInput
       label="Additional-Details"
       multiline={true}
+      numberOfLines={10}
       style={styles.input}
       value= {this.state.additionalDetails}
       onChangeText={text =>
@@ -199,13 +201,18 @@ const pickerStyle = StyleSheet.create({
 const styles = StyleSheet.create({
   input: {
     backgroundColor: theme.colors.surface,
-    height: 120,
+    textAlignVertical: 'top',
+    //height: 120,
+    width:'100%',
+    paddingTop:0,
+    paddingBottom:0,
   },
   container: {
     borderWidth: 1,
     width: '100%',
     marginVertical: 12,
   },
+
   formStyle:{
     backgroundColor: theme.colors.surface
   }
