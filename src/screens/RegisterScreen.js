@@ -98,30 +98,30 @@ class RegisterScreen extends React.Component {
   onSignUpPressed = () => {
        console.log('fref');
        console.log(this.props.firstName.value);
-       const firstNameError = nameValidator(this.props.firstName.value);
-       const lastNameError = nameValidator(this.props.lastName.value);
+      // const firstNameError = nameValidator(this.props.firstName.value);
+       //const lastNameError = nameValidator(this.props.lastName.value);
        const studentIDError = studentIDValidator(this.props.studentID.value);
        const phoneError = phoneValidator(this.props.phone.value);
        const dateOfBirthError = dateOfBirthValidator(this.props.dateOfBirth.value);
        const emailError = emailValidator(this.props.email.value);
-       const centerNameError = centerNameValidator(this.props.centerName.value);
+       //const centerNameError = centerNameValidator(this.props.centerName.value);
        console.log('onsignup');
        if (
-         firstNameError ||
+         /*firstNameError ||
          lastNameError ||
-         studentIDError ||
+         */studentIDError ||
          phoneError ||
          dateOfBirthError ||
-         emailError ||
-         centerNameError
+         emailError /*||
+         centerNameError*/
        ) {
-         this.props.onboardInputChange({field:'firstName', value:{value:this.props.firstName.value,error:firstNameError}});
+         /*this.props.onboardInputChange({field:'firstName', value:{value:this.props.firstName.value,error:firstNameError}});
          this.props.onboardInputChange({field:'lastName', value:{value:this.props.lastName.value,error:lastNameError}});
-         this.props.onboardInputChange({field:'studentID', value:{value:this.props.studentID.value,error:studentIDError}});
+         */this.props.onboardInputChange({field:'studentID', value:{value:this.props.studentID.value,error:studentIDError}});
          this.props.onboardInputChange({field:'phone', value:{value:this.props.phone.value,error:phoneError}});
          this.props.onboardInputChange({field:'dateOfBirth', value:{value:this.props.dateOfBirth.value,error:dateOfBirthError}});
          this.props.onboardInputChange({field:'email', value:{value:this.props.email.value,error:emailError}});
-         this.props.onboardInputChange({field:'centerName', value:{value:this.props.centerName.value,error:centerNameError}});
+         //this.props.onboardInputChange({field:'centerName', value:{value:this.props.centerName.value,error:centerNameError}});
         console.log(this.props.centerName.error);
          return ;
        }
@@ -161,7 +161,7 @@ class RegisterScreen extends React.Component {
                 />
 
                 <TextInput
-                  label="Student ID"
+                  label="* Student ID"
                   returnKeyType="next"
                   value={this.props.studentID.value}
                   onChangeText={text => //this.setState({ studentID:{value: text, error: ''} })}
@@ -179,7 +179,7 @@ class RegisterScreen extends React.Component {
                   errorText={this.props.dateOfBirth.error}
                 />
                 <TextInput
-                  label="Mobile"
+                  label="* Mobile"
                   returnKeyType="next"
                   value={this.props.phone.value}
                   onChangeText={text => //this.setState({ phone:{value: text, error: '' }})}
@@ -189,7 +189,7 @@ class RegisterScreen extends React.Component {
                 />
 
                 <TextInput
-                  label="Email"
+                  label="* Email"
                   returnKeyType="next"
                   value={this.props.email.value}
                   onChangeText={text => //this.setState({ email:{value: text, error: '' }})}
