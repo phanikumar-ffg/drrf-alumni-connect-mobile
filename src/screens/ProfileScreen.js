@@ -234,7 +234,7 @@ const getState=(selectedState)=>{
         />
 
         <TextInput
-          label="Mobile"
+          label="* Mobile"
           returnKeyType="next"
           value={mobile.value.toString()}
           onChangeText={text => setMobile({ value: text, error: '' })}
@@ -261,6 +261,10 @@ const getState=(selectedState)=>{
 
         <View style={styles.container}>
            <RNPickerSelect
+           placeholder={{
+             label: '* Select a City Name',
+             value: null,
+           }}
             value={selectedCityItem}
             onValueChange={e => getCityId(e)}
             items={city.value}
@@ -271,7 +275,7 @@ const getState=(selectedState)=>{
 
 
 <TextInput
-          label="Current Company"
+          label="* Current Company"
           returnKeyType="next"
           value={CurrentCompany.value}
           onChangeText={text => setCurrentCompany({ value: text, error: '' })}
