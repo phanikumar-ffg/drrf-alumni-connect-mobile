@@ -17,31 +17,31 @@ export default class UserHomeScreen extends Component {
               <Header>Better Skills Better Jobs</Header>
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
-                   <Image source={require('../assets/home-page-logos/person.svg')} onPress={() => this.props.navigation.navigate('ProfileScreen')} style={styles.image}/>
+                   <Icon name='person'  size={80} onPress={() => this.props.navigation.navigate('ProfileScreen')} />
                    <Text style = {styles.text} > Profile Maintenance </Text>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon}  >
-                   <Image source={require('../assets/home-page-logos/search.svg')} onPress={() => this.props.navigation.navigate('JobSearch')} style={styles.image}/>
+                   <Icon name='search'  size={80}  onPress={() => this.props.navigation.navigate('JobSearch')}/>
                    <Text style = {styles.text} > Job Search </Text>
                 </Card>
               </View>
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
-                   <Image source={require('../assets/home-page-logos/help_center.svg')} onPress={() => this.props.navigation.navigate('HelpScreen')} style={styles.image}/>
+                   <Icon name='help'  size={80} onPress={() => this.props.navigation.navigate('HelpScreen')} />
                    <Text style = {styles.text} > DRF Help </Text>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon}  >
-                   <Image source={require('../assets/home-page-logos/local_library.svg')} onPress={() => this.props.navigation.navigate('HomePage')} style={styles.image}/>
+                   <Icon name='image'  size={80}  onPress={() => this.props.navigation.navigate('HomePage')}/>
                    <Text style = {styles.text} > Learning </Text>
                 </Card>
               </View>
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
-                   <Image source={require('../assets/home-page-logos/lock_open.svg')} onPress={{changePassword}} style={styles.image}/>
+                   <Icon name='lock'  size={80} onPress={{changePassword}} />
                    <Text style = {styles.text} > Change Password </Text>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon}  >
-                   <Image source={require('../assets/home-page-logos/exit_to_app.svg')} onPress={() => this.props.navigation.navigate('HomeScreen')} style={styles.image}/>
+                   <Icon name='launch'  size={80}  onPress={() => this.props.navigation.navigate('HomeScreen')}/>
                    <Text style = {styles.text} > Logout </Text>
                 </Card>
               </View>
@@ -51,12 +51,8 @@ export default class UserHomeScreen extends Component {
   }
 }
 const styles = StyleSheet.create({
-  image: {
-      width: 100,
-      height: 100   ,
-  },
   container: {
-     justifyContent: "center",
+     justifyContent: "flex-start",
      flexDirection: "row",
      flexWrap: "wrap",
      marginTop: 30,
