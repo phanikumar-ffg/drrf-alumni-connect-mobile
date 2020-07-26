@@ -18,13 +18,13 @@ export default class AdminHomeScreen extends Component {
           <View style ={{flex:1, flexDirection: 'row'}} >
             <Card containerStyle={styles.container}   style = {styles.icon}>
                <TouchableOpacity onPress={() => this.props.navigation.navigate('AdminHelpScreen')} >
-                   <Image source={require('../assets/home-page-logos/help_center.svg')} style={styles.image}/>
+                   <Image source={require('../assets/home-page-logos/help_center.png')} style={styles.image}/>
                    <Text style = {styles.text} > Help </Text>
                </ TouchableOpacity>
             </Card>
             <Card containerStyle={styles.container}  style = {styles.icon}  >
-               <TouchableOpacity onPress={() => this.props.navigation.navigate('AdminJobEntryScreen')} >
-                   <Image source={require('../assets/home-page-logos/search.svg')} style={styles.image}/>
+               <TouchableOpacity onPress={() => this.props.navigation.navigate('AdminJobManagement')} >
+                   <Image source={require('../assets/home-page-logos/search.png')} style={styles.image}/>
                    <Text style = {styles.text} > Job Admin </Text>
                </TouchableOpacity>
             </Card>
@@ -32,27 +32,27 @@ export default class AdminHomeScreen extends Component {
           <View style ={{flex:1, flexDirection: 'row'}} >
              <Card containerStyle={styles.container}   style = {styles.icon} >
                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileScreen')} >
-                     <Image source={require('../assets/home-page-logos/person.svg')} style={styles.image}/>
+                     <Image source={require('../assets/home-page-logos/person.png')} style={styles.image}/>
                      <Text style = {styles.text} > Profile Admin </Text>
                  </ TouchableOpacity>
              </Card>
              <Card containerStyle={styles.container} style = {styles.icon} >
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('AdminContentManagement')} >
-                      <Image source={require('../assets/home-page-logos/local_library.svg')} style={styles.image}/>
+                      <Image source={require('../assets/home-page-logos/local_library.png')} style={styles.image}/>
                       <Text style = {styles.text} > Manage Content </Text>
                   </TouchableOpacity>
              </Card>
           </View>
           <View style ={{flex:1, flexDirection: 'row'}} >
             <Card containerStyle={styles.container}   style = {styles.icon}>
-                <TouchableOpacity onPress={{changePassword}} >
-                    <Image source={require('../assets/home-page-logos/lock_open.svg')} style={styles.image}/>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangePasswordScreen')} >
+                    <Image source={require('../assets/home-page-logos/lock_open.png')} style={styles.image}/>
                     <Text style = {styles.text} > Change Password </Text>
                 </TouchableOpacity>
             </Card>
             <Card containerStyle={styles.container}  style = {styles.icon}  >
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeScreen')} >
-                    <Image source={require('../assets/home-page-logos/exit_to_app.svg')} style={styles.image}/>
+                    <Image source={require('../assets/home-page-logos/exit_to_app.png')} style={styles.image}/>
                     <Text style = {styles.text} > Logout </Text>
                 </TouchableOpacity>
             </Card>
@@ -75,8 +75,7 @@ const styles = StyleSheet.create({
      marginTop: 30
   },
   text: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    textAlign: "center",
     fontSize: 10
   },
   icon: {

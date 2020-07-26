@@ -16,3 +16,4 @@ export { default as UserHomeScreen } from './UserHomeScreen';
 export { default as AdminHelpScreen } from './AdminHelpScreen';
 export { default as AdminHomeScreen } from './AdminHomeScreen';
 export { default as ChangePasswordScreen } from './ChangePasswordScreen';
+export { default as AdminJobManagement } from './AdminJobManagement';
