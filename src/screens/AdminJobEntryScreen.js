@@ -188,7 +188,7 @@ const AdminJobEntryScreen = (props) => {
   return (
        <ScrollView>
       <Background>
-        <BackButton goBack={() => props.navigation.navigate('AdminHomeScreen')} />
+        <BackButton goBack={() => props.navigation.navigate('AdminJobManagement')} />
         <Logo />
         <Header>New Job Entry - Admin</Header>
         {Alert}
