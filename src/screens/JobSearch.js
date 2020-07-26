@@ -239,22 +239,18 @@ const JobSearch = (props) => {
                         shadowOpacity: 0.6,
                         shadowRadius: 6.27,
                         elevation: 5,
-                        borderRadius: 6, left : '5%', top: 20, marginBottom: '25px', width: '90%', backgroundColor: '#fdfdfd'}}>
-                    <Card.Title style = {{ backgroundColor: '#efefef'}} title={j.designation} left={LeftContent} />
-                    <Card.Content style ={{marginTop: '8%', marginBottom: '8%'}}> 
-                        <Title style = {{fontWeight: 'bold', fontSize: '18px', margin: 'auto', marginBottom: '6%'}}>{j.companyName}</Title>
-                        <Paragraph>
-                            <View style = {{flex: 1, flexDirection: 'row'}}>
+                        borderRadius: 6, left : '5%', top: 20, marginBottom: 25, width: '90%', backgroundColor: '#fdfdfd'}}>
+                    <Card.Title style = {{ backgroundColor: '#e2e2e2'}} title={j.designation} left={LeftContent} />
+                    <Card.Content style ={{marginTop: '6%', marginBottom: '8%'}}> 
+                        <Title style = {{fontWeight: 'bold', fontSize: 18, marginLeft: 'auto',marginRight: 'auto', marginBottom: '6%'}}>{j.companyName}</Title>
+                            <View style = {{flex: 1, marginBottom: '3%', flexDirection: 'row'}}>
                                 <Icon name='place' color="#414142" size={25} style = {{flex:0.5}}/>
                                 <Text style = {{flex: 0.5, fontSize: 16, marginLeft: '1%'}}>{j.cityName}</Text>
                             </View>
-                        </Paragraph>
-                        <Paragraph>
                             <View style = {{flex: 1, flexDirection: 'row', width: '100%'}}>
                                 <Icon name='message' color="#414142" size={22} style = {{flex:0.2}}/>
-                                <Text style = {{flex: 0.8, fontSize: 16, marginLeft: '1%'}}>{j.jobDescription}</Text>
+                                <Text style = {{flex: 0.8, fontSize: 16, marginLeft: '2%'}}>{j.jobDescription}</Text>
                             </View>
-                        </Paragraph>
                     </Card.Content>
 
                     <Card.Actions style={{ height: 50, backgroundColor: '#600ee6',borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
@@ -338,7 +334,7 @@ touchOpacity: {
   },
   backContainer: {
     position: 'absolute',
-    top: 22,
+    top: '4%',
     left: '3%',
   },
   backImage: {
