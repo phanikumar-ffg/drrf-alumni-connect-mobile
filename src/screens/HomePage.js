@@ -13,7 +13,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import config from '../config/index.js';
 import * as Linking from 'expo-linking';
 
-const AdminContentManagement = ({ props, navigation }) => {
+const HomePage = ({ props, navigation }) => {
     var [data, setData] = useState({value:[]})
     var [dataBackup, setDataBackup] = useState({value:[]})
     var [searchText, setSearchText] = useState({value:''})
@@ -123,9 +123,10 @@ const AdminContentManagement = ({ props, navigation }) => {
     }
     const getIconName = (name) => {
         console.log("content type  : "+ name);
-        if(name == "Video")     return "image";
-        if(name == "Document")  return "file";
-        if(name == "Website")   return "website";
+        if(name == "Video")     return require('../assets/content-type/play.png');
+        if(name == "Document")  return require('../assets/content-type/file.png');
+        if(name == "Website")   return require('../assets/content-type/web.png');
+        else return require('../assets/content-type/play.png');
     }
 
     return (
@@ -147,18 +148,17 @@ const AdminContentManagement = ({ props, navigation }) => {
             {loader}
             {Alert}
             {data.value.map((j,index)=>(<View style={styles.viewStyle}>
-                <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={{width:'80%'}} >
+                <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={styles.container} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
-                    <Image source={require('../assets/content-type/play.png')}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
+                    <Image source={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
                     </TouchableOpacity>
-                    <Text>{j.contentDesc}</Text>
+                    <Text style = {styles.popupText}>{j.contentDesc}</Text>
                     <TouchableOpacity onPress={()=>Linking.openURL(j.assessmentURL)}>
                     <Button mode="contained" disabled = {isDisabled(j.assessmentURL)}>Quiz</Button>
                     </TouchableOpacity>
                 </Card>
                 </View>
             ))}
-
             {showTouchOpacity}
         </View>
         </ScrollView>
@@ -170,6 +170,17 @@ const styles = StyleSheet.create({
     image: {
           width: 40,
           height: 40,
+    },
+    container: {
+        width:'80%',
+        shadowOffset: {
+                     	width: 1,
+                     	height: 3,
+                     },
+        shadowOpacity: 0.6,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 25
     },
     content: {
         flex:1,
@@ -235,7 +246,10 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 18,
         marginLeft: "1%",
-        color:'#426db3'
+        color:'#426db3',
+        textAlign: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
       },
     loader: {
         flex:1,
@@ -267,4 +281,4 @@ return {
     }
 };
 
-export default connect(mapStateToProps)(memo(AdminContentManagement));
+export default connect(mapStateToProps)(memo(HomePage));

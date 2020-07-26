@@ -159,7 +159,7 @@ const AdminContentManagement = ({ props, navigation }) => {
           console.log('handle submit method');
           console.log( 'content url : ' + contentSelected.contentURL)
           setButtonLoading(true)
-          fetch('http://localhost:8080/api/v1/content/delete', {
+          fetch(config.baseurl+'/api/v1/content/delete', {
              method: 'POST',
              body: JSON.stringify({
              contentURL: contentSelected.contentURL,
@@ -195,12 +195,13 @@ const AdminContentManagement = ({ props, navigation }) => {
                 return true;
             return false;
       }
-      const getIconName = (name) => {
-              console.log("content type  : "+ name);
-              if(name == "Video")     return "image";
-              if(name == "Document")  return "link";
-              if(name == "Website")   return "website";
-          }
+     const getIconName = (name) => {
+        console.log("content type  : "+ name);
+        if(name == "Video")     return require('../assets/content-type/play.png');
+        if(name == "Document")  return require('../assets/content-type/file.png');
+        if(name == "Website")   return require('../assets/content-type/web.png');
+        else return require('../assets/content-type/play.png');
+  }
 
 
     return (
@@ -222,20 +223,20 @@ const AdminContentManagement = ({ props, navigation }) => {
             {loader}
             {Alert}
             {data.value.map((j,index)=>(
-                <Card key={index} wrapperStyle={styles.content} containerStyle={{width:'100%'}} >
+                <Card key={index} wrapperStyle={styles.content} containerStyle={styles.container} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
-                    <Icon name={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
+                    <Image source={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
                     </TouchableOpacity>
                     <Text>{j.contentDesc}</Text>
                     <TouchableOpacity onPress={()=>{j.assessmentURL? Linking.openURL(j.assessmentURL) : Linking.openURL()}}>
-                    <Button mode="contained" disabled = {isDisabled(j.assessmentURL)} >Quiz</Button>
+                    <Button mode="contained" containerStyle={styles.icon} disabled = {isDisabled(j.assessmentURL)} >Quiz</Button>
                     </TouchableOpacity>
                     <Icon name='delete'  containerStyle={styles.icon} size={40} onPress={() => deleteContentHandler(index)}/>
                 </Card>
 
             ))}
 
-            <Button mode="contained"  mode="contained" onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
+            <Button mode="contained" onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
             {showTouchOpacity}
             {showPopup}
          </View>
@@ -249,11 +250,21 @@ const styles = StyleSheet.create({
           width: 40,
           height: 40,
     },
+    container: {
+        width:'80%',
+        shadowOffset: {
+            width: 1,
+            height: 3,
+        },
+        shadowOpacity: 0.6,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 25,
+    },
     content: {
         flex:1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
     },
       viewStyle: {
        flexDirection:'row',
@@ -312,7 +323,9 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 18,
         marginLeft: "1%",
-        color:'#426db3'
+        color:'#426db3',
+        width: 0,
+        flexWrap: 'wrap'
       },
     loader: {
         flex:1,

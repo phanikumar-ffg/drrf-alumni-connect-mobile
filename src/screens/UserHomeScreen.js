@@ -63,6 +63,7 @@ export default class UserHomeScreen extends Component {
   }
 }
 const styles = StyleSheet.create({
+
   image: {
       width: 100,
       height: 100   ,
@@ -73,6 +74,14 @@ const styles = StyleSheet.create({
      flexWrap: "wrap",
      marginTop: 30,
      width:'40%',
+     shadowOffset: {
+     	width: 1,
+     	height: 5,
+     },
+     shadowOpacity: 0.5,
+     shadowRadius: 6.27,
+     elevation: 10,
+     borderRadius: 25,
   },
   text: {
     textAlign: "center",
