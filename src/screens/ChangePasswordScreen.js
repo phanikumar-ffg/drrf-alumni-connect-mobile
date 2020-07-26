@@ -90,7 +90,12 @@ const ChangePasswordScreen = ({ navigation,user, changePassword }) => {
   return (
     <ScrollView>
       <Background>
-        <BackButton goBack={() => navigation.navigate('ProfileScreen')} />
+       <BackButton goBack={() => {
+          if(props.user.isAdmin=="N")
+            props.navigation.navigate('UserHomeScreen');
+          else
+            props.navigation.navigate('AdminHomeScreen');
+            }} />
         <Logo />
         <Header>Dr. Reddy's Foundation</Header>
 
