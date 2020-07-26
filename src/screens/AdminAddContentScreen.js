@@ -78,7 +78,7 @@ class AdminAddContentScreen extends React.Component {
           <Header>Dr. Reddy's Foundation</Header>
           <Header>Add New Content</Header>
           <View style={styles.formStyle}>
-              <TextInput label="Video URL" returnKeyType="next" value={this.props.contentURL}
+              <TextInput label="Content URL" returnKeyType="next" value={this.props.contentURL}
                 onChangeText={value => this.props.authContentChange({field: 'contentURL',value: value, })}/>
               <RNPickerSelect placeholder={{ label: 'Content Type', value: '' }} value={this.props.contentType}
                 style={pickerStyle} onValueChange={value => this.props.authContentChange({ field: 'contentType', value: value, })} items={contentTypeOptions}/>

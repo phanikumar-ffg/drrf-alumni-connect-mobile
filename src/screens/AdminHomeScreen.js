@@ -72,7 +72,16 @@ const styles = StyleSheet.create({
      justifyContent: "flex-start",
      flexDirection: "row",
      flexWrap: "wrap",
-     marginTop: 30
+     marginTop: 30,
+     width:'40%',
+     shadowOffset: {
+        width: 1,
+        height: 5,
+     },
+     shadowOpacity: 0.5,
+     shadowRadius: 6.27,
+     elevation: 10,
+     borderRadius: 25,
   },
   text: {
     textAlign: "center",
