@@ -205,9 +205,39 @@ const getState=(selectedState)=>{
       
     }
 
-    const _onPasswordChange = () => {
-      props.navigation.navigate('ChangePasswordScreen');
-    };
+    const _onCertificateRequest = () => {
+      
+      fetch(config.baseurl+'/api/v1/requestCertificate', {
+        method: 'POST',
+        headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+            aspirantId:props.user.aspirantId,
+            Email:props.user.emailId,
+               centerId:props.user.centerId,
+               centerName:props.user.centerName
+             }),
+           })
+           .then(response => {
+           if (response.status == 200){
+            setAlertParameters({message: "Certificate request successfully sent", backgroundColor: '#b6e0bc', icon: 'check-circle', iconColor: '#146110'});
+            setAlertVisibility(true);
+          }
+          else{
+            setAlertParameters({message: "Certificate Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
+            setAlertVisibility(true);
+          }
+        })
+            .catch(error => {
+              
+              setAlertParameters({message: "Certificate Request not sent, Internal Server Error", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'});
+              setAlertVisibility(true);
+            });
+    
+    }
+    
 
   
 
@@ -290,9 +320,9 @@ const getState=(selectedState)=>{
 
         <Button
           mode="contained"
-          onPress={_onPasswordChange}
+          onPress={_onCertificateRequest}
           style={styles.button}
-        >            Change Password
+        >            Request Certificate
           </Button>
 
       </Background>
@@ -305,8 +335,9 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   container: {
+    borderWidth: 1,
     width: '100%',
-    paddingTop: 17,
+    marginVertical: 12,
   },
   HeadStyle: {
     height: 50,
@@ -322,12 +353,14 @@ const styles = StyleSheet.create({
 });
 const pickerStyle = StyleSheet.create({
   inputAndroid: {
-    backgroundColor: theme.colors.surface,
     paddingTop: 16,
     paddingBottom: 16,
     paddingLeft: 8,
-    borderRadius: 4,
-    borderColor: '#808080',
+    borderRadius: 10,
+    borderWidth: 1,
+    width: '100%',
+    color: '#999',
+    borderColor: 'black',
   }
 });
 
