@@ -217,8 +217,8 @@ const AdminContentManagement = ({ props, navigation }) => {
 
 
     return (
-     <ScrollView>
         <View>
+                 <ScrollView>
         <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
         <SearchBar
              containerStyle = {{backgroundColor: "#151517"}}
@@ -251,10 +251,10 @@ const AdminContentManagement = ({ props, navigation }) => {
             <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
                 <Button mode="contained" style={styles.addContent} onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
             </View>
+                    </ScrollView>
             {showTouchOpacity}
             {showPopup}
          </View>
-        </ScrollView>
     );
 };
 
