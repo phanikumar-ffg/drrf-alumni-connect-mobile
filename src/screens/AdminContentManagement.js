@@ -40,16 +40,28 @@ const AdminContentManagement = ({ props, navigation }) => {
         <View style={styles.popupContainer}>
                 <Text  style = {styles.popupHeaderText}>Confirmation</Text>
                 <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
-                    <Image style={styles.imagePopup} source={require('../assets/content-type/web.png')} />
-                    <Text style={styles.popupText}> {contentSelected.contentURL}</Text>
+                    <View style = {{flex: 0.2,justifyContent: 'center', alignItems: 'flex-start'}}>
+                        <Image style={styles.imagePopup} source={require('../assets/content-type/web.png')} />
+                    </View>
+                    <View style = {{flex: 0.8,justifyContent: 'center'}}>
+                        <Text style={styles.popupText}> {contentSelected.contentURL}</Text>
+                    </View>
                 </View>
                 <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginBottom: '8%'}}>
-                    <Image style={styles.imagePopup} source={require('../assets/content-type/file.png')} />
-                    <Text style={styles.popupText}> {contentSelected.contentDesc}</Text>
+                    <View style = {{flex: 0.2,justifyContent: 'center', alignItems: 'flex-start'}}>
+                        <Image style={styles.imagePopup} source={require('../assets/content-type/file.png')} />
+                    </View>
+                    <View style = {{flex: 0.8, justifyContent: 'center'}}>
+                        <Text style={styles.popupText}> {contentSelected.contentDesc}</Text>
+                    </View>
                 </View>
                 <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '10%', marginBottom: '10%'}}>
-                    <Image style={styles.imagePopup} source={require('../assets/content-type/play.png')} />
-                    <Text style={styles.popupText}> {contentSelected.contentType}</Text>
+                    <View style = {{flex: 0.2,justifyContent: 'center', alignItems: 'flex-start'}}>
+                        <Image style={styles.imagePopup} source={require('../assets/content-type/play.png')} />
+                    </View>
+                    <View style = {{flex: 0.8, justifyContent: 'center'}}>
+                        <Text style={styles.popupText}> {contentSelected.contentType}</Text>
+                    </View>
                 </View>
                 <Text style={{flex:1, width: "100%"}}></Text>
                 <View style = {{flex:1, flexDirection: 'row', borderTopWidth: 1, borderTopColor: 'grey'}}>
@@ -223,6 +235,7 @@ const AdminContentManagement = ({ props, navigation }) => {
             {loader}
             {Alert}
             {data.value.map((j,index)=>(
+            <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
                 <Card key={index} wrapperStyle={styles.content} containerStyle={styles.container} >
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
                     <Image source={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
@@ -233,10 +246,11 @@ const AdminContentManagement = ({ props, navigation }) => {
                     </TouchableOpacity>
                     <Icon name='delete'  containerStyle={styles.iconDELETE} size={40} onPress={() => deleteContentHandler(index)}/>
                 </Card>
-
+            </View>
             ))}
-
-            <Button mode="contained" style={styles.addContent} onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
+            <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
+                <Button mode="contained" style={styles.addContent} onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
+            </View>
             {showTouchOpacity}
             {showPopup}
          </View>
@@ -251,10 +265,9 @@ const styles = StyleSheet.create({
           height: 40,
     },
     imagePopup: {
-        flex: 1,
         width: 40,
         height: 40,
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     container: {
@@ -325,7 +338,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowOffset: {width:2, height: 2},
         borderBottomWidth: 1,
-        borderBottomColor: '#1c3466'
+        borderBottomColor: '#1c3466',
   },
    popupHeaderText: {
         flex: 1,
@@ -342,11 +355,13 @@ const styles = StyleSheet.create({
     popupText: {
         flex: 1,
         fontSize: 18,
+        flexDirection: 'column',
         marginLeft: "1%",
         color:'#426db3',
         textAlign: 'center',
         justifyContent: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        flexShrink: 1
       },
     loader: {
         flex:1,

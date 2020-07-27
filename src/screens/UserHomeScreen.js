@@ -18,13 +18,13 @@ export default class UserHomeScreen extends Component {
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileScreen')} >
-                       <Image source={require('../assets/home-page-logos/profile.png')}  style={styles.image}/>
+                       <Image source={require('../assets/home-page-logos/profile2.png')}  style={styles.image}/>
                        <Text style = {styles.text} > Profile Maintenance </Text>
                    </TouchableOpacity>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon}  >
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('JobSearch')} >
-                       <Image source={require('../assets/home-page-logos/job_search.png')} style={styles.image}/>
+                       <Image source={require('../assets/home-page-logos/job_search2.png')} style={styles.image}/>
                        <Text style = {styles.text} > Job Search </Text>
                    </TouchableOpacity>
                 </Card>
@@ -32,13 +32,13 @@ export default class UserHomeScreen extends Component {
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HelpScreen')} >
-                       <Image source={require('../assets/home-page-logos/help.png')} style={styles.image}/>
+                       <Image source={require('../assets/home-page-logos/help2.png')} style={styles.image}/>
                        <Text style = {styles.text} > DRF Help </Text>
                    </TouchableOpacity>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon} >
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomePage')}>
-                       <Image source={require('../assets/home-page-logos/content.png')} style={styles.image}/>
+                       <Image source={require('../assets/home-page-logos/content2.png')} style={styles.image}/>
                        <Text style = {styles.text} > Learning </Text>
                    </TouchableOpacity>
                 </Card>
@@ -46,13 +46,13 @@ export default class UserHomeScreen extends Component {
               <View style ={{flex:1, flexDirection: 'row'}} >
                 <Card containerStyle={styles.container}   style = {styles.icon}>
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangePasswordScreen')} >
-                       <Image source={require('../assets/home-page-logos/change_password.png')}  style={styles.image}/>
+                       <Image source={require('../assets/home-page-logos/change_password2.png')}  style={styles.image}/>
                        <Text style = {styles.text} > Change Password </Text>
                    </TouchableOpacity>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon} >
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeScreen')}>
-                       <Image source={require('../assets/home-page-logos/logout.png')} style={styles.image}/>
+                       <Image source={require('../assets/home-page-logos/logout2.png')} style={styles.image}/>
                        <Text style = {styles.text} > Logout </Text>
                    </TouchableOpacity>
                 </Card>

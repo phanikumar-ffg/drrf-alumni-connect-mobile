@@ -123,9 +123,9 @@ const HomePage = ({ props, navigation }) => {
     }
     const getIconName = (name) => {
         console.log("content type  : "+ name);
-        if(name == "Video")     return require('../assets/content-type/movie.png');
-        if(name == "Document")  return require('../assets/content-type/file2.png');
-        if(name == "Website")   return require('../assets/content-type/website.png');
+        if(name == "Video")     return require('../assets/content-type/play.png');
+        if(name == "Document")  return require('../assets/content-type/file.png');
+        if(name == "Website")   return require('../assets/content-type/web.png');
         else return require('../assets/content-type/play.png');
     }
 
