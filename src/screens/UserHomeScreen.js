@@ -10,6 +10,22 @@ import {connect} from 'react-redux';
 
 
 class UserHomeScreen extends Component {
+  backAction = () => {
+         BackHandler.exitApp()
+        return true;
+      };
+
+    componentDidMount() {
+      this.backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        this.backAction
+      );
+    }
+
+    componentWillUnmount() {
+      this.backHandler.remove();
+    }
+  
   render() {
     return (
     <ScrollView>
