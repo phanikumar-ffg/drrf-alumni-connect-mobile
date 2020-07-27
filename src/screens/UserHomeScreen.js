@@ -1,5 +1,5 @@
 import React, {memo, Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Image, BackHandler, ScrollView, TouchableOpacity } from 'react-native';
 import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 const { width } = Dimensions.get("window");
 import Background from '../components/Background';
