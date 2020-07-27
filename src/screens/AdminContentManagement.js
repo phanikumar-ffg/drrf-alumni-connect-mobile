@@ -40,15 +40,15 @@ const AdminContentManagement = ({ props, navigation }) => {
         <View style={styles.popupContainer}>
                 <Text  style = {styles.popupHeaderText}>Confirmation</Text>
                 <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
-                    <Icon name='link' color="#0b2652" size={25} style = {{flex:1}}/>
+                    <Image style={styles.imagePopup} source={require('../assets/content-type/web.png')} />
                     <Text style={styles.popupText}> {contentSelected.contentURL}</Text>
                 </View>
                 <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginBottom: '8%'}}>
-                    <Icon name='image' color="#0b2652" size={25} style = {{flex:1}} />
+                    <Image style={styles.imagePopup} source={require('../assets/content-type/file.png')} />
                     <Text style={styles.popupText}> {contentSelected.contentDesc}</Text>
                 </View>
                 <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '10%', marginBottom: '10%'}}>
-                    <Icon name='link' color="#0b2652" size={25} style = {{flex:1}}/>
+                    <Image style={styles.imagePopup} source={require('../assets/content-type/play.png')} />
                     <Text style={styles.popupText}> {contentSelected.contentType}</Text>
                 </View>
                 <Text style={{flex:1, width: "100%"}}></Text>
@@ -227,16 +227,16 @@ const AdminContentManagement = ({ props, navigation }) => {
                     <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
                     <Image source={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
                     </TouchableOpacity>
-                    <Text>{j.contentDesc}</Text>
+                    <Text style = {styles.popupText}>{j.contentDesc}</Text>
                     <TouchableOpacity onPress={()=>{j.assessmentURL? Linking.openURL(j.assessmentURL) : Linking.openURL()}}>
                     <Button mode="contained" containerStyle={styles.icon} disabled = {isDisabled(j.assessmentURL)} >Quiz</Button>
                     </TouchableOpacity>
-                    <Icon name='delete'  containerStyle={styles.icon} size={40} onPress={() => deleteContentHandler(index)}/>
+                    <Icon name='delete'  containerStyle={styles.iconDELETE} size={40} onPress={() => deleteContentHandler(index)}/>
                 </Card>
 
             ))}
 
-            <Button mode="contained" onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
+            <Button mode="contained" style={styles.addContent} onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
             {showTouchOpacity}
             {showPopup}
          </View>
@@ -249,6 +249,13 @@ const styles = StyleSheet.create({
     image: {
           width: 40,
           height: 40,
+    },
+    imagePopup: {
+        flex: 1,
+        width: 40,
+        height: 40,
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     container: {
         width:'80%',
@@ -265,14 +272,27 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
       viewStyle: {
        flexDirection:'row',
        justifyContent:'space-around',
     },
+    iconDelete: {
+        alignItems:'center',
+        justifyContent:'center',
+        marginRight: '2%',
+        marginLeft: '5%',
+    },
     icon: {
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+    },
+    addContent: {
+        width:'80%',
+        margin: '2%',
+        alignItems:'center',
+        justifyContent:'center',
     },
     text: {
         fontWeight: 'bold',
@@ -296,7 +316,7 @@ const styles = StyleSheet.create({
         zIndex: 5,
         flex: 1,
         width: '70%',
-        marginTop: '25%',
+        marginTop: '10%',
         marginHorizontal: '15%',
         flexDirection: 'column',
         padding: '3%',
@@ -324,7 +344,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: "1%",
         color:'#426db3',
-        width: 0,
+        textAlign: 'center',
+        justifyContent: 'center',
         flexWrap: 'wrap'
       },
     loader: {
