@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, {memo, Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Card, ListItem, Icon, SearchBar } from 'react-native-elements'
 const { width } = Dimensions.get("window");
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
-import {changePassword} from '../actions'
+import {userLogout} from '../actions'
+import {connect} from 'react-redux';
 
 
-export default class UserHomeScreen extends Component {
+class UserHomeScreen extends Component {
   render() {
     return (
     <ScrollView>
@@ -51,7 +52,10 @@ export default class UserHomeScreen extends Component {
                    </TouchableOpacity>
                 </Card>
                 <Card containerStyle={styles.container}  style = {styles.icon} >
-                   <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeScreen')}>
+                   <TouchableOpacity onPress={() => {
+                            this.props.userLogout();  
+                            this.props.navigation.navigate('HomeScreen');                      
+                        }}>
                        <Image source={require('../assets/home-page-logos/logout2.png')} style={styles.image}/>
                        <Text style = {styles.text} > Logout </Text>
                    </TouchableOpacity>
@@ -97,4 +101,12 @@ const styles = StyleSheet.create({
      backgroundColor: '#eee',
      width : 100
   }
-  });
+});
+
+const mapPropstoState = state => {
+  return {
+      user: state.auth.user 
+  }
+}
+
+export default connect(mapPropstoState, {userLogout})(memo(UserHomeScreen))

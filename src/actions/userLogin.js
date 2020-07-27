@@ -8,6 +8,13 @@ import {
 } from './actionTypes';
 import config from '../config/index.js';
 
+export const userLogout = () => {
+  return {
+    type: USER_LOGOUT,
+    payload: {}
+  };
+};
+
 export const authInputChange = ({ field, value }) => {
   return {
     type: AUTH_INPUT_CHANGE,
