@@ -93,7 +93,6 @@ const JobSearch = (props) => {
         }})
         .then(res => {
             setLoaderVisibility(false)
-            console.log(res)
             if (Array.isArray(res) && res.length) {
             setData({value: res});
             setDataBackup({value: res});
@@ -334,7 +333,7 @@ touchOpacity: {
   },
   backContainer: {
     position: 'absolute',
-    top: '4%',
+    top: '3%',
     left: '3%',
   },
   backImage: {
