@@ -163,7 +163,7 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
     return (
       <Background>
         <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
-        <ScrollView style={{ width: '100%' }}>
+        <ScrollView style={{ width: '80%' }}>
           <Logo />
           <TouchableOpacity>
             <View>
