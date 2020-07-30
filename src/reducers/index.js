@@ -4,6 +4,7 @@ import SignUpReducer from './signup-reducer';
 import AddContentReducer from './addContent-reducer';
 import helpScreenReducer from './helpScreen-reducer';
 import AdminHelpRequestReducer from './adminHelpRequest-reducer';
+import ForgotPwdReducer from './forgotPwd-reducer';
 
 
 const configureStore = combineReducers({
@@ -11,7 +12,8 @@ const configureStore = combineReducers({
   onboard: SignUpReducer,
   addContent: AddContentReducer,
   help: helpScreenReducer,
-  helpRequestAdmin: AdminHelpRequestReducer
+  helpRequestAdmin: AdminHelpRequestReducer,
+  getPwd: ForgotPwdReducer
 
 });
 
