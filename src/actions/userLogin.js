@@ -35,19 +35,22 @@ export const forgotPwd = (emailId) => {
               'Content-Type': 'application/json',
             },
           })
-        .then(response => response)
-          .then(res => {
-            console.log(res);
-            if (res=="Error occured while checking the user account information " +  emailId) {
-              dispatch({ type: FRGT_PWD_FAILURE, payload: res });
-            } else {
+        .then(response => {
+            if(response.status==200) {
               dispatch({ type: FRGT_PWD_SUCCESS});
+              return '';
             }
-          })
+            else
+             return response.json();
+            })
+            .then(res => {
+            if(res.errorMessage)
+             dispatch({ type: FRGT_PWD_FAILURE, payload: res.errorMessage });
+            })
           .catch(error => {
           console.log(error);
             console.error(error);
-            dispatch({ type: FRGT_PWD_FAILURE });
+            dispatch({ type: FRGT_PWD_FAILURE});
           });
         };
 };

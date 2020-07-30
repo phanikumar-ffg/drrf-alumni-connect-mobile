@@ -14,13 +14,10 @@ import { authInputChange,forgotPwd } from '../actions';
 import Paragraph from '../components/Paragraph';
 
 class ForgotPasswordScreen extends React.Component {
-  //const [email, setEmail] = useState({ value: '', error: '' });
 
     componentWillReceiveProps(nextProps) {
 
       if (!_.isEmpty(nextProps)) {
-      console.log(nextProps);
-      console.log(nextProps.request_success);
       if(nextProps.request_success){
           this.props.navigation.navigate('ForgotPasswordMsgScreen');
           }
@@ -57,11 +54,9 @@ class ForgotPasswordScreen extends React.Component {
 
     if (emailError) {
         this.props.authInputChange({field:'email',value:{value:this.props.authInputChange.value,error:emailError}});
-      //setEmail({ ...email, error: emailError });
       return;
     }
     this.props.forgotPwd(this.props.email.value);
-    //navigation.navigate('ForgotPasswordMsgScreen');
   };
 
   render(){
@@ -86,8 +81,8 @@ class ForgotPasswordScreen extends React.Component {
         textContentType="emailAddress"
         keyboardType="email-address"
       />
-    {this.showError()}
-    {this.showButton()}
+        {this.showError()}
+        {this.showButton()}
 
 
       <TouchableOpacity
