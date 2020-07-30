@@ -48,7 +48,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
 
                   }}
                   alignItems='center'
-                  title="In-progress"
+                  title="Mark As In-progress"
                   color={theme.colors.primary}
 
                 />
@@ -99,7 +99,7 @@ const Showdata = ({ si, dt, sdt, inp, inpdt }) => {
                         .catch(err => { setiserror(true) })
                       inpdt(inp.filter(obj => j.Student_Id !== obj.Student_Id))
                     }}
-                    title="Attended"
+                    title="Mark As Attended"
                     color={theme.colors.primary}
                   />
                 </CardAction>
@@ -163,7 +163,7 @@ const AdminHelpScreen = ({ navigation, adhreq }) => {
     return (
       <Background>
         <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
-        <ScrollView style={{ width: '100%' }}>
+        <ScrollView style={{ width: '80%' }}>
           <Logo />
           <TouchableOpacity>
             <View>

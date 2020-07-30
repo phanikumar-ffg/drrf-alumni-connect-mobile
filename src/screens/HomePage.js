@@ -174,9 +174,9 @@ const styles = StyleSheet.create({
     container: {
         width:'80%',
         shadowOffset: {
-                     	width: 1,
-                     	height: 3,
-                     },
+           width: 1,
+           height: 3,
+        },
         shadowOpacity: 0.6,
         shadowRadius: 6.27,
         elevation: 10,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-      viewStyle: {
+     viewStyle: {
        flexDirection:'row',
        justifyContent:'space-around',
     },

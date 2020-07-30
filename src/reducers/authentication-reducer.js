@@ -40,6 +40,14 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
       };
+      case USER_LOGOUT:
+      return {
+        ...state,
+        user: {},
+        emailId: '',
+        password: '',
+        loading: false
+      };
       case PASSWORD_CHANGE_SUCCESS:
       return {
         ...state,
