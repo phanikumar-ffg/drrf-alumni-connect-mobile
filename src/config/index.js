@@ -7,7 +7,7 @@ const config = {
   messagingSenderId: '794225197210',
   appId: '1:794225197210:web:f0a27d5e0eaa0bf7ea1f23',
   measurementId: 'G-2MG76M0DXE',
-  baseurl: 'https://alumniconnect.azurewebsites.net'
+  baseurl: 'https://alumniconnect-services.azurewebsites.net'
 };
 
 export default config;
