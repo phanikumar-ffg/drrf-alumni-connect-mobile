@@ -12,6 +12,7 @@ import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { authInputChange,forgotPwd } from '../actions';
 import Paragraph from '../components/Paragraph';
+import _ from 'lodash';
 
 class ForgotPasswordScreen extends React.Component {
 
@@ -62,7 +63,7 @@ class ForgotPasswordScreen extends React.Component {
   render(){
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('LoginScreen')} />
+      <BackButton goBack={() => this.props.navigation.navigate('LoginScreen')} />
 
       <Logo />
 
@@ -87,7 +88,7 @@ class ForgotPasswordScreen extends React.Component {
 
       <TouchableOpacity
         style={styles.back}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={() => this.props.navigation.navigate('LoginScreen')}>
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>
 
