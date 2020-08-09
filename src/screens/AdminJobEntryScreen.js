@@ -115,7 +115,7 @@ const AdminJobEntryScreen = (props) => {
         setButtonLoading(false);
         setTimeout(()=>{
           setAlertVisibility(false)
-      }, 6000)
+      }, 10000)
       resetForm();
       }
       else{
@@ -123,7 +123,7 @@ const AdminJobEntryScreen = (props) => {
         setAlertVisibility(true);
         setTimeout(()=>{
           setAlertVisibility(false)
-      }, 6000)
+      }, 10000)
       }
     })
     .catch(err => {
@@ -133,7 +133,7 @@ const AdminJobEntryScreen = (props) => {
         setButtonLoading(false);
         setTimeout(()=>{
           setAlertVisibility(false)
-      }, 6000)
+      }, 10000)
     })
 
   }
