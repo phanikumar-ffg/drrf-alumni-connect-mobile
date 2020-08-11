@@ -5,6 +5,8 @@ import {
   Text,
   View,
   ActivityIndicator,
+  Platform,
+  Vibration
 } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -19,6 +21,10 @@ import { connect } from 'react-redux';
 import { authInputChange, login } from '../actions';
 import Paragraph from '../components/Paragraph';
 import _ from 'lodash';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+import config from '../config/index.js';
 
 class LoginScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -60,6 +66,70 @@ class LoginScreen extends React.Component {
       return <Paragraph>{this.props.error}</Paragraph>;
     }
   }
+  async registerForPushNotifications() {
+     if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      let token;
+      try {
+        token = await Notifications.getExpoPushTokenAsync();
+        console.log(token);
+        this.sendUserToken(token);
+      } catch (e) {
+        console.log(e);
+      }
+
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+     }
+  }
+  sendUserToken = (token) => {
+       console.log('Calling Service to send User Token');
+       return fetch(config.baseurl+'/api/v1/saveUserToken' , {
+         body: token,
+         headers: {
+           Accept: 'application/json',
+           'Content-Type': 'application/json',
+         },
+         method: 'POST',
+       })
+       .then(response => {
+            console.log('Response received!' + response.status);
+            if (response.status != 200){
+                    console.log("Token not saved in Database");
+            }
+            else {
+                     console.log("Token added successfully");
+            }
+            })
+            .catch(err => {
+                 console.log("error occurred while adding token");
+              })
+  };
+  componentWillMount(){
+          this.registerForPushNotifications();
+      }
   render() {
     return (
       <ScrollView>
