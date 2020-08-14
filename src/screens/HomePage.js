@@ -128,6 +128,28 @@ const HomePage = ({ props, navigation }) => {
         if(name == "Website")   return require('../assets/content-type/web.png');
         else return require('../assets/content-type/play.png');
     }
+    const incrementCountAndRedirect = (content) => {
+        console.log("content before redirection - " + content.contentDesc);
+        Linking.openURL(content.contentURL)
+        fetch(config.baseurl+'/api/v1/content/incrementViews', {
+                     method: 'POST',
+                     body: JSON.stringify({
+                     contentId : content.contentId,
+                     contentURL: contentSelected.contentURL,
+                     contentType: contentSelected.contentType,
+                     contentDesc: contentSelected.contentDesc,
+                     assessmentURL: contentSelected.assessmentURL
+                  }),
+                  headers: {
+                             "Content-type": "application/json; charset=UTF-8"
+                  }})
+                   .then(response => {
+                        console.log('reponse received with status - ' + response.status)
+                        })
+                       .catch(err => {
+                             console.log("error occurred internally")
+                         })
+      }
 
     return (
         <ScrollView >
@@ -149,9 +171,15 @@ const HomePage = ({ props, navigation }) => {
             {Alert}
             {data.value.map((j,index)=>(<View style={styles.viewStyle}>
                 <Card key={j.content_id} wrapperStyle={styles.content} containerStyle={styles.container} >
-                    <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
-                    <Image source={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
-                    </TouchableOpacity>
+                <View style={styles.column}>
+                       <TouchableOpacity onPress={ () => {incrementCountAndRedirect(j);}} >
+                          <Image source={getIconName(j.contentType)}  style={styles.image}/>
+                          <View style={{flex:1, flexDirection: 'row'}}>
+                            <Image source={require('../assets/content-type/eye_black.png')} style={{ width:10, height:10, justifyContent:'center', alignItems:'center'}}/>
+                            <Text style = {styles.viewText}>{j.contentViews}</Text>
+                          </View>
+                        </TouchableOpacity>
+                    </View>
                     <Text style = {styles.popupText}>{j.contentDesc}</Text>
                     <TouchableOpacity onPress={()=>Linking.openURL(j.assessmentURL)}>
                     <Button mode="contained" disabled = {isDisabled(j.assessmentURL)}>Quiz</Button>
