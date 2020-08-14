@@ -241,7 +241,6 @@ const pickerStyle = StyleSheet.create({
       paddingRight: 4,
       borderRadius: 4,
       width: '100%',
-      marginVertical: 6,
       color: 'black',
       borderColor: '#808080',
     },
