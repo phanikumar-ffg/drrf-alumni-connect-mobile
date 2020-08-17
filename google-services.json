@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "804715801915",
+    "firebase_url": "https://drrf-alumni-connect-test.firebaseio.com",
+    "project_id": "drrf-alumni-connect-test",
+    "storage_bucket": "drrf-alumni-connect-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804715801915:android:8aa25d3fb046d335ef1b1e",
+        "android_client_info": {
+          "package_name": "com.drfAlumniConnectMobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804715801915-ghjq54n096u9kt5tgc72l8samm1hg80p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCILNtsVpCXQjl6Ef1xbnaUTJz_3PvPqUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804715801915-ghjq54n096u9kt5tgc72l8samm1hg80p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
