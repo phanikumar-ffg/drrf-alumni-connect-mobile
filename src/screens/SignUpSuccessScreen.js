@@ -19,8 +19,7 @@ class SignUpSuccessScreen extends React.Component {
       {' '}
       If you didnt get details in 5 min, please contact admin
     </Paragraph>
-    <Paragraph>Admin emil id: dr.customercare@gmail.com</Paragraph>
-    <Paragraph>Admin phone no:040-64532111</Paragraph>
+    <Paragraph>Admin email id: Helplinedrf@gmail.com</Paragraph>
     <Button mode="outlined" onPress={() => this.props.navigation.navigate('LoginScreen')}>
       Login
     </Button>
