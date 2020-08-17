@@ -1,7 +1,7 @@
 import { ScrollView, View, Text, Image, ActivityIndicator } from 'react-native'
 import { Card, Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect} from 'react';
-import { TouchableOpacity, StatusBar,StyleSheet} from 'react-native';
+import { TouchableOpacity, StatusBar,StyleSheet, TouchableHighlight} from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import Background from '../components/Background';
 import { theme } from '../core/theme';
@@ -99,8 +99,12 @@ const AdminContentManagement = ({ props, navigation }) => {
               .then(contents => {
                   setLoaderVisibility(false)
                   if (Array.isArray(contents) && contents.length) {
-                  setData({value: contents});
-                  setDataBackup({value: contents});
+                    setData({value: contents});
+                    setDataBackup({value: contents});
+                    console.log("contents - ");
+                    data.value.map((j,index)=>(
+                    console.log(j.contentDesc + ", views - "+ j.contentViews)
+                    ));
                   }
                   else {
                       setAlertParameters({message: "No contents found", backgroundColor: '#f0eabd', icon: 'warning', iconColor: '#665c10'})
@@ -208,22 +212,42 @@ const AdminContentManagement = ({ props, navigation }) => {
             return false;
       }
      const getIconName = (name) => {
-        console.log("content type  : "+ name);
         if(name == "Video")     return require('../assets/content-type/play.png');
         if(name == "Document")  return require('../assets/content-type/file.png');
         if(name == "Website")   return require('../assets/content-type/web.png');
         else return require('../assets/content-type/play.png');
   }
+  const incrementCountAndRedirect = (content) => {
+    console.log("content before redirection - " + content.contentDesc);
+    Linking.openURL(content.contentURL)
+    fetch(config.baseurl+'/api/v1/content/incrementViews', {
+                 method: 'POST',
+                 body: JSON.stringify({
+                 contentId : content.contentId,
+                 contentURL: contentSelected.contentURL,
+                 contentType: contentSelected.contentType,
+                 contentDesc: contentSelected.contentDesc,
+                 assessmentURL: contentSelected.assessmentURL
+              }),
+              headers: {
+                         "Content-type": "application/json; charset=UTF-8"
+              }})
+               .then(response => {
+                    console.log('reponse received with status - ' + response.status)
+                    })
+                   .catch(err => {
+                         console.log("error occurred internally")
+                     })
+  }
 
 
     return (
         <View>
-                 <ScrollView>
+        <ScrollView>
         <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
         <SearchBar
              containerStyle = {{backgroundColor: "#151517"}}
              inputContainerStyle = {{marginLeft: '10%',width:'88%', marginTop: '2%', marginBottom: '2%', backgroundColor: '#202024'}}
-             darkTheme
              clearIcon
              placeholder='Search Content'
             onChangeText={text=>searchContent(text)}
@@ -232,14 +256,21 @@ const AdminContentManagement = ({ props, navigation }) => {
         <TouchableOpacity onPress={() => {navigation.navigate("AdminHomeScreen")}} style={styles.backContainer}>
                <Image style={styles.backImage} source={require('../assets/arrow_back.png')} />
         </TouchableOpacity>
+
             {loader}
             {Alert}
             {data.value.map((j,index)=>(
             <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
                 <Card key={index} wrapperStyle={styles.content} containerStyle={styles.container} >
-                    <TouchableOpacity onPress={()=>Linking.openURL(j.contentURL)}>
-                    <Image source={getIconName(j.contentType)}  onPress={()=>Linking.openURL(j.contentURL)} style={styles.image}/>
-                    </TouchableOpacity>
+                    <View style={styles.column}>
+                       <TouchableOpacity onPress={ () => {incrementCountAndRedirect(j)}} >
+                          <Image source={getIconName(j.contentType)}  style={styles.image}/>
+                          <View style={{flex:1, flexDirection: 'row'}}>
+                            <Image source={require('../assets/content-type/eye_black.png')} style={{ width:10, height:10, justifyContent:'center', alignItems:'center'}}/>
+                            <Text style = {styles.viewText}>{j.contentViews}</Text>
+                          </View>
+                        </TouchableOpacity>
+                    </View>
                     <Text style = {styles.popupText}>{j.contentDesc}</Text>
                     <TouchableOpacity onPress={()=>{j.assessmentURL? Linking.openURL(j.assessmentURL) : Linking.openURL()}}>
                     <Button mode="contained" containerStyle={styles.icon} disabled = {isDisabled(j.assessmentURL)} >Quiz</Button>
@@ -251,7 +282,7 @@ const AdminContentManagement = ({ props, navigation }) => {
             <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
                 <Button mode="contained" style={styles.addContent} onPress={() => navigation.navigate('AdminAddContentScreen')} > Add Content </Button>
             </View>
-                    </ScrollView>
+            </ScrollView>
             {showTouchOpacity}
             {showPopup}
          </View>
@@ -352,6 +383,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'grey',
       },
+    viewText:{
+        flex: 0.5,
+        fontSize: 10
+    },
     popupText: {
         flex: 1,
         fontSize: 18,
@@ -362,6 +397,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexWrap: 'wrap',
         flexShrink: 1
+      },
+    column:{
+        flex: 1,
+        flexDirection: 'column',
+//        paddingLeft: 10,
+
       },
     loader: {
         flex:1,
