@@ -1,13 +1,22 @@
-import { ScrollView, View, Text, ActivityIndicator} from 'react-native'
-import { Card, Icon, SearchBar } from 'react-native-elements'
+import { ScrollView, View, Text,StatusBar, ActivityIndicator} from 'react-native'
+import {  Icon, SearchBar } from 'react-native-elements'
 import React, { memo, useState, useEffect } from 'react';
 import { TouchableOpacity, Image,StyleSheet} from 'react-native';
-import { Button as PaperButton } from 'react-native-paper';
+import {Avatar, Card, DefaultTheme, Title, Paragraph , Button as PaperButton } from 'react-native-paper';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Button from '../components/Button';
-import { theme } from '../core/theme';
 import {connect} from 'react-redux';
 import config from '../config/index.js';
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#151517',
+  },
+};
+
+const LeftContent = props => <Avatar.Icon {...props} theme = {theme} icon="account-box"  />
 
 //Main Job Search React Component
 const JobSearch = (props) => {
@@ -42,23 +51,11 @@ const JobSearch = (props) => {
     //Popup view component
     const popup = (
         <View style={styles.popupContainer}>
-            <Text  style = {styles.popupHeaderText}>Confirmation<hr /></Text>
-            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginTop: "5%",marginBottom: '8%'}}>
-                <Icon name='assignment-ind' color="#0b2652" size={25} style = {{flex:1}}/>   
-                <Text style={styles.popupText}> {jobSelected.designation}</Text>
-            </View>
-            <View style = {{flex: 1, flexDirection: 'row', marginLeft: '10%', marginBottom: '8%'}}>
-                <Icon name='location-city' color="#0b2652" size={25} style = {{flex:1}} />   
-                <Text style={styles.popupText}> {jobSelected.companyName}</Text>
-            </View>
-            <View style = {{flex: 1, flexDirection: 'row',  marginLeft: '10%', marginBottom: '10%'}}>
-                <Icon name='place' color="#0b2652" size={25} style = {{flex:1}}/>   
-                <Text style={styles.popupText}> {jobSelected.cityName}</Text>
-            </View>
-            <Text style={{flex:1, width: "100%"}}><hr /></Text>
-            <View style = {{flex:1, flexDirection: 'row'}}>
-                <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onClick = {() => {setdialogVisibility(false)}}>No</PaperButton>
-                <PaperButton mode = "contained"  labelStyle = {styles.text} style={styles.yesButton} onClick = {() => sendJobRequest()} loading = {yesButtonLoading}>Yes</PaperButton>
+            <Text  style = {styles.popupHeaderText}>Confirmation</Text>
+            <Text style={{flex:1, fontSize: 18, color:'#152b73', marginBottom: '5%', marginTop: "5%", padding: '5%'}}>Are you sure you want to apply for this Job?</Text>
+            <View style = {{flex:1, flexDirection: 'row', borderTopWidth: 1, borderTopColor: 'grey'}}>
+                <PaperButton mode = "contained" labelStyle = {styles.text} style={styles.noButton} onPress = {() => {setdialogVisibility(false)}}>No</PaperButton>
+                <PaperButton mode = "contained"  labelStyle = {styles.text} style={styles.yesButton} onPress = {() => sendJobRequest()} loading = {yesButtonLoading}>Yes</PaperButton>
             </View>
         </View>
     )
@@ -66,10 +63,10 @@ const JobSearch = (props) => {
 
     //Alert view Component; Created dynamically based on request response status
     const resAlert = (
-        <View style = {{flex:1, flexDirection: 'row', paddingTop: "5%", paddingHorizontal: "5%", paddingBottom: "10%", backgroundColor: alertParameters.backgroundColor}}>
-            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} style = {{flex:1}} />
-            <Text style = {{fontSize: 20, flex: 5,}}>{alertParameters.message}</Text>
-            <Icon name = 'clear' color = {alertParameters.iconColor} size = {25} style = {{flex:1}} onPress = {() => setAlertVisibility(false)} />
+        <View style = {{flexDirection: 'row', padding: '5%', alignItems: 'center',backgroundColor: alertParameters.backgroundColor}}>
+            <Icon name = {alertParameters.icon} color = {alertParameters.iconColor} size = {25} />
+            <Text style = {{fontSize: 20, width: '90%'}}>{alertParameters.message}</Text>
+            <Icon name = 'clear' color = {alertParameters.iconColor} size = {20}  onPress = {() => setAlertVisibility(false)} />
         </View>
     )
 
@@ -79,6 +76,7 @@ const JobSearch = (props) => {
         <TouchableOpacity disabled = {true} style = {styles.touchOpacity} onPress ={ ()=>{setdialogVisibility(false)}}></TouchableOpacity>
     )
 
+    const cardTop = 20;
 
     //Function runs once only when Job Search screen is rendered to get job data
     useEffect(() => {
@@ -200,26 +198,22 @@ const JobSearch = (props) => {
                 setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             }
             setAlertVisibility(true)
-            setTimeout(()=>{
-                setAlertVisibility(false)
-            }, 6000)                        // Alert gets automatically cleared after 6 sec
         })
         .catch(err => {
             setButtonLoading(false)
             setdialogVisibility(false)
             setAlertParameters({message: "Request not sent", backgroundColor: '#e6c8c8', icon: 'error', iconColor: '#611010'})
             setAlertVisibility(true)
-            setTimeout(()=>{
-                setAlertVisibility(false)
-            }, 6000)
         })
 
      }
 
     return (
         <View style = {{flex: 1}}>
+                <StatusBar backgroundColor = '#262629' barStyle = 'light-content'></StatusBar>
                 <SearchBar 
-                    inputContainerStyle = {{marginLeft: '10%',width:'88%'}}
+                    containerStyle = {{backgroundColor: "#151517"}}
+                    inputContainerStyle = {{marginLeft: '12%',width:'84%', marginTop: '2%', marginBottom: '2%', backgroundColor: '#202024'}}
                     searchIcon
                     clearIcon
                     placeholder='Search Location'
@@ -235,21 +229,32 @@ const JobSearch = (props) => {
             {Alert}
 
             <ScrollView>
-                {data.value.map((j,index)=>(
-                <Card
-                key={j.jobId}
-                title={j.designation}
-                style={{marginTop: 20 ,width: '95%'}} >
-                <Text style={{marginBottom: 8}}>
-                        Company: {j.companyName}
-                    </Text>
-                    <Text style={{marginBottom: 8}}>
-                        Location: {j.cityName}
-                    </Text>
-                    <Text style={{marginBottom: 8}}>
-                        Description: {j.jobDescription}
-                    </Text>
-                <Button mode="contained" onClick = {() => {applyJobHandler(index)}}>Apply Now</Button>
+            {data.value.map((j,index)=>(
+
+                    <Card key = {j.jobId} style ={{ shadowOffset: {
+                                        width: 1,
+                                        height: 3,
+                                    },
+                        shadowOpacity: 0.6,
+                        shadowRadius: 6.27,
+                        elevation: 5,
+                        borderRadius: 6, left : '5%', top: 20, marginBottom: 25, width: '90%', backgroundColor: '#fdfdfd'}}>
+                    <Card.Title style = {{ backgroundColor: '#e2e2e2'}} title={j.designation} left={LeftContent} />
+                    <Card.Content style ={{marginTop: '6%', marginBottom: '8%'}}> 
+                        <Title style = {{fontWeight: 'bold', fontSize: 18, marginLeft: 'auto',marginRight: 'auto', marginBottom: '6%'}}>{j.companyName}</Title>
+                            <View style = {{flex: 1, marginBottom: '3%', flexDirection: 'row'}}>
+                                <Icon name='place' color="#414142" size={25} style = {{flex:0.5}}/>
+                                <Text style = {{flex: 0.5, fontSize: 16, marginLeft: '1%'}}>{j.cityName}</Text>
+                            </View>
+                            <View style = {{flex: 1, flexDirection: 'row', width: '100%'}}>
+                                <Icon name='message' color="#414142" size={22} style = {{flex:0.2}}/>
+                                <Text style = {{flex: 0.8, fontSize: 16, marginLeft: '2%'}}>{j.jobDescription}</Text>
+                            </View>
+                    </Card.Content>
+
+                    <Card.Actions style={{ height: 50, backgroundColor: '#600ee6',borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
+                    <PaperButton labelStyle = {styles.text} style = {{width: '100%'}} onPress = {() => {applyJobHandler(index)}}>Apply Now</PaperButton>
+                    </Card.Actions>
                 </Card>))}
             </ScrollView>
             
@@ -272,12 +277,12 @@ const styles = StyleSheet.create({
   yesButton: {
     flex: 0.5,
     margin: '3%',
-    backgroundColor: '#3f9e3a'
+    backgroundColor: '#1b8f3a'
   },
   noButton: {
     flex: 0.5, 
      margin: '3%',
-    backgroundColor: '#e35b5b'
+    backgroundColor: '#e0110d'
   },
 popupContainer: {
     borderRadius: 20,
@@ -299,10 +304,14 @@ popupContainer: {
 popupHeaderText: {
     flex: 1, 
     textAlign: 'center', 
-    marginTop: "2%", width: '100%', 
+    marginTop: "2%",
+    marginBottom: '5%',
+    width: '100%', 
     fontSize: 22,
     color: '#1a2638',
-    fontWeight: "bold"
+    fontWeight: "bold",
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey'
   },
 popupText: {
     flex: 1,
@@ -324,8 +333,8 @@ touchOpacity: {
   },
   backContainer: {
     position: 'absolute',
-    top: 20 + getStatusBarHeight(),
-    left: 10,
+    top: 25,
+    left: '4%',
   },
   backImage: {
     width: 24,
