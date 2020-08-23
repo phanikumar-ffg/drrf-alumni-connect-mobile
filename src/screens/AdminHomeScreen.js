@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
      height: 100,
   },
   container: {
-     justifyContent: "flex-start",
+     justifyContent: "center",
      flexDirection: "row",
      flexWrap: "wrap",
      marginTop: 30,
@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
      marginVertical: '3%',
      flex : 0.5,
      backgroundColor: '#eee',
-     height : '100%',
      width : 100
   }
 });
